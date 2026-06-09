@@ -7,6 +7,16 @@ Design System-handoff/
 # Tooling
 .netlify/
 .superpowers/
+.playwright-mcp/
 Thumbs.db
 ~ai-*.tmp
 node_modules/
+
+# Temp screenshot artifacts
+desktop-*.png
+mobile-*.png
+landing-*.png
+screenshot-*.png
+
+# Tools temp output
+tools/crops/
