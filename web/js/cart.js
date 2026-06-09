@@ -41,7 +41,7 @@ export function refresh() {
 
       const btnMinus = document.createElement('button');
       btnMinus.dataset.d = '-1';
-      btnMinus.setAttribute('aria-label', 'Less');
+      btnMinus.setAttribute('aria-label', t('cart.less'));
       btnMinus.textContent = '−';
 
       const qtyNum = document.createElement('b');
@@ -49,7 +49,7 @@ export function refresh() {
 
       const btnPlus = document.createElement('button');
       btnPlus.dataset.d = '1';
-      btnPlus.setAttribute('aria-label', 'More');
+      btnPlus.setAttribute('aria-label', t('cart.more'));
       btnPlus.textContent = '+';
 
       qtySpan.append(btnMinus, qtyNum, btnPlus);
@@ -69,10 +69,19 @@ export function refresh() {
 }
 
 export function initCartUI() {
-  fab.addEventListener('click', () => { sheet.classList.add('open'); overlay.hidden = false; refresh(); });
-  const close = () => { sheet.classList.remove('open'); overlay.hidden = true; refresh(); };
+  const close = () => { sheet.classList.remove('open'); overlay.hidden = true; fab.focus(); refresh(); };
+  fab.addEventListener('click', () => {
+    sheet.classList.add('open'); overlay.hidden = false; refresh();
+    document.getElementById('cartClose').focus();
+  });
   document.getElementById('cartClose').addEventListener('click', close);
   overlay.addEventListener('click', close);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && sheet.classList.contains('open')) close();
+  });
+  document.getElementById('waSend').addEventListener('click', e => {
+    if (e.currentTarget.getAttribute('aria-disabled') === 'true') e.preventDefault();
+  });
   document.getElementById('sheetBody').addEventListener('click', e => {
     const b = e.target.closest('button[data-d]');
     if (!b) return;

@@ -81,6 +81,8 @@ export const DICT = {
   'cart.empty':     { en: 'Your order is empty. Add something tasty!', es: 'Tu pedido está vacío. ¡Agrega algo rico!' },
   'cart.total':     { en: 'Total', es: 'Total' },
   'cart.send':      { en: 'Send order via WhatsApp', es: 'Enviar pedido por WhatsApp' },
+  'cart.less':      { en: 'Less', es: 'Menos' },
+  'cart.more':      { en: 'More', es: 'Más' },
   'cart.add':       { en: 'Add', es: 'Agregar' },
   'cart.items':     { en: 'items', es: 'items' },
   'cart.note':      { en: 'Pickup / delivery details are confirmed by WhatsApp.', es: 'Recogida / delivery se confirman por WhatsApp.' },
