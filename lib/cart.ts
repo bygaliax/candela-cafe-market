@@ -11,6 +11,7 @@ export type CartAction =
   | { type: 'SET_QTY'; itemId: string; qty: number }
   | { type: 'CLEAR' }
   | { type: 'SET_ORDER_TYPE'; orderType: OrderType }
+  /** Interno: usado solo por la capa de persistencia (CartProvider). Reemplaza el estado completo. */
   | { type: 'HYDRATE'; state: CartState };
 
 export const initialCartState: CartState = { lines: [], orderType: 'dine-in' };

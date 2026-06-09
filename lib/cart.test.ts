@@ -38,6 +38,17 @@ describe('cartReducer', () => {
     expect(s.lines).toEqual([]);
   });
 
+  it('SET_QTY positivo para un ítem inexistente agrega una línea nueva', () => {
+    const s = cartReducer(initialCartState, { type: 'SET_QTY', itemId: 'side-fries', qty: 2 });
+    expect(s.lines).toEqual([{ itemId: 'side-fries', qty: 2 }]);
+  });
+
+  it('DECREMENT de qty>1 mantiene la línea con qty actualizada', () => {
+    let s = cartReducer(initialCartState, { type: 'SET_QTY', itemId: 'burger-classic', qty: 3 });
+    s = cartReducer(s, { type: 'DECREMENT', itemId: 'burger-classic' });
+    expect(s.lines).toEqual([{ itemId: 'burger-classic', qty: 2 }]);
+  });
+
   it('CLEAR vacía las líneas pero conserva orderType', () => {
     let s: CartState = { lines: [{ itemId: 'side-fries', qty: 2 }], orderType: 'to-go' };
     s = cartReducer(s, { type: 'CLEAR' });
