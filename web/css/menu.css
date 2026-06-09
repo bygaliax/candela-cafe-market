@@ -4,7 +4,7 @@
 .chip{flex:0 0 auto;padding:8px 18px;border-radius:999px;border:1.5px solid #3a3a3a;color:var(--crema);
   font-size:.8rem;font-weight:600;letter-spacing:.06em;transition:all .2s}
 .chip.active{background:var(--rojo);border-color:var(--rojo);color:#fff}
-.menu-main{padding:48px 24px 140px}
+.menu-main{padding:48px 24px 140px;min-height:100vh}
 .cat-title{font-family:var(--display);font-size:1.7rem;color:var(--rojo);margin:46px 0 18px;scroll-margin-top:84px}
 .menu-item{display:grid;grid-template-columns:1fr auto auto;gap:8px 16px;align-items:center;
   padding:16px 0;border-bottom:1px dashed #d8cfc2}

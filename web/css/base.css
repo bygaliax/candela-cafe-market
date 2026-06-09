@@ -7,7 +7,7 @@
   --verde:#76C043;
   --claro:#FBF7F0;
   --crema:#F5F0E8;
-  --gris:#8a837a;          /* texto secundario sobre claro */
+  --gris:#6e6762;          /* texto secundario sobre claro — WCAG AA 5.2:1 vs #FBF7F0 */
   --gris-oscuro:#b8b1a6;   /* texto secundario sobre oscuro */
 
   --display:'Architects Daughter', cursive;
