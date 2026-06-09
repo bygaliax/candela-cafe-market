@@ -1,5 +1,3 @@
-'use client';
-
 import { menu } from '@/data/menu';
 
 export function CategoryTabs() {

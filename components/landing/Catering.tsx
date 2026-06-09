@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { Button } from '@/components/ui/Button';
+import { site } from '@/data/site';
 
 export function Catering() {
   return (
@@ -13,9 +13,12 @@ export function Catering() {
           <p className="mt-3 font-body text-base text-carbon/80">
             Eleva tus eventos con nuestro servicio de catering exclusivo.
           </p>
-          <Button href="/menu" variant="outline" className="mt-5 border-carbon text-carbon hover:bg-carbon hover:text-crema">
+          <a
+            href={site.phoneHref}
+            className="mt-5 inline-flex items-center justify-center border-2 border-carbon px-6 py-3 font-display text-lg uppercase tracking-tight text-carbon transition-colors hover:bg-carbon hover:text-crema"
+          >
             Solicitar
-          </Button>
+          </a>
         </div>
         <div className="relative mx-auto aspect-[4/3] w-full max-w-md">
           <Image src="/img/catering.jpg" alt="Catering" fill className="rounded-3xl object-cover" />

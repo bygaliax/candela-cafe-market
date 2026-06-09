@@ -16,6 +16,7 @@ export function OrderTypeToggle() {
         <button
           key={o.value}
           type="button"
+          aria-pressed={state.orderType === o.value}
           onClick={() => dispatch({ type: 'SET_ORDER_TYPE', orderType: o.value })}
           className={`rounded-full px-4 py-1.5 font-body text-sm transition-colors ${
             state.orderType === o.value ? 'bg-fuego text-crema' : 'text-hueso/70'

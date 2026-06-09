@@ -9,6 +9,7 @@ export function SearchBar({ value, onChange }: Props) {
         type="search"
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        aria-label="Buscar en el menú"
         placeholder="Buscar en el menú…"
         className="w-full rounded-full bg-carbon-2 px-5 py-3 font-body text-sm text-crema placeholder:text-hueso/40 focus:outline-none focus:ring-2 focus:ring-fuego"
       />
