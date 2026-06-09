@@ -1,0 +1,11 @@
+# Material pesado / no-repo
+wetransfer_*/
+*.zip
+*.ai
+Design System-handoff/
+
+# Tooling
+.netlify/
+.superpowers/
+Thumbs.db
+~ai-*.tmp
