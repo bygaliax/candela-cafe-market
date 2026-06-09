@@ -81,9 +81,7 @@ h2.display{font-size:clamp(1.9rem,4.2vw,3rem)}
 .footer a:hover{color:var(--verde)}
 
 /* ============ MOTION ============ */
-.reveal{opacity:0;transform:translateY(28px)}
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .reveal{opacity:1;transform:none}
   *,*::before,*::after{animation:none!important;transition:none!important}
 }

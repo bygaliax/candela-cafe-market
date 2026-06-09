@@ -14,7 +14,7 @@
 </head>
 <body>
 
-<nav class="nav" id="nav">
+<nav class="nav" id="nav" aria-label="Main navigation">
   <a class="nav-logo" href="#">
     <img src="assets/img/logo-96.webp" alt="Candela &amp; Café logo" width="46" height="46">
     <b>CANDELA &amp; CAFÉ</b>
@@ -28,10 +28,12 @@
     <button class="lang-toggle">ES</button>
     <a class="btn btn-primary nav-cta" href="menu.html" data-i18n="nav.order">Order Now</a>
   </div>
-  <button class="nav-burger" id="burger" aria-label="Menu">
+  <button class="nav-burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">
     <span></span><span></span><span></span>
   </button>
 </nav>
+
+<main>
 
 <header class="hero dark" id="hero">
   <picture class="hero-img">
@@ -106,12 +108,12 @@
     <div class="music-photos">
       <img src="assets/img/gal-5-480.webp"
            srcset="assets/img/gal-5-480.webp 480w"
-           sizes="(max-width:860px) 100vw, 25vw"
+           sizes="(max-width:860px) 50vw, 300px"
            alt="Dominican fritura board with longaniza, tostones and chicharrón with Presidente beer, live music Friday at Candela &amp; Café"
            loading="lazy">
       <img src="assets/img/gal-6-480.webp"
            srcset="assets/img/gal-6-480.webp 480w"
-           sizes="(max-width:860px) 100vw, 25vw"
+           sizes="(max-width:860px) 50vw, 300px"
            alt="Charcuterie and cheese tapas board with olives and wine glass for Friday tapas night at Candela &amp; Café"
            loading="lazy">
     </div>
@@ -183,25 +185,29 @@
   </div>
 </section>
 
-<section class="section reviews" id="reviews">
+<section class="section reviews" id="reviews" hidden>
+  <!-- Quitar "hidden" cuando Robert apruebe 2-3 citas reales de clientes (Google/Yelp) -->
   <div class="wrap">
     <p class="kicker" data-i18n="reviews.kicker">What people say</p>
     <h2 class="display" data-i18n="reviews.title">Neighbors already know</h2>
     <div class="reviews-grid reveal">
       <blockquote>
         <!-- PENDIENTE: cita real — Robert debe aprobar -->
-        <p class="stars">★★★★★</p>
-        <p>— Google Reviews</p>
+        <p class="stars" aria-hidden="true">★★★★★</p>
+        <p class="quote"><!-- texto de la reseña --></p>
+        <cite>— Nombre · Google</cite>
       </blockquote>
       <blockquote>
         <!-- PENDIENTE: cita real — Robert debe aprobar -->
-        <p class="stars">★★★★★</p>
-        <p>— Google Reviews</p>
+        <p class="stars" aria-hidden="true">★★★★★</p>
+        <p class="quote"><!-- texto de la reseña --></p>
+        <cite>— Nombre · Google</cite>
       </blockquote>
       <blockquote>
         <!-- PENDIENTE: cita real — Robert debe aprobar -->
-        <p class="stars">★★★★★</p>
-        <p>— Google Reviews</p>
+        <p class="stars" aria-hidden="true">★★★★★</p>
+        <p class="quote"><!-- texto de la reseña --></p>
+        <cite>— Nombre · Google</cite>
       </blockquote>
     </div>
   </div>
@@ -225,6 +231,8 @@
       src="https://www.google.com/maps?q=507+N+Miami+Ave,+Miami,+FL+33136&output=embed"></iframe>
   </div>
 </section>
+
+</main>
 
 <footer class="footer dark">
   <div class="wrap footer-grid">
