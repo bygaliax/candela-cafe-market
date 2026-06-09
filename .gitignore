@@ -9,3 +9,4 @@ Design System-handoff/
 .superpowers/
 Thumbs.db
 ~ai-*.tmp
+node_modules/
