@@ -91,8 +91,17 @@ export const DICT = {
 };
 
 const KEY = 'candela-lang';
-export function getLang() { return localStorage.getItem(KEY) || 'en'; }
-export function setLang(lang) { localStorage.setItem(KEY, lang); apply(); }
+const LANGS = ['en', 'es'];
+
+export function getLang() {
+  try { const l = localStorage.getItem(KEY); return LANGS.includes(l) ? l : 'en'; }
+  catch { return 'en'; }
+}
+export function setLang(lang) {
+  if (!LANGS.includes(lang)) return;
+  try { localStorage.setItem(KEY, lang); } catch { /* private mode: sigue en memoria de la página */ }
+  apply();
+}
 export function t(key) { const e = DICT[key]; return e ? e[getLang()] : key; }
 
 export function apply() {
@@ -106,7 +115,10 @@ export function apply() {
   document.dispatchEvent(new CustomEvent('langchange', { detail: lang }));
 }
 
+let toggleReady = false;
 export function initLangToggle() {
+  if (toggleReady) return;
+  toggleReady = true;
   document.querySelectorAll('.lang-toggle').forEach(b =>
     b.addEventListener('click', () => setLang(getLang() === 'en' ? 'es' : 'en')));
   apply();
