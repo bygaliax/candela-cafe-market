@@ -2,7 +2,7 @@ import sharp from 'sharp';
 import path from 'path';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
-const src = path.join(ROOT, 'web', 'assets', 'img', 'logo.png');
+const src = path.join(ROOT, 'assets', 'branding', 'logopng.png');
 const out = path.join(ROOT, 'web', 'favicon.png');
 
 await sharp(src)
