@@ -56,7 +56,7 @@ function render() {
     ${MENU[c.id].map(it => `
       <div class="menu-item${it.img ? ' has-img' : ''}" data-id="${esc(it.id)}" data-cat="${esc(c.id)}">
         ${it.img ? `<img src="assets/img/${esc(it.img)}-480.webp" alt="${esc(it.name)}" loading="lazy" width="84" height="84">` : ''}
-        <span class="mi-name">${esc(it.name)}${it.badge ? `<span class="badge">${esc(it.badge)}</span>` : ''}</span>
+        <span class="mi-name">${esc(it.name)}</span>${it.badge ? `<span class="badge">${esc(it.badge)}</span>` : ''}
         ${it.price > 0
           ? `<span class="mi-price">$${it.price.toFixed(2)}</span>
              <button class="mi-add" aria-label="Add ${esc(it.name)}">+</button>`

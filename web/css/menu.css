@@ -11,7 +11,7 @@
 .menu-item.has-img{grid-template-columns:84px 1fr auto auto}
 .menu-item img{width:84px;height:84px;object-fit:cover;border-radius:10px}
 .mi-name{font-weight:700}
-.mi-name .badge{background:var(--verde);color:#10210a;font-size:.62rem;font-weight:700;
+.badge{background:var(--verde);color:#10210a;font-size:.62rem;font-weight:700;
   letter-spacing:.06em;border-radius:4px;padding:2px 7px;margin-left:8px;vertical-align:2px;text-transform:uppercase}
 .mi-desc{grid-column:1/-1;color:var(--gris);font-size:.9rem}
 .menu-item.has-img .mi-desc{grid-column:2/-1}
