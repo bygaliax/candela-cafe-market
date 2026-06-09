@@ -3,3 +3,11 @@ Thumbs.db
 *.DS_Store
 node_modules/
 .netlify/
+
+# Next.js
+/.next/
+/out/
+/node_modules
+next-env.d.ts
+*.tsbuildinfo
+.vercel
