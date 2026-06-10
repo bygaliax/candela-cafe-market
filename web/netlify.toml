@@ -1,0 +1,11 @@
+# Config para deploy directo del directorio web/ (publish root = web/).
+# El netlify.toml de la raíz (publish="web") aplica a builds conectados a git.
+[[headers]]
+  for = "/assets/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
