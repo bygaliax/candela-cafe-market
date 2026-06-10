@@ -2,6 +2,7 @@ import { initLangToggle, t, getLang } from './i18n.js';
 import { MENU, CATEGORIES, PHONE } from './menu-data.js';
 import { MARKET } from './market-data.js';
 import { buildReservationUrl } from './cart-core.js';
+import { cart, refresh, initCartUI } from './cart.js';
 
 initLangToggle();
 
@@ -53,22 +54,17 @@ function renderMarket() {
   shopEl.innerHTML = MARKET.map(p => {
     const price = p.price > 0 ? `$${p.price.toFixed(2)}` : esc(t('market.instore'));
     const media = p.img ? `<div class="p-img"><img src="assets/img/${esc(p.img)}-480.webp" alt="${esc(p.name)}" loading="lazy" width="480" height="480"></div>` : '';
-    return `<article class="product">${media}<div class="p-body"><span class="p-cat">${esc(p.cat[lang])}</span><h3>${esc(p.name)}</h3><div class="p-foot"><span class="p-price">${price}</span><button class="p-add" data-name="${esc(p.name)}">${esc(t('market.add'))} +</button></div></div></article>`;
+    return `<article class="product">${media}<div class="p-body"><span class="p-cat">${esc(p.cat[lang])}</span><h3>${esc(p.name)}</h3><div class="p-foot"><span class="p-price">${price}</span><button class="p-add" data-id="${esc(p.id)}" data-name="${esc(p.name)}" data-price="${p.price}">${esc(t('market.add'))} +</button></div></div></article>`;
   }).join('');
   shopEl.querySelectorAll('.p-add').forEach(b => b.addEventListener('click', () => {
-    window.open(WA(`${t('wa.greeting')}\n\n1x ${b.dataset.name}`), '_blank');
+    cart.add({ id: b.dataset.id, name: b.dataset.name, price: +b.dataset.price });
+    refresh();
+    b.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.12)' }, { transform: 'scale(1)' }], 240);
   }));
 }
 renderMarket();
 document.addEventListener('langchange', renderMarket);
-
-/* ── CTA catering → WhatsApp (idioma) ─────────────────────── */
-function renderLangBits() {
-  const c = document.getElementById('cateringWa');
-  if (c) c.href = WA(t('catering.wa'));
-}
-renderLangBits();
-document.addEventListener('langchange', renderLangBits);
+initCartUI();
 
 /* ── timeline: relleno de la espina según scroll ──────────── */
 const tl = document.getElementById('timeline'), fill = document.getElementById('spineFill');

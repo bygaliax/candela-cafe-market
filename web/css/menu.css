@@ -3,7 +3,7 @@
 .menu-hero h1.display{font-size:clamp(2.4rem,6vw,3.8rem)}
 .menu-hero .ssub{margin:8px auto 0}
 
-.chips{position:sticky;top:0;z-index:90;display:flex;gap:10px;overflow-x:auto;padding:14px 24px;
+.chips{position:sticky;top:70px;z-index:90;display:flex;gap:10px;overflow-x:auto;padding:14px 24px;
   background:rgba(13,13,13,.94);backdrop-filter:blur(10px);scrollbar-width:none}
 .chips::-webkit-scrollbar{display:none}
 .chip{flex:0 0 auto;padding:8px 18px;border-radius:999px;border:1.5px solid rgba(255,255,255,.18);color:var(--crema);

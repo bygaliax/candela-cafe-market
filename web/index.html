@@ -49,7 +49,6 @@
     <a href="#historia" data-i18n="nav.history">Story</a>
     <a href="#music" data-i18n="nav.music">Live Music</a>
     <a href="#market" data-i18n="nav.market">Market</a>
-    <a href="#catering" data-i18n="nav.catering">Catering</a>
     <a href="#visit" data-i18n="nav.visit">Visit Us</a>
     <button class="lang-toggle">ES</button>
     <a class="btn btn-p nav-cta" href="menu.html" data-i18n="nav.order">Order Now</a>
@@ -154,22 +153,6 @@
   </div>
 </section>
 
-<section class="section light s-catering" id="catering">
-  <div class="wrap grid2">
-    <div class="photo-wrap reveal" style="order:-1">
-      <div class="frame"><img src="assets/img/catering-960.webp" srcset="assets/img/catering-480.webp 480w, assets/img/catering-960.webp 960w" sizes="(max-width:860px) 100vw, 46vw" alt="Catering platter with tostones, chicharrón and pork bites at an event" loading="lazy"></div>
-      <div class="seal"><img src="assets/img/logo-96.webp" alt="" width="78" height="78"></div>
-    </div>
-    <div class="reveal">
-      <span class="kick" data-i18n="catering.kicker">Corporate Catering</span>
-      <h2 class="stitle"><span data-i18n="catering.title.a">Elevate your</span> <span class="fire" data-i18n="catering.title.b">events</span></h2>
-      <p class="ssub" data-i18n="catering.body">Breakfast trays, sandwich platters and Dominican specialties for offices and events Downtown. Tell us the date and headcount — we handle the rest.</p>
-      <ul class="bullets"><li data-i18n="catering.b1">Breakfast &amp; coffee trays</li><li data-i18n="catering.b2">Boar's Head sandwich platters</li><li data-i18n="catering.b3">Dominican specialties</li></ul>
-      <a class="btn btn-p" id="cateringWa" href="https://wa.me/17862547577" target="_blank" rel="noopener" data-i18n="catering.cta">Get a quote</a>
-    </div>
-  </div>
-</section>
-
 <section class="section s-gallery" id="gallery">
   <div class="wrap">
     <span class="kick" style="justify-content:center" data-i18n="gallery.kicker">The vibe</span>
@@ -229,7 +212,7 @@
     <div><div class="brand"><img src="assets/img/logo-96.webp" alt="Candela &amp; Café Market logo" width="50" height="50"><b>CANDELA &amp; CAFÉ</b></div>
       <p style="margin-top:14px;max-width:38ch" data-i18n="footer.tag">NY Deli · Market &amp; Café — made with candela in Downtown Miami.</p></div>
     <nav aria-label="Footer navigation"><h4 data-i18n="footer.explore">Explore</h4>
-      <a href="#menu" data-i18n="nav.menu">Menu</a><a href="#historia" data-i18n="nav.history">Story</a><a href="#music" data-i18n="nav.music">Live Music</a><a href="#market" data-i18n="nav.market">Market</a><a href="#catering" data-i18n="nav.catering">Catering</a><a href="#visit" data-i18n="nav.visit">Visit Us</a></nav>
+      <a href="#menu" data-i18n="nav.menu">Menu</a><a href="#historia" data-i18n="nav.history">Story</a><a href="#music" data-i18n="nav.music">Live Music</a><a href="#market" data-i18n="nav.market">Market</a><a href="#visit" data-i18n="nav.visit">Visit Us</a></nav>
     <div><h4 data-i18n="footer.orders">Orders &amp; Social</h4>
       <a href="https://www.ubereats.com/store/candela-y-cafe-market/oa35cIfwWWuJm-ND4o9G1g" target="_blank" rel="noopener">Uber Eats</a>
       <a href="https://www.doordash.com/store/candela-y-caf%C3%A9-market-miami-26069377/" target="_blank" rel="noopener">DoorDash</a>
@@ -237,6 +220,23 @@
       <a href="tel:+17862547577">+1 (786) 254-7577</a></div>
   </div><div class="foot-bottom"><span>&copy; 2026 Candela &amp; Café Market</span><span>507 N Miami Ave, Miami FL</span></div></div>
 </footer>
+
+<!-- CARRITO (compartido market + menú) -->
+<button class="cart-fab" id="cartFab" hidden>
+  <span class="fab-count" id="fabCount">0</span>
+  <span data-i18n="cart.label">Your order</span>
+  <b id="fabTotal">$0.00</b>
+</button>
+<div class="overlay" id="overlay" hidden></div>
+<aside class="cart-sheet" id="cartSheet" role="dialog" aria-modal="true" aria-label="Your order">
+  <header><b data-i18n="cart.label">Your order</b><button id="cartClose" aria-label="Close">&#x2715;</button></header>
+  <div class="sheet-body" id="sheetBody"></div>
+  <footer class="sheet-footer">
+    <p class="cart-note" data-i18n="cart.note">Pickup / delivery details are confirmed by WhatsApp.</p>
+    <div class="total-row"><span data-i18n="cart.total">Total</span><b id="cartTotal">$0.00</b></div>
+    <a class="btn btn-g wa-send" id="waSend" href="#" target="_blank" rel="noopener" data-i18n="cart.send">Send order via WhatsApp</a>
+  </footer>
+</aside>
 
 <!-- MODAL DE RESERVA -->
 <div class="modal" id="resModal" aria-hidden="true">
