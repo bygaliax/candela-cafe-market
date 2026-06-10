@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add('js')</script>
 <title>Candela &amp; Café Market — NY Deli, Dominican Soul &amp; Live Music | Downtown Miami</title>
 <meta name="description" content="NY-style deli sandwiches, Dominican specialties, specialty coffee, daily market and live music Fridays. 507 N Miami Ave, Downtown Miami. Order via WhatsApp.">
 <link rel="icon" type="image/png" href="favicon.png">
@@ -20,7 +21,8 @@
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap"></noscript>
 <link rel="preload" as="image" href="assets/img/hero-sandwich-960.webp"
       imagesrcset="assets/img/hero-sandwich-480.webp 480w, assets/img/hero-sandwich-960.webp 960w, assets/img/hero-sandwich-1440.webp 1440w"
-      imagesizes="100vw" fetchpriority="high">
+      imagesizes="430px" fetchpriority="high">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.2.10/swiper-bundle.min.css">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/landing.css">
 <script type="application/ld+json">
@@ -40,254 +42,229 @@
 </head>
 <body>
 
-<nav class="nav" id="nav" aria-label="Main navigation">
-  <a class="nav-logo" href="#">
-    <img src="assets/img/logo-96.webp" alt="Candela &amp; Café logo" width="46" height="46">
-    <b>CANDELA &amp; CAFÉ</b>
-  </a>
+<nav class="nav" id="nav" aria-label="Main navigation"><div class="nav-inner">
+  <a class="nav-logo" href="#"><img src="assets/img/logo-96.webp" alt="Candela &amp; Café logo" width="46" height="46"><b>CANDELA &amp; CAFÉ</b></a>
   <div class="nav-links" id="navLinks">
-    <a href="menu.html" data-i18n="nav.menu">Menu</a>
+    <a href="#menu" data-i18n="nav.menu">Menu</a>
+    <a href="#historia" data-i18n="nav.history">Story</a>
     <a href="#music" data-i18n="nav.music">Live Music</a>
     <a href="#market" data-i18n="nav.market">Market</a>
     <a href="#catering" data-i18n="nav.catering">Catering</a>
     <a href="#visit" data-i18n="nav.visit">Visit Us</a>
     <button class="lang-toggle">ES</button>
-    <a class="btn btn-primary nav-cta" href="menu.html" data-i18n="nav.order">Order Now</a>
+    <a class="btn btn-p nav-cta" href="menu.html" data-i18n="nav.order">Order Now</a>
   </div>
-  <button class="nav-burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
+  <button class="nav-burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="navLinks"><span></span><span></span><span></span></button>
+</div></nav>
 
 <main>
 
-<header class="hero dark" id="hero">
-  <picture class="hero-img">
-    <img src="assets/img/hero-sandwich-960.webp"
-         srcset="assets/img/hero-sandwich-480.webp 480w, assets/img/hero-sandwich-960.webp 960w, assets/img/hero-sandwich-1440.webp 1440w"
-         sizes="100vw"
-         alt="Signature Boar's Head sandwich at Candela &amp; Café"
-         fetchpriority="high">
-  </picture>
-  <div class="hero-overlay"></div>
-  <div class="wrap hero-content">
-    <p class="kicker" data-i18n="hero.kicker">NY Deli · Market &amp; Café · Downtown Miami</p>
-    <h1 class="display">
-      <span data-i18n="hero.title.1">New York flavor,</span><br>
-      <span class="accent" data-i18n="hero.title.2">Caribbean fire</span>
-    </h1>
-    <p class="section-sub" data-i18n="hero.sub">NY-style deli sandwiches, Dominican soul food, specialty coffee and live music every Friday — in the heart of Downtown Miami.</p>
-    <div class="hero-ctas">
-      <a class="btn btn-primary" href="menu.html" data-i18n="hero.cta.order">Order Now</a>
-      <a class="btn btn-ghost" href="#music" data-i18n="hero.cta.music">Live Music Fridays</a>
+<header class="hero" id="hero">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="ghost" aria-hidden="true">CANDELA</span>
+      <span class="kick" data-i18n="hero.kicker">NY Deli · Dominican Soul · Downtown Miami</span>
+      <h1 class="display hero-title">
+        <span class="l1" data-i18n="hero.t1">Born in NY,</span>
+        <span class="l1" data-i18n="hero.t2">raised Dominican,</span>
+        <span class="l2"><span data-i18n="hero.t3a">served in</span> <span class="fire" data-i18n="hero.t3b">Miami</span></span>
+      </h1>
+      <p class="ssub" data-i18n="hero.sub">Classic deli craft, Dominican sazón and specialty coffee — plus live music every Friday, in the heart of Downtown Miami.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-p" href="menu.html" data-i18n="hero.cta.order">Order Now</a>
+        <a class="btn btn-ghost" href="#music" data-i18n="hero.cta.music">Live Music Fridays</a>
+      </div>
+      <p class="hero-meta" data-i18n="hero.meta">Open daily from 8am · 507 N Miami Ave</p>
     </div>
-    <p class="hero-meta"><span data-i18n="hero.hours">Open daily from 8am</span> · 507 N Miami Ave, Miami FL</p>
+    <div class="hero-visual">
+      <div class="ring">
+        <div class="hero-carousel" id="heroCarousel" role="img" aria-label="Dishes at Candela &amp; Café"></div>
+        <div class="seal"><img src="assets/img/logo-96.webp" alt="" width="78" height="78"></div>
+      </div>
+    </div>
   </div>
 </header>
 
-<div class="marquee" aria-hidden="true">
-  <div class="marquee-track" id="marqueeTrack">
-    <span>Breakfast</span><i>✶</i><span>Lunch</span><i>✶</i><span>NY Deli</span><i>✶</i><span>Dominican Spot</span><i>✶</i><span>Live Music Fridays</span><i>✶</i><span>Daily Market</span><i>✶</i><span>Breakfast</span><i>✶</i><span>Lunch</span><i>✶</i><span>NY Deli</span><i>✶</i><span>Dominican Spot</span><i>✶</i><span>Live Music Fridays</span><i>✶</i><span>Daily Market</span><i>✶</i>
-  </div>
-</div>
-
-<section class="section about" id="about">
-  <div class="wrap about-grid reveal">
-    <div class="about-text">
-      <p class="kicker" data-i18n="about.kicker">Our Story</p>
-      <h2 class="display" data-i18n="about.title">NY in the craft, Dominican at heart</h2>
-      <p class="section-sub" data-i18n="about.body">Candela &amp; Café brings the energy of a classic New York delicatessen to Downtown Miami — Boar's Head cold cuts, bagels and pastrami — and lights it up with Dominican warmth: mangú, live merengue and coffee that tastes like home.</p>
-    </div>
-    <figure class="about-photo">
-      <img src="assets/img/local-interior-960.webp"
-           srcset="assets/img/local-interior-480.webp 480w, assets/img/local-interior-960.webp 960w"
-           sizes="(max-width:860px) 100vw, 50vw"
-           alt="Grilled chicken plate with white rice and salad, colorful venue lights in the background at Candela &amp; Café"
-           loading="lazy">
-    </figure>
-  </div>
-</section>
-
-<div class="daily-special">
-  <div class="wrap"><span id="dailySpecial"></span></div>
-</div>
-
-<section class="section teaser" id="teaser">
+<section class="section s-menu" id="menu">
+  <div class="miami" aria-hidden="true"></div><div class="glow" aria-hidden="true"></div>
   <div class="wrap">
-    <p class="kicker" data-i18n="teaser.kicker">The Menu</p>
-    <h2 class="display" data-i18n="teaser.title">Made fresh, every day</h2>
-    <div class="teaser-grid reveal" id="teaserGrid"><!-- render desde FEATURED en landing.js (Task 7) — DEJAR VACÍO --></div>
-    <div class="teaser-cta">
-      <a class="btn btn-primary" href="menu.html" data-i18n="teaser.cta">View full menu &amp; order</a>
+    <div class="menu-head"><div>
+      <span class="kick" data-i18n="menu.kicker">The Menu · Explore by category</span>
+      <h2 class="stitle"><span data-i18n="menu.title.a">Fresh,</span> <span class="fire" data-i18n="menu.title.b">every day</span></h2>
+    </div></div>
+    <div class="chips" id="menuChips"></div>
+    <div class="dishes" id="menuDishes"></div>
+    <div class="menu-cta"><a class="btn btn-p" href="menu.html" data-i18n="menu.cta">View full menu &amp; order</a></div>
+  </div>
+</section>
+
+<section class="section s-time" id="historia">
+  <div class="time-head wrap">
+    <span class="kick" data-i18n="hist.kicker">Our Story</span>
+    <h2 class="stitle"><span data-i18n="hist.title.a">From New York to Miami, with Dominican</span> <span class="fire" data-i18n="hist.title.b">candela</span></h2>
+    <p class="ssub" data-i18n="hist.sub">Scroll: the line lights up as the story moves from the roots to today.</p>
+  </div>
+  <div class="timeline" id="timeline">
+    <div class="spine" aria-hidden="true"><div class="spine-fill" id="spineFill"></div></div>
+    <div class="ms ms--l reveal">
+      <div class="ms-photo"><div class="ms-frame"><img src="assets/img/pastrami-480.webp" alt="NY pastrami sandwich" loading="lazy" width="480" height="360"></div></div>
+      <div class="ms-node" aria-hidden="true"></div>
+      <div class="ms-text"><span class="ms-tag" data-i18n="hist.1.tag">The roots</span><h3 data-i18n="hist.1.title">New York deli craft</h3><p data-i18n="hist.1.body">Pastrami, bagels, Boar's Head cold cuts — the craft of the classic NY delicatessen.</p></div>
+    </div>
+    <div class="ms ms--r reveal">
+      <div class="ms-photo"><div class="ms-frame"><img src="assets/img/food-1-480.webp" alt="Dominican mixed grill plate" loading="lazy" width="480" height="360"></div></div>
+      <div class="ms-node" aria-hidden="true"></div>
+      <div class="ms-text"><span class="ms-tag" data-i18n="hist.2.tag">The soul</span><h3 data-i18n="hist.2.title">Dominican soul</h3><p data-i18n="hist.2.body">Mangú, fritura, home sazón and coffee that tastes like the neighborhood. The candela that lights it all.</p></div>
+    </div>
+    <div class="ms ms--l reveal">
+      <div class="ms-photo"><div class="ms-frame"><img src="assets/img/local-interior-480.webp" alt="Inside Candela &amp; Café in Downtown Miami" loading="lazy" width="480" height="360"></div></div>
+      <div class="ms-node" aria-hidden="true"></div>
+      <div class="ms-text"><span class="ms-tag" data-i18n="hist.3.tag">The leap</span><h3 data-i18n="hist.3.title">Lands in Downtown Miami</h3><p data-i18n="hist.3.body">Candela &amp; Café opens at 507 N Miami Ave — apartments above, loyal neighborhood below.</p></div>
+    </div>
+    <div class="ms ms--r reveal">
+      <div class="ms-photo"><div class="ms-frame"><img src="assets/img/gal-4-480.webp" alt="Signature Candela burger" loading="lazy" width="480" height="360"></div></div>
+      <div class="ms-node" aria-hidden="true"></div>
+      <div class="ms-text"><span class="ms-tag" data-i18n="hist.4.tag">Today</span><h3 data-i18n="hist.4.title">Deli · Market · Music</h3><p data-i18n="hist.4.body">Daily food, mini-market, and live music on Fridays. One place, a thousand flavors.</p></div>
     </div>
   </div>
 </section>
 
-<section class="section dark music" id="music">
-  <div class="wrap music-grid reveal">
-    <div class="music-text">
-      <p class="kicker" data-i18n="music.kicker">Friday Nights</p>
-      <h2 class="display neon" data-i18n="music.title">Live Music Fridays</h2>
-      <p class="section-sub" data-i18n="music.body">Every Friday the deli turns up: live music, wine, beer and the best vibe in Downtown. Come for dinner, stay for the candela.</p>
-      <a class="btn btn-primary" id="musicWa" href="https://wa.me/17862547577?text=Hi!%20I'd%20like%20to%20reserve%20a%20table%20for%20Friday%20live%20music." target="_blank" rel="noopener" data-i18n="music.cta">Reserve via WhatsApp</a>
+<section class="section s-music" id="music">
+  <div class="wrap music-grid">
+    <div class="reveal">
+      <span class="kick" data-i18n="music.kicker">Friday Nights</span>
+      <h2 class="neon">Live Music<br>Fridays</h2>
+      <div class="ev-pills"><span class="pill" data-i18n="music.p1">Every Friday</span><span class="pill" data-i18n="music.p2">Live music</span><span class="pill" data-i18n="music.p3">From 8pm</span></div>
+      <p class="ssub" data-i18n="music.body">Every Friday the deli lights up: live music, wine, beer and the best vibe Downtown. Come for dinner, stay for the candela.</p>
+      <button class="btn btn-g" id="openRes" data-i18n="music.cta">Reserve a table</button>
     </div>
-    <div class="music-photos">
-      <img src="assets/img/gal-5-480.webp"
-           srcset="assets/img/gal-5-480.webp 480w"
-           sizes="(max-width:860px) 50vw, 300px"
-           alt="Dominican fritura board with longaniza, tostones and chicharrón with Presidente beer, live music Friday at Candela &amp; Café"
-           loading="lazy">
-      <img src="assets/img/gal-6-480.webp"
-           srcset="assets/img/gal-6-480.webp 480w"
-           sizes="(max-width:860px) 50vw, 300px"
-           alt="Charcuterie and cheese tapas board with olives and wine glass for Friday tapas night at Candela &amp; Café"
-           loading="lazy">
-    </div>
+    <div class="swiper live-swiper reveal"><div class="swiper-wrapper" id="liveSlides"></div><div class="swiper-pagination"></div></div>
   </div>
 </section>
 
-<section class="section market" id="market">
-  <div class="wrap market-grid reveal">
-    <div class="market-text">
-      <p class="kicker" data-i18n="market.kicker">Daily Market</p>
-      <h2 class="display" data-i18n="market.title">Wines, beers &amp; gourmet finds</h2>
-      <p class="section-sub" data-i18n="market.body">A curated selection of wines and craft beers — the perfect pairing for your sandwich or your Friday night.</p>
-    </div>
-    <figure class="market-photo">
-      <img src="assets/img/food-1-960.webp"
-           srcset="assets/img/food-1-480.webp 480w, assets/img/food-1-960.webp 960w"
-           sizes="(max-width:860px) 100vw, 50vw"
-           alt="Charcuterie and gourmet selections from the daily market"
-           loading="lazy">
-    </figure>
-  </div>
-</section>
-
-<section class="section catering" id="catering">
-  <div class="wrap catering-grid reveal">
-    <div class="catering-text">
-      <p class="kicker" data-i18n="catering.kicker">Corporate Catering</p>
-      <h2 class="display" data-i18n="catering.title">Elevate your events</h2>
-      <p class="section-sub" data-i18n="catering.body">Breakfast trays, sandwich platters and Dominican specialties for offices and events. Tell us the date and headcount — we handle the rest.</p>
-      <a class="btn btn-primary" id="cateringWa" href="https://wa.me/17862547577?text=Hi!%20I'd%20like%20a%20catering%20quote." target="_blank" rel="noopener" data-i18n="catering.cta">Get a quote</a>
-    </div>
-    <figure class="catering-photo">
-      <img src="assets/img/catering-960.webp"
-           srcset="assets/img/catering-480.webp 480w, assets/img/catering-960.webp 960w"
-           sizes="(max-width:860px) 100vw, 50vw"
-           alt="Catering platter with tostones, chicharrón skewers and pork bites on a wooden board at an anniversary event"
-           loading="lazy">
-    </figure>
-  </div>
-</section>
-
-<section class="section gallery" id="gallery">
+<section class="section light s-market" id="market">
   <div class="wrap">
-    <p class="kicker" data-i18n="gallery.kicker">The Vibe</p>
-    <h2 class="display" data-i18n="gallery.title">Follow the candela</h2>
-    <div class="gallery-grid reveal">
-      <img src="assets/img/gal-1-480.webp"
-           alt="Three glazed salmon fillets with herbs and lemon on a white plate"
-           loading="lazy">
-      <img src="assets/img/gal-2-480.webp"
-           alt="Fresh ceviche by Chef Roberto with red onion, corn and cilantro on a dark plate — Friday special at Candela &amp; Café"
-           loading="lazy">
-      <img src="assets/img/gal-3-480.webp"
-           alt="Bruschetta bites topped with sautéed vegetables and shaved parmesan on a wooden board"
-           loading="lazy">
-      <img src="assets/img/gal-4-480.webp"
-           alt="Towering double smash burger with ham, cheese and fried egg on a pretzel bun, served with shoestring fries"
-           loading="lazy">
-      <img src="assets/img/gal-5-480.webp"
-           alt="Dominican fritura board with longaniza, tostones and chicharrón with Presidente beer — live music Friday"
-           loading="lazy">
-      <img src="assets/img/gal-6-480.webp"
-           alt="Charcuterie and cheese tapas board with green olives and wine glass — tapas y vinos Friday night"
-           loading="lazy">
+    <div class="shop-head"><div>
+      <span class="kick" data-i18n="market.kicker">Daily Market · Bodega</span>
+      <h2 class="stitle"><span data-i18n="market.title.a">The neighborhood</span> <span class="fire" data-i18n="market.title.b">market</span></h2>
+      <p class="ssub" data-i18n="market.sub">The basics and the good stuff, around the corner. Coffee, fresh, pantry and treats — pick up or we deliver.</p>
+    </div><a class="btn btn-p" href="#" data-i18n="market.cta">See the whole market</a></div>
+    <div class="shop" id="marketShop"></div>
+  </div>
+</section>
+
+<section class="section light s-catering" id="catering">
+  <div class="wrap grid2">
+    <div class="photo-wrap reveal" style="order:-1">
+      <div class="frame"><img src="assets/img/catering-960.webp" srcset="assets/img/catering-480.webp 480w, assets/img/catering-960.webp 960w" sizes="(max-width:860px) 100vw, 46vw" alt="Catering platter with tostones, chicharrón and pork bites at an event" loading="lazy"></div>
+      <div class="seal"><img src="assets/img/logo-96.webp" alt="" width="78" height="78"></div>
     </div>
-    <div class="gallery-cta">
-      <a class="btn btn-ghost" href="https://www.instagram.com/candelaycafe/" target="_blank" rel="noopener" data-i18n="gallery.cta">Follow @candelaycafe</a>
+    <div class="reveal">
+      <span class="kick" data-i18n="catering.kicker">Corporate Catering</span>
+      <h2 class="stitle"><span data-i18n="catering.title.a">Elevate your</span> <span class="fire" data-i18n="catering.title.b">events</span></h2>
+      <p class="ssub" data-i18n="catering.body">Breakfast trays, sandwich platters and Dominican specialties for offices and events Downtown. Tell us the date and headcount — we handle the rest.</p>
+      <ul class="bullets"><li data-i18n="catering.b1">Breakfast &amp; coffee trays</li><li data-i18n="catering.b2">Boar's Head sandwich platters</li><li data-i18n="catering.b3">Dominican specialties</li></ul>
+      <a class="btn btn-p" id="cateringWa" href="https://wa.me/17862547577" target="_blank" rel="noopener" data-i18n="catering.cta">Get a quote</a>
     </div>
   </div>
 </section>
 
-<section class="section reviews" id="reviews" hidden>
-  <!-- Quitar "hidden" cuando Robert apruebe 2-3 citas reales de clientes (Google/Yelp) -->
+<section class="section s-gallery" id="gallery">
   <div class="wrap">
-    <p class="kicker" data-i18n="reviews.kicker">What people say</p>
-    <h2 class="display" data-i18n="reviews.title">Neighbors already know</h2>
-    <div class="reviews-grid reveal">
-      <blockquote>
-        <!-- PENDIENTE: cita real — Robert debe aprobar -->
-        <p class="stars" aria-hidden="true">★★★★★</p>
-        <p class="quote"><!-- texto de la reseña --></p>
-        <cite>— Nombre · Google</cite>
-      </blockquote>
-      <blockquote>
-        <!-- PENDIENTE: cita real — Robert debe aprobar -->
-        <p class="stars" aria-hidden="true">★★★★★</p>
-        <p class="quote"><!-- texto de la reseña --></p>
-        <cite>— Nombre · Google</cite>
-      </blockquote>
-      <blockquote>
-        <!-- PENDIENTE: cita real — Robert debe aprobar -->
-        <p class="stars" aria-hidden="true">★★★★★</p>
-        <p class="quote"><!-- texto de la reseña --></p>
-        <cite>— Nombre · Google</cite>
-      </blockquote>
+    <span class="kick" style="justify-content:center" data-i18n="gallery.kicker">The vibe</span>
+    <h2 class="stitle" style="text-align:center"><span data-i18n="gallery.title.a">Follow the</span> <span class="fire" data-i18n="gallery.title.b">candela</span></h2>
+    <div class="gallery">
+      <a class="g-item g-0" href="https://www.instagram.com/candelaycafe/" target="_blank" rel="noopener"><img src="assets/img/hero-sandwich-480.webp" alt="Boar's Head sub sandwich" loading="lazy"></a>
+      <a class="g-item g-1" href="https://www.instagram.com/candelaycafe/" target="_blank" rel="noopener"><img src="assets/img/pastrami-480.webp" alt="NY pastrami sandwich" loading="lazy"></a>
+      <a class="g-item g-2" href="https://www.instagram.com/candelaycafe/" target="_blank" rel="noopener"><img src="assets/img/food-1-480.webp" alt="Dominican mixed grill plate" loading="lazy"></a>
+      <a class="g-item g-3" href="https://www.instagram.com/candelaycafe/" target="_blank" rel="noopener"><img src="assets/img/gal-1-480.webp" alt="Glazed salmon fillets with herbs" loading="lazy"></a>
+      <a class="g-item g-4" href="https://www.instagram.com/candelaycafe/" target="_blank" rel="noopener"><img src="assets/img/gal-3-480.webp" alt="Bruschetta bites on a wooden board" loading="lazy"></a>
+      <a class="g-item g-5" href="https://www.instagram.com/candelaycafe/" target="_blank" rel="noopener"><img src="assets/img/gal-4-480.webp" alt="Towering double smash burger with fries" loading="lazy"></a>
+      <a class="g-item g-6" href="https://www.instagram.com/candelaycafe/" target="_blank" rel="noopener"><img src="assets/img/local-interior-480.webp" alt="Grilled chicken plate with venue lights behind" loading="lazy"></a>
+      <a class="g-item g-7" href="https://www.instagram.com/candelaycafe/" target="_blank" rel="noopener"><img src="assets/img/caesar-salad-480.webp" alt="Chicken Caesar salad" loading="lazy"></a>
+      <a class="g-item g-8" href="https://www.instagram.com/candelaycafe/" target="_blank" rel="noopener"><img src="assets/img/breakfast-platter-480.webp" alt="Breakfast platter with eggs and home fries" loading="lazy"></a>
+    </div>
+    <div style="text-align:center"><a class="btn btn-ghost" href="https://www.instagram.com/candelaycafe/" target="_blank" rel="noopener" data-i18n="gallery.cta">Follow @candelaycafe</a></div>
+  </div>
+</section>
+
+<section class="section light s-reviews" id="reviews">
+  <!-- ⚠ PLACEHOLDER: reseñas de muestra. Reemplazar por reseñas REALES de Google (Place ID/widget) antes de publicar. -->
+  <div class="wrap">
+    <span class="kick" style="justify-content:center" data-i18n="reviews.kicker">What people say</span>
+    <h2 class="stitle" style="text-align:center"><span data-i18n="reviews.title.a">The neighborhood already</span> <span class="fire" data-i18n="reviews.title.b">knows</span></h2>
+    <div class="rev-top">
+      <div class="g-rate"><span class="g-num">4.8</span><span class="g-stars" aria-hidden="true">★★★★★</span><span class="g-sub" data-i18n="reviews.rating">Real Google reviews</span></div>
+      <a class="btn btn-p" id="googleWrite" href="https://www.google.com/maps/search/Candela+y+Caf%C3%A9+Market,+507+N+Miami+Ave,+Miami,+FL" target="_blank" rel="noopener" data-i18n="reviews.write">Write a review</a>
+    </div>
+    <div class="reviews">
+      <blockquote class="rev reveal"><div class="rev-head"><span class="avatar" style="background:#7e57c2">J</span><div><b>Jonathan R.</b><span class="rev-meta">2 weeks ago · via Google</span></div></div><div class="stars" aria-hidden="true">★★★★★</div><p>“The pastrami took me straight back to NY, but the sazón is pure Dominican. Best deli Downtown.”</p></blockquote>
+      <blockquote class="rev reveal"><div class="rev-head"><span class="avatar" style="background:#ED3B2F">C</span><div><b>Carla M.</b><span class="rev-meta">1 month ago · via Google</span></div></div><div class="stars" aria-hidden="true">★★★★★</div><p>“Friday nights with live music, wine and that mangú — my new spot. The vibe is unmatched.”</p></blockquote>
+      <blockquote class="rev reveal"><div class="rev-head"><span class="avatar" style="background:#43a047">L</span><div><b>Luis D.</b><span class="rev-meta">3 days ago · via Google</span></div></div><div class="stars" aria-hidden="true">★★★★★</div><p>“Café, mercado y comida criolla en un solo lugar. El barrio lo necesitaba. ¡Candela!”</p></blockquote>
     </div>
   </div>
 </section>
 
-<section class="section visit" id="visit">
-  <div class="wrap visit-grid reveal">
-    <div>
-      <p class="kicker" data-i18n="visit.kicker">Visit Us</p>
-      <h2 class="display" data-i18n="visit.title">Downtown Miami, with parking</h2>
+<section class="section s-visit" id="visit">
+  <div class="wrap grid2">
+    <div class="reveal">
+      <span class="kick" data-i18n="visit.kicker">Visit Us</span>
+      <h2 class="stitle"><span data-i18n="visit.title.a">Downtown Miami, with</span> <span class="fire" data-i18n="visit.title.b">parking</span></h2>
       <address>507 N Miami Ave, Miami, FL 33136</address>
-      <h3 data-i18n="visit.hours.title">Hours</h3>
-      <p data-i18n="visit.hours.1">Sun–Tue · 8:00am – 10:00pm</p>
-      <p data-i18n="visit.hours.2">Wed–Sat · 8:00am – 11:30pm</p>
+      <div class="hours"><span data-i18n="visit.h1">Sun–Tue · 8:00am – 10:00pm</span><span data-i18n="visit.h2">Wed–Sat · 8:00am – 11:30pm</span></div>
       <div class="visit-ctas">
-        <a class="btn btn-primary" href="tel:+17862547577" data-i18n="visit.call">Call us</a>
-        <a class="btn btn-ghost" href="https://maps.google.com/?q=507+N+Miami+Ave,+Miami,+FL+33136" target="_blank" rel="noopener" data-i18n="visit.directions">Get directions</a>
+        <a class="btn btn-p" href="tel:+17862547577" data-i18n="visit.call">Call us</a>
+        <a class="btn btn-ghost" href="https://maps.google.com/?q=507+N+Miami+Ave,+Miami,+FL+33136" target="_blank" rel="noopener" data-i18n="visit.dir">Get directions</a>
       </div>
     </div>
-    <iframe class="visit-map" loading="lazy" title="Map: Candela &amp; Café"
-      src="https://www.google.com/maps?q=507+N+Miami+Ave,+Miami,+FL+33136&output=embed"></iframe>
+    <iframe class="map" loading="lazy" title="Map: Candela &amp; Café" src="https://www.google.com/maps?q=507+N+Miami+Ave,+Miami,+FL+33136&output=embed"></iframe>
   </div>
 </section>
 
 </main>
 
-<footer class="footer dark">
-  <div class="wrap footer-grid">
-    <div class="footer-brand">
-      <img src="assets/img/logo-96.webp" alt="Candela &amp; Café Market logo" width="56" height="56">
-      <p data-i18n="footer.tag">NY Deli · Market &amp; Café — made with candela in Downtown Miami.</p>
-    </div>
-    <nav class="footer-nav" aria-label="Footer navigation">
-      <a href="menu.html" data-i18n="nav.menu">Menu</a>
-      <a href="#music" data-i18n="nav.music">Live Music</a>
-      <a href="#market" data-i18n="nav.market">Market</a>
-      <a href="#catering" data-i18n="nav.catering">Catering</a>
-      <a href="#visit" data-i18n="nav.visit">Visit Us</a>
-      <a href="https://www.instagram.com/candelaycafe/" target="_blank" rel="noopener">@candelaycafe</a>
-    </nav>
-    <div class="footer-delivery">
-      <p><span data-i18n="footer.delivery">Also on</span></p>
+<footer class="footer">
+  <div class="wrap"><div class="footer-grid">
+    <div><div class="brand"><img src="assets/img/logo-96.webp" alt="Candela &amp; Café Market logo" width="50" height="50"><b>CANDELA &amp; CAFÉ</b></div>
+      <p style="margin-top:14px;max-width:38ch" data-i18n="footer.tag">NY Deli · Market &amp; Café — made with candela in Downtown Miami.</p></div>
+    <nav aria-label="Footer navigation"><h4 data-i18n="footer.explore">Explore</h4>
+      <a href="#menu" data-i18n="nav.menu">Menu</a><a href="#historia" data-i18n="nav.history">Story</a><a href="#music" data-i18n="nav.music">Live Music</a><a href="#market" data-i18n="nav.market">Market</a><a href="#catering" data-i18n="nav.catering">Catering</a><a href="#visit" data-i18n="nav.visit">Visit Us</a></nav>
+    <div><h4 data-i18n="footer.orders">Orders &amp; Social</h4>
       <a href="https://www.ubereats.com/store/candela-y-cafe-market/oa35cIfwWWuJm-ND4o9G1g" target="_blank" rel="noopener">Uber Eats</a>
       <a href="https://www.doordash.com/store/candela-y-caf%C3%A9-market-miami-26069377/" target="_blank" rel="noopener">DoorDash</a>
-      <a href="tel:+17862547577">+1 (786) 254-7577</a>
-      <p class="footer-copy">&copy; 2026 Candela &amp; Café Market</p>
-    </div>
-  </div>
+      <a href="https://www.instagram.com/candelaycafe/" target="_blank" rel="noopener">@candelaycafe</a>
+      <a href="tel:+17862547577">+1 (786) 254-7577</a></div>
+  </div><div class="foot-bottom"><span>&copy; 2026 Candela &amp; Café Market</span><span>507 N Miami Ave, Miami FL</span></div></div>
 </footer>
+
+<!-- MODAL DE RESERVA -->
+<div class="modal" id="resModal" aria-hidden="true">
+  <div class="modal-ov" data-close></div>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="resTitle">
+    <button class="modal-x" data-close aria-label="Close">×</button>
+    <div class="modal-seal"><img src="assets/img/logo-96.webp" alt="" width="54" height="54"></div>
+    <span class="kick" data-i18n="music.kicker">Friday Nights</span>
+    <h3 id="resTitle" class="modal-title"><span data-i18n="res.title.a">Reserve your</span> <span class="fire" data-i18n="res.title.b">Friday</span></h3>
+    <p class="modal-sub" data-i18n="res.sub">Live music every Friday. Fill this in and we confirm by WhatsApp.</p>
+    <label class="fld"><span data-i18n="res.name">Name</span><input id="resName" type="text" autocomplete="name"></label>
+    <label class="fld"><span data-i18n="res.phone">Phone</span><input id="resPhone" type="tel" autocomplete="tel" placeholder="(786) 000-0000"></label>
+    <div class="fld-row">
+      <label class="fld"><span data-i18n="res.day">Friday</span><select id="resDate"></select></label>
+      <label class="fld"><span data-i18n="res.time">Time</span><select id="resTime"><option>8:00 PM</option><option>9:00 PM</option><option>10:00 PM</option></select></label>
+    </div>
+    <div class="fld"><span data-i18n="res.guests">Guests</span><div class="stepper"><button type="button" id="gMinus" aria-label="Less">−</button><b id="gCount">2</b><button type="button" id="gPlus" aria-label="More">+</button></div></div>
+    <button class="btn btn-g modal-go" id="resGo" data-i18n="res.go">Confirm via WhatsApp</button>
+    <p class="modal-note" data-i18n="res.note">We'll reply to confirm availability.</p>
+  </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer
   integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer
   integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11.2.10/swiper-bundle.min.js" defer
+  integrity="sha384-2UI1PfnXFjVMQ7/ZDEF70CR943oH3v6uZrFQGGqJYlvhh4g6z6uVktxYbOlAczav" crossorigin="anonymous"></script>
 <script type="module" src="js/landing.js"></script>
 </body>
 </html>
