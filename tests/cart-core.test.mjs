@@ -42,3 +42,27 @@ test('buildWaUrl genera wa.me con número correcto y mensaje legible', () => {
   assert.match(msg, /2x Downtown Platter — \$16\.98/);
   assert.match(msg, /Total: \$16\.98/);
 });
+
+import { buildReservationUrl } from '../web/js/cart-core.js';
+
+test('buildReservationUrl arma wa.me con día, hora, personas, nombre y teléfono', () => {
+  const url = buildReservationUrl(
+    { day: 'vie, 13 jun', time: '8:00 PM', guests: 4, name: 'Ana', phone: '786-000-0000' },
+    '17862547577',
+    'Hola! reservo para música en vivo'
+  );
+  assert.ok(url.startsWith('https://wa.me/17862547577?text='));
+  const msg = decodeURIComponent(url.split('text=')[1]);
+  assert.match(msg, /vie, 13 jun/);
+  assert.match(msg, /8:00 PM/);
+  assert.match(msg, /4 personas/);
+  assert.match(msg, /Ana/);
+  assert.match(msg, /786-000-0000/);
+});
+
+test('buildReservationUrl omite nombre y teléfono vacíos', () => {
+  const url = buildReservationUrl({ day: 'vie', time: '9:00 PM', guests: 2, name: '', phone: '' }, '17862547577', 'Hola');
+  const msg = decodeURIComponent(url.split('text=')[1]);
+  assert.ok(!/Nombre:/.test(msg));
+  assert.ok(!/Tel:/.test(msg));
+});

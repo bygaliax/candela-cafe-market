@@ -32,3 +32,12 @@ export function buildWaUrl(cart, phone, greeting) {
   const msg = `${greeting}\n\n${body}\n\nTotal: ${fmt(cart.total())}`;
   return `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
 }
+
+// Mensaje de reserva de mesa (Live Music) → wa.me. Puro/testeable.
+export function buildReservationUrl(data, phone, greeting) {
+  const { day, time, guests, name, phone: tel } = data;
+  let msg = `${greeting} del ${day} a las ${time}, para ${guests} personas.`;
+  if (name) msg += ` Nombre: ${name}.`;
+  if (tel)  msg += ` Tel: ${tel}.`;
+  return `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+}
