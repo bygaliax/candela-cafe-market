@@ -33,7 +33,7 @@
 </head>
 <body>
 
-<nav class="nav" id="nav" aria-label="Main navigation">
+<nav class="nav" id="nav" aria-label="Main navigation"><div class="nav-inner">
   <a class="nav-logo" href="index.html">
     <img src="assets/img/logo-96.webp" alt="Candela &amp; Café logo" width="46" height="46">
     <b>CANDELA &amp; CAFÉ</b>
@@ -49,12 +49,12 @@
   <button class="nav-burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">
     <span></span><span></span><span></span>
   </button>
-</nav>
+</div></nav>
 
-<header class="menu-hero dark">
+<header class="menu-hero">
   <div class="wrap">
     <h1 class="display" data-i18n="menu.title">The Menu</h1>
-    <p class="section-sub" data-i18n="menu.sub">Order online — we confirm by WhatsApp.</p>
+    <p class="ssub" data-i18n="menu.sub">Order online — we confirm by WhatsApp.</p>
   </div>
 </header>
 
@@ -76,32 +76,22 @@
   <footer class="sheet-footer">
     <p class="cart-note" data-i18n="cart.note">Pickup / delivery details are confirmed by WhatsApp.</p>
     <div class="total-row"><span data-i18n="cart.total">Total</span><b id="cartTotal">$0.00</b></div>
-    <a class="btn btn-green wa-send" id="waSend" href="#" target="_blank" rel="noopener" data-i18n="cart.send">Send order via WhatsApp</a>
+    <a class="btn btn-g wa-send" id="waSend" href="#" target="_blank" rel="noopener" data-i18n="cart.send">Send order via WhatsApp</a>
   </footer>
 </aside>
 
-<footer class="footer dark">
-  <div class="wrap footer-grid">
-    <div class="footer-brand">
-      <img src="assets/img/logo-96.webp" alt="Candela &amp; Café Market logo" width="56" height="56">
-      <p data-i18n="footer.tag">NY Deli · Market &amp; Café — made with candela in Downtown Miami.</p>
-    </div>
-    <nav class="footer-nav" aria-label="Footer navigation">
-      <a href="menu.html" data-i18n="nav.menu">Menu</a>
-      <a href="index.html#music" data-i18n="nav.music">Live Music</a>
-      <a href="index.html#market" data-i18n="nav.market">Market</a>
-      <a href="index.html#catering" data-i18n="nav.catering">Catering</a>
-      <a href="index.html#visit" data-i18n="nav.visit">Visit Us</a>
-      <a href="https://www.instagram.com/candelaycafe/" target="_blank" rel="noopener">@candelaycafe</a>
-    </nav>
-    <div class="footer-delivery">
-      <p><span data-i18n="footer.delivery">Also on</span></p>
+<footer class="footer">
+  <div class="wrap"><div class="footer-grid">
+    <div><div class="brand"><img src="assets/img/logo-96.webp" alt="Candela &amp; Café Market logo" width="50" height="50"><b>CANDELA &amp; CAFÉ</b></div>
+      <p style="margin-top:14px;max-width:38ch" data-i18n="footer.tag">NY Deli · Market &amp; Café — made with candela in Downtown Miami.</p></div>
+    <nav aria-label="Footer navigation"><h4 data-i18n="footer.explore">Explore</h4>
+      <a href="index.html#menu" data-i18n="nav.menu">Menu</a><a href="index.html#historia" data-i18n="nav.history">Story</a><a href="index.html#music" data-i18n="nav.music">Live Music</a><a href="index.html#market" data-i18n="nav.market">Market</a><a href="index.html#catering" data-i18n="nav.catering">Catering</a><a href="index.html#visit" data-i18n="nav.visit">Visit Us</a></nav>
+    <div><h4 data-i18n="footer.orders">Orders &amp; Social</h4>
       <a href="https://www.ubereats.com/store/candela-y-cafe-market/oa35cIfwWWuJm-ND4o9G1g" target="_blank" rel="noopener">Uber Eats</a>
       <a href="https://www.doordash.com/store/candela-y-caf%C3%A9-market-miami-26069377/" target="_blank" rel="noopener">DoorDash</a>
-      <a href="tel:+17862547577">+1 (786) 254-7577</a>
-      <p class="footer-copy">&copy; 2026 Candela &amp; Café Market</p>
-    </div>
-  </div>
+      <a href="https://www.instagram.com/candelaycafe/" target="_blank" rel="noopener">@candelaycafe</a>
+      <a href="tel:+17862547577">+1 (786) 254-7577</a></div>
+  </div><div class="foot-bottom"><span>&copy; 2026 Candela &amp; Café Market</span><span>507 N Miami Ave, Miami FL</span></div></div>
 </footer>
 
 <script type="module" src="js/menu.js"></script>

@@ -42,7 +42,7 @@ h1.display{font-family:var(--disp);line-height:1.02}
 .light .kick{color:var(--verde-d)} .light .kick::before{background:var(--verde-d)}
 .light .stitle{color:var(--ink)} .light .ssub{color:var(--ink-2)}
 /* ============ NAVBAR (contenida al ancho del hero) ============ */
-.nav{position:fixed;inset:0 0 auto;z-index:100;transition:background .3s,padding .3s}
+.nav{position:fixed;inset:0 0 auto;z-index:100;color:var(--crema);transition:background .3s,padding .3s}
 .nav-inner{max-width:1240px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:22px 40px}
 .nav.is-scrolled{background:rgba(13,13,13,.94);backdrop-filter:blur(10px)}
 .nav.is-scrolled .nav-inner{padding:12px 40px}
