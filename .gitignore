@@ -20,3 +20,11 @@ screenshot-*.png
 
 # Tools temp output
 tools/crops/
+
+# Rediseño: artefactos de prueba y scratch de mockups (las salidas WebP sí se versionan)
+/*.jpeg
+tools/build-*-mock.mjs
+tools/food-slider.js
+tools/miami.jpg
+tools/prod/
+tools/bottles/
