@@ -3,33 +3,52 @@
    Estilos portados de los mockups aprobados (tools/build-*-mock.mjs).
    ============================================================ */
 
-/* ── HERO ─────────────────────────────────────────────────── */
-.hero{position:relative;overflow:hidden;min-height:100vh;display:flex;align-items:center;
-  background:radial-gradient(1200px 600px at 84% -6%, rgba(237,59,47,.30), transparent 58%),
-    radial-gradient(760px 520px at 4% 112%, rgba(118,192,67,.14), transparent 60%), var(--negro)}
-.hero-bg{position:absolute;top:0;right:0;bottom:0;width:62%;z-index:0;pointer-events:none;
-  background:url(../assets/img/gal-4-960.webp) center right / cover no-repeat;opacity:.5;
-  -webkit-mask-image:linear-gradient(to right, transparent 0%, rgba(0,0,0,.55) 50%, #000 100%);
-          mask-image:linear-gradient(to right, transparent 0%, rgba(0,0,0,.55) 50%, #000 100%)}
-.hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(to right, rgba(13,13,13,.65), rgba(13,13,13,.15) 60%, rgba(13,13,13,.45))}
-.hero-grid{position:relative;z-index:2;width:100%;display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;padding:96px 0 70px}
-@media(max-width:900px){.hero-grid{grid-template-columns:1fr}.hero-visual{order:-1}}
-.hero-copy{position:relative}
-.ghost{position:absolute;top:-26px;left:-6px;font-family:var(--disp);font-size:8.5rem;line-height:.8;color:rgba(255,255,255,.045);font-weight:700;white-space:nowrap;z-index:-1;pointer-events:none}
-.hero-title{margin:18px 0 6px}
-.hero-title .l1{display:block;font-size:clamp(1.9rem,3.5vw,2.9rem);color:#fff}
-.hero-title .l2{display:block;font-size:clamp(2.5rem,5.4vw,3.7rem)}
-.hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:26px}
-.hero-meta{margin-top:22px;font-size:.84rem;color:var(--gris-d)}
-.hero-visual{position:relative;display:flex;justify-content:center;align-items:center;min-height:460px}
-.ring{position:relative;width:min(430px,82vw);aspect-ratio:1;border-radius:50%;padding:10px;
-  background:var(--fuego);box-shadow:0 0 60px rgba(237,59,47,.35),inset 0 0 0 1px rgba(255,255,255,.12)}
-.ring::before{content:"";position:absolute;inset:-14px;border-radius:50%;border:1.5px dashed rgba(118,192,67,.5);animation:spin 40s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.hero-carousel{position:relative;width:100%;height:100%;border-radius:50%;overflow:hidden;border:6px solid var(--negro)}
-.hero-carousel .slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .9s ease, transform 2.2s ease;transform:scale(1.06)}
-.hero-carousel .slide.active{opacity:1;transform:scale(1)}
-.hero-visual .seal{position:absolute;right:2%;bottom:4%;z-index:3}
+/* ── HERO (banner aprobado 2026-06-10: fuego + parrillada) ── */
+.hero{position:relative;overflow:hidden;min-height:100vh;min-height:100svh;background:#0a0302}
+.hero-fire{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none}
+.dec{position:absolute;z-index:1;height:auto;pointer-events:none;transform:rotate(var(--rot,0deg))}
+.dec-chips{left:max(-20px,-1.2vw);top:3.5vh;width:clamp(100px,12.8vw,250px)}
+.dec-drink{left:-3vw;top:30%;width:clamp(160px,17vw,330px)}
+.dec-leaf-a{right:8.5%;top:4%;width:clamp(50px,4.9vw,95px);--rot:10deg}
+.dec-leaf-b{right:20%;top:74%;width:clamp(40px,4.5vw,88px);--rot:-22deg}
+.dec-ringburger{right:-7vw;top:18%;width:clamp(180px,19.6vw,375px)}
+.dec-burger{right:max(-55px,-3vw);top:52%;width:clamp(180px,17.5vw,340px)}
+.hero-sparks{position:absolute;inset:0;z-index:3;pointer-events:none}
+.hero-copy{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;text-align:center;padding:max(19vh,140px) 24px 0}
+.hero-title{font-size:clamp(2.7rem,5.3vw,6.3rem);line-height:1.04;color:#F4DCC4;text-shadow:0 4px 30px rgba(0,0,0,.55)}
+.hero-sub{margin-top:8px;font-size:clamp(1rem,1.8vw,2rem);font-weight:500;color:#FAF3DC;text-shadow:0 2px 18px rgba(0,0,0,.6)}
+.hero-ctas{display:flex;gap:clamp(18px,1.8vw,32px);flex-wrap:wrap;justify-content:center;margin-top:clamp(28px,3.8vh,44px)}
+.hbtn{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;min-width:9.5em;padding:.7em 1.9em;border-radius:999px;
+  font-weight:600;font-size:clamp(.85rem,.95vw,1.05rem);color:#fff;box-shadow:0 8px 22px rgba(0,0,0,.38);
+  transition:transform .2s var(--ease),box-shadow .25s}
+.hbtn span{position:relative;z-index:1}
+.hbtn::before{content:"";position:absolute;inset:0;z-index:0;border-radius:inherit;
+  background:linear-gradient(180deg,#FFB546 0%,#FF7A33 45%,#ED3B2F 100%);
+  transform:translateY(101%);transition:transform .35s var(--ease)}
+.hbtn:active{transform:scale(.97)}
+.hbtn-terra{background:#D4542C}
+.hbtn-green{background:#6CB41C}
+@media(hover:hover) and (pointer:fine){
+  .hbtn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(255,120,40,.5)}
+  .hbtn:hover::before{transform:translateY(0)}
+}
+.hero-platter{position:absolute;left:50%;top:49%;transform:translateX(-50%);z-index:1;
+  width:clamp(340px,43.5vw,790px);aspect-ratio:1;border-radius:50%;border:clamp(6px,.55vw,10px) solid #C84C24;padding:clamp(12px,1.1vw,20px);
+  background:radial-gradient(circle at 50% 30%, #2a130a, #140806 70%);
+  box-shadow:0 0 70px rgba(0,0,0,.30),0 0 120px rgba(200,76,36,.20)}
+.platter-disc{position:relative;width:100%;height:100%;border-radius:50%;overflow:hidden}
+.platter-disc img{position:absolute;left:0;top:0;width:100%;height:auto}
+.platter-disc .grill-b{top:auto;bottom:0;transform:rotate(180deg)}
+@media(max-width:700px){
+  .dec-drink,.dec-ringburger{display:none}
+  .dec-chips{top:66px;left:-14px;width:90px}
+  .dec-leaf-a{right:5%;top:11%;width:46px}
+  .dec-leaf-b{top:58%;right:6%}
+  .dec-burger{width:190px;right:-80px;top:56%}
+  .hero-copy{padding-top:max(16vh,120px)}
+  .hero-ctas{gap:14px}
+  .hero-platter{width:min(140vw,560px);top:auto;bottom:calc(min(140vw,560px)/-2.4)}
+}
 
 /* ── MENÚ (oscuro, Miami muy tenue, chips interactivos) ───── */
 .s-menu{position:relative;overflow:hidden;padding:92px 0;background:var(--negro)}

@@ -11,9 +11,9 @@ export const DICT = {
   'hero.kicker':   { en: 'NY Deli · Dominican Soul · Downtown Miami', es: 'NY Deli · Alma Dominicana · Downtown Miami' },
   'hero.title.1':  { en: 'New York flavor,', es: 'Sabor neoyorquino,' },
   'hero.title.2':  { en: 'Caribbean fire',   es: 'fuego caribeño' },
-  'hero.sub':      { en: 'Classic deli craft, Dominican sazón and specialty coffee — plus live music every Friday, in the heart of Downtown Miami.',
-                     es: 'Oficio de deli clásico, sazón dominicana y café de especialidad — más música en vivo los viernes, en el corazón de Downtown Miami.' },
-  'hero.cta.order': { en: 'Order Now',          es: 'Ordena Ya' },
+  'hero.sub':      { en: 'Enjoy our special mixed grill today.',
+                     es: 'Disfruta hoy nuestra parrillada mixta especial.' },
+  'hero.cta.order': { en: 'Order Now!',          es: '¡Ordena Ya!' },
   'hero.cta.music': { en: 'Live Music Fridays', es: 'Viernes de Música' },
   'hero.hours':    { en: 'Open daily from 8am', es: 'Abierto todos los días desde las 8am' },
 
@@ -93,11 +93,8 @@ export const DICT = {
 
   /* ============ claves del rediseño (2026-06-10) ============ */
   'nav.history':   { en: 'Story', es: 'Historia' },
-  'hero.t1':       { en: 'Born in NY,', es: 'Nacidos en NY,' },
-  'hero.t2':       { en: 'raised Dominican,', es: 'criados dominicanos,' },
-  'hero.t3a':      { en: 'served in', es: 'servidos en' },
-  'hero.t3b':      { en: 'Miami', es: 'Miami' },
-  'hero.meta':     { en: 'Open daily from 8am · 507 N Miami Ave', es: 'Abierto todos los días desde las 8am · 507 N Miami Ave' },
+  'hero.title':    { en: 'Authentic Flavors!', es: '¡Sabores auténticos!' },
+  'hero.cta.menu': { en: 'View menu', es: 'Ver menú' },
   'menu.kicker':   { en: 'The Menu · Explore by category', es: 'El Menú · Explora por categoría' },
   'menu.title.a':  { en: 'Fresh,', es: 'Fresco,' },
   'menu.title.b':  { en: 'every day', es: 'todos los días' },

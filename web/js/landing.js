@@ -16,17 +16,6 @@ const burger = document.getElementById('burger'), navLinks = document.getElement
 burger.addEventListener('click', () => { const o = navLinks.classList.toggle('open'); burger.setAttribute('aria-expanded', String(o)); });
 navLinks.addEventListener('click', e => { if (e.target.closest('a')) { navLinks.classList.remove('open'); burger.setAttribute('aria-expanded', 'false'); } });
 
-/* ── hero carousel: cross-fade cada 2s ────────────────────── */
-const HERO_SLUGS = ['hero-sandwich', 'pastrami', 'breakfast-platter', 'food-1', 'local-interior'];
-const heroC = document.getElementById('heroCarousel');
-if (heroC) {
-  heroC.innerHTML = HERO_SLUGS.map((s, i) =>
-    `<img class="slide${i === 0 ? ' active' : ''}" src="assets/img/${s}-960.webp" srcset="assets/img/${s}-480.webp 480w, assets/img/${s}-960.webp 960w" sizes="430px" alt="" ${i === 0 ? 'fetchpriority="high"' : 'loading="lazy"'}>`
-  ).join('');
-  const sl = heroC.querySelectorAll('.slide');
-  if (sl.length > 1) { let i = 0; setInterval(() => { sl[i].classList.remove('active'); i = (i + 1) % sl.length; sl[i].classList.add('active'); }, 2000); }
-}
-
 /* ── menú: chips de categoría que cambian el contenido ────── */
 const chipsEl = document.getElementById('menuChips'), dishesEl = document.getElementById('menuDishes');
 function dishCard(it, lang) {
@@ -94,6 +83,31 @@ addEventListener('DOMContentLoaded', () => {
   }
   gsap.registerPlugin(ScrollTrigger);
   gsap.from('.hero-copy > *', { y: 34, opacity: 0, stagger: .1, duration: .9, ease: 'power3.out' });
+
+  /* hero: flotación perpetua (papas y hojas) */
+  [['.dec-chips', 12, 3.6], ['.dec-leaf-a', 10, 2.8], ['.dec-leaf-b', 9, 3.2]].forEach(([sel, amp, dur]) =>
+    gsap.to(sel, { y: -amp, duration: dur, yoyo: true, repeat: -1, ease: 'sine.inOut' }));
+
+  /* hero: plato giratorio (disco = mitad real + mitad espejada) */
+  gsap.to('#platterDisc', { rotation: 360, duration: 48, repeat: -1, ease: 'none' });
+
+  /* hero: parallax de profundidad con el cursor */
+  if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    const hero = document.getElementById('hero');
+    const movers = [
+      ['.dec-chips', 26, 0], ['.dec-leaf-a', 30, 0], ['.dec-leaf-b', 22, 0],
+      ['.dec-drink', 16, 10], ['.dec-ringburger', 18, 12], ['.dec-burger', 16, 10],
+    ].map(([sel, fx, fy]) => {
+      const el = document.querySelector(sel);
+      return el && { fx, fy, x: gsap.quickTo(el, 'x', { duration: .7, ease: 'power2.out' }), y: fy ? gsap.quickTo(el, 'y', { duration: .7, ease: 'power2.out' }) : null };
+    }).filter(Boolean);
+    hero.addEventListener('mousemove', e => {
+      const r = hero.getBoundingClientRect();
+      const nx = (e.clientX - r.left) / r.width * 2 - 1, ny = (e.clientY - r.top) / r.height * 2 - 1;
+      movers.forEach(m => { m.x(nx * m.fx); if (m.y) m.y(ny * m.fy); });
+    }, { passive: true });
+    hero.addEventListener('mouseleave', () => movers.forEach(m => { m.x(0); if (m.y) m.y(0); }), { passive: true });
+  }
   document.querySelectorAll('.reveal:not(.ms)').forEach(el =>
     gsap.to(el, { opacity: 1, y: 0, duration: .8, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 84%', once: true } }));
   document.querySelectorAll('.ms').forEach(el => {
@@ -101,6 +115,65 @@ addEventListener('DOMContentLoaded', () => {
     gsap.fromTo(el, { opacity: 0, x }, { opacity: 1, x: 0, duration: .7, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 80%', once: true } });
   });
 });
+
+/* ── hero: chispas que siguen el cursor (canvas ligero) ───── */
+(() => {
+  const hero = document.getElementById('hero'), cv = document.getElementById('heroSparks');
+  if (!hero || !cv || !matchMedia('(hover: hover) and (pointer: fine)').matches
+    || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const ctx = cv.getContext('2d');
+  let W, H;
+  const fit = () => {
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    W = hero.clientWidth; H = hero.clientHeight;
+    cv.width = W * dpr; cv.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  };
+  fit(); addEventListener('resize', fit, { passive: true });
+  const P = [], COLORS = ['255,155,64', '255,90,60', '255,210,122'];
+  let lx = -1, ly = -1, raf = 0, visible = true;
+  new IntersectionObserver(en => { visible = en[0].isIntersecting; if (visible && !raf) raf = requestAnimationFrame(tick); }).observe(hero);
+  hero.addEventListener('mousemove', e => {
+    const r = hero.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+    if (lx < 0 || Math.hypot(x - lx, y - ly) > 13) {
+      lx = x; ly = y;
+      for (let i = 0; i < 2 && P.length < 90; i++) P.push({
+        x, y, vx: (Math.random() - .5) * 1.1, vy: -.4 - Math.random() * 1.1,
+        r: 1.2 + Math.random() * 2.2, a: 1, d: .012 + Math.random() * .02, c: COLORS[Math.random() * 3 | 0],
+      });
+    }
+  }, { passive: true });
+  /* chispitas desde el borde superior de los botones al hover */
+  document.querySelectorAll('.hbtn').forEach(btn => {
+    let iv = 0;
+    btn.addEventListener('mouseenter', () => {
+      iv = setInterval(() => {
+        if (P.length >= 90) return;
+        const br = btn.getBoundingClientRect(), hr = hero.getBoundingClientRect();
+        P.push({
+          x: br.left - hr.left + 6 + Math.random() * (br.width - 12), y: br.top - hr.top + 2,
+          vx: (Math.random() - .5) * .7, vy: -.5 - Math.random() * .8,
+          r: .8 + Math.random() * 1.3, a: 1, d: .022 + Math.random() * .025, c: COLORS[Math.random() * 3 | 0],
+        });
+      }, 150);
+    });
+    btn.addEventListener('mouseleave', () => clearInterval(iv));
+  });
+  function tick() {
+    raf = 0; ctx.clearRect(0, 0, W, H);
+    ctx.globalCompositeOperation = 'lighter';
+    for (let i = P.length - 1; i >= 0; i--) {
+      const p = P[i];
+      p.x += p.vx; p.y += p.vy; p.vy -= .008; p.vx += (Math.random() - .5) * .08; p.a -= p.d;
+      if (p.a <= 0) { P.splice(i, 1); continue; }
+      const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 3);
+      g.addColorStop(0, `rgba(${p.c},${p.a})`); g.addColorStop(1, `rgba(${p.c},0)`);
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 3, 0, 7); ctx.fill();
+    }
+    if (visible) raf = requestAnimationFrame(tick);
+  }
+  raf = requestAnimationFrame(tick);
+})();
 
 /* ── modal de reserva → WhatsApp ──────────────────────────── */
 const modal = document.getElementById('resModal');
