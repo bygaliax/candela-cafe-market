@@ -1,0 +1,55 @@
+// Datos del local — ÚNICA fuente de horario, franjas del día, Google, favoritos y cartas.
+// Los usan «Ahora en Candela», la tabla de Visítanos y el test de coherencia del JSON-LD.
+
+export const ADDRESS = { street: '507 N Miami Ave', city: 'Downtown Miami, FL 33136' };
+export const MAPS_DIRECTIONS = 'https://www.google.com/maps/dir/?api=1&destination=507+N+Miami+Ave%2C+Miami%2C+FL+33136';
+export const MAPS_PLACE = 'https://www.google.com/maps/search/?api=1&query=Candela+y+Caf%C3%A9+Market%2C+507+N+Miami+Ave%2C+Miami%2C+FL';
+
+// 0 = domingo … 6 = sábado. null = cerrado. Sin cierres después de medianoche.
+export const HOURS = [
+  { open: '08:00', close: '22:00' },
+  { open: '08:00', close: '22:00' },
+  { open: '08:00', close: '22:00' },
+  { open: '08:00', close: '23:30' },
+  { open: '08:00', close: '23:30' },
+  { open: '08:00', close: '23:30' },
+  { open: '08:00', close: '23:30' },
+];
+
+// Franjas del día, en orden. Coinciden con los carteles de cada sección.
+export const DAYPARTS = [
+  { id: 'manana',   from: '08:00' },
+  { id: 'mediodia', from: '12:00' },
+  { id: 'tarde',    from: '15:00' },
+  { id: 'noche',    from: '19:00' },
+];
+
+// Nota real del Perfil de Google. Se actualiza a mano, con su fecha.
+export const GOOGLE = { rating: 4.6, count: 136, asOf: '2026-07-27', url: MAPS_PLACE, reviewUrl: MAPS_PLACE };
+
+// Favoritos del deli: id de MENU + foto nueva (h = alto de la variante de 480).
+export const FAVORITES = [
+  { id: 'ny-the-ruben-sandwich',     img: 'deli-ruben',          h: 720 },
+  { id: 'bg-candela-burger',         img: 'deli-candela-burger', h: 320 },
+  { id: 'ny-phili-cheese-steak',     img: 'deli-cheese-steak',   h: 320 },
+  { id: 'pn-grilled-chicken-panini', img: 'deli-chicken-panini', h: 320 },
+];
+
+// Mesa caliente por día de la semana (0 = dom), p. ej. { 3: [{ en: 'Beef stew', es: 'Carne guisada' }] }.
+// ⚠ La rellena el cliente. Vacío = se muestra el especial del día. NUNCA poner platos inventados.
+export const DAILY_MENU = {};
+
+// Cartas «Coffee now» / «Wine later». ⚠ Líneas y horas a confirmar con el cliente antes de publicar.
+export const DAY_NIGHT = [
+  { id: 'day', title: 'Coffee now', from: '08:00', to: '19:00', items: [
+    { en: 'Espresso & cortadito', es: 'Espresso y cortadito' },
+    { en: 'Cappuccino & latte',   es: 'Cappuccino y latte' },
+    { en: 'Fresh juices',         es: 'Jugos naturales' },
+  ] },
+  { id: 'night', title: 'Wine later', from: '19:00', to: 'close', items: [
+    { en: 'Red, white & rosé wine', es: 'Vino tinto, blanco y rosado' },
+    { en: 'By the glass or bottle', es: 'Por copa o por botella' },
+    { en: 'Cold beers',             es: 'Cervezas frías' },
+    { en: 'Coffee until close',     es: 'Café hasta el cierre' },
+  ] },
+];
