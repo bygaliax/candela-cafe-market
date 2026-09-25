@@ -2,6 +2,8 @@
 // Testeadas en tests/menu-render.test.mjs. Todo dato pasa por esc().
 import { DICT } from './i18n.js';
 import { esc } from './sections.js';
+import { waUrl } from './cart-core.js';
+import { PHONE } from './menu-data.js';
 
 const tx = (key, lang) => (DICT[key] && DICT[key][lang]) || key;
 const IMG = 'assets/img/';
@@ -77,3 +79,41 @@ export function renderChips(categories, parts, lang) {
   return groupByPart(categories, parts).flatMap(g => g.cats)
     .map(c => `<a class="chip" href="#${esc(c.id)}" data-cat="${esc(c.id)}">${esc(c.label[lang])}</a>`).join('');
 }
+
+/* ── buscador ─────────────────────────────────────────────── */
+
+/** Minúsculas, sin tildes y sin espacios sobrantes: «Café » → «cafe». */
+export const normalize = s => String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+
+/** Busca en nombre, descripción (EN y ES) y nombre de la categoría (EN y ES). Tienen que estar todas las palabras. */
+export function matches(item, cat, query) {
+  const q = normalize(query);
+  if (q.length < 2) return true;
+  const hay = [item.name, item.desc && item.desc.en, item.desc && item.desc.es, cat.label.en, cat.label.es]
+    .filter(Boolean).map(normalize).join(' | ');
+  return q.split(/\s+/).every(w => hay.includes(w));
+}
+
+/** Qué se ve con una búsqueda: platos, categorías, momentos, tarjetas anchas y cuántos platos. */
+export function filterMenu(categories, menu, query) {
+  const items = new Set(), cats = new Set(), parts = new Set(), wide = new Set();
+  for (const c of categories) {
+    const hits = (menu[c.id] || []).filter(i => matches(i, c, query));
+    if (!hits.length) continue;
+    hits.forEach(i => items.add(i.id));
+    cats.add(c.id);
+    parts.add(c.part);
+    const w = wideId(hits.filter(i => i.img));
+    if (w) wide.add(w);
+  }
+  return { items, cats, parts, wide, count: items.size };
+}
+
+/** Texto de la región viva: «1 plato», «12 platos» o «No lo encontramos.». */
+export function searchStatus(count, lang) {
+  if (count === 0) return tx('menu.search.none', lang);
+  return count === 1 ? tx('menu.search.one', lang) : tx('menu.search.many', lang).replace('{n}', String(count));
+}
+
+/** «¿Tienen …?» por WhatsApp, con lo que se buscó. */
+export const askUrl = (query, lang) => waUrl(PHONE, tx('menu.search.wa', lang).replace('{q}', query.trim()));

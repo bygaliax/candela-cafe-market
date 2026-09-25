@@ -133,6 +133,15 @@ export const DICT = {
   'mbar.label':        { en: 'Quick actions', es: 'Acciones rápidas' },
   'mbar.go':           { en: 'Directions', es: 'Cómo llegar' },
   'mbar.call':         { en: 'Call', es: 'Llamar' },
+
+  /* ============ carta «Carta de papel» (2026-09-24) ============ */
+  'menu.search.label': { en: 'Search the menu', es: 'Buscar en la carta' },
+  'menu.search.ph':    { en: 'Cortadito, burger, empanadas…', es: 'Cortadito, burger, empanadas…' },
+  'menu.search.one':   { en: '1 dish', es: '1 plato' },
+  'menu.search.many':  { en: '{n} dishes', es: '{n} platos' },
+  'menu.search.none':  { en: "We couldn't find that.", es: 'No lo encontramos.' },
+  'menu.search.ask':   { en: 'Ask us on WhatsApp', es: 'Pregúntanos por WhatsApp' },
+  'menu.search.wa':    { en: 'Hi Candela & Café! Do you have {q}?', es: '¡Hola Candela & Café! ¿Tienen {q}?' },
 };
 
 const KEY = 'candela-lang';
@@ -155,6 +164,7 @@ export function apply() {
   document.querySelectorAll('[data-i18n]').forEach(el => { const e = DICT[el.dataset.i18n]; if (e) el.textContent = e[lang]; });
   document.querySelectorAll('[data-i18n-alt]').forEach(el => { const e = DICT[el.dataset.i18nAlt]; if (e) el.alt = e[lang]; });
   document.querySelectorAll('[data-i18n-aria]').forEach(el => { const e = DICT[el.dataset.i18nAria]; if (e) el.setAttribute('aria-label', e[lang]); });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { const e = DICT[el.dataset.i18nPlaceholder]; if (e) el.placeholder = e[lang]; });
   document.querySelectorAll('.lang-toggle').forEach(b => {
     b.textContent = lang === 'en' ? 'ES' : 'EN';
     b.setAttribute('aria-label', DICT['lang.switch'][lang]);

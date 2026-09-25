@@ -29,7 +29,7 @@ test('La nota de Google del HTML (sin JS) es la de site-data', () => {
 
 test('i18n: toda clave usada existe en EN y en ES', () => {
   const keys = new Set();
-  for (const html of [INDEX, MENUP]) for (const m of html.matchAll(/data-i18n(?:-alt|-aria)?="([^"]+)"/g)) keys.add(m[1]);
+  for (const html of [INDEX, MENUP]) for (const m of html.matchAll(/data-i18n(?:-alt|-aria|-placeholder)?="([^"]+)"/g)) keys.add(m[1]);
   for (const f of readdirSync(new URL('../web/js/', import.meta.url))) {
     for (const m of read(`web/js/${f}`).matchAll(/\b(?:t|tx)\('([\w.-]+)'/g)) keys.add(m[1]);
   }
