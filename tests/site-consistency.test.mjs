@@ -1,8 +1,9 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, readdirSync } from 'node:fs';
+import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { DICT } from '../web/js/i18n.js';
-import { HOURS, GOOGLE } from '../web/js/site-data.js';
+import { HOURS, GOOGLE, FAVORITES } from '../web/js/site-data.js';
+import { findItem } from '../web/js/sections.js';
 
 const read = p => readFileSync(new URL(`../${p}`, import.meta.url), 'utf8');
 const INDEX = read('web/index.html'), MENUP = read('web/menu.html');
@@ -34,6 +35,21 @@ test('i18n: toda clave usada existe en EN y en ES', () => {
   }
   const missing = [...keys].filter(k => !DICT[k] || !DICT[k].en || !DICT[k].es);
   assert.deepEqual(missing, []);
+});
+
+test('Cada favorito existe en la carta y lleva la foto de ESE plato', () => {
+  // Emparejado verificado a ojo con las fotos del cliente (24-sep): D-1 es un Chopped Cheese, no un Philly.
+  const PHOTO_OF = {
+    'ny-the-ruben-sandwich': 'deli-ruben',
+    'bg-candela-burger': 'deli-candela-burger',
+    'ny-chopped-cheese': 'deli-chopped-cheese',
+    'pn-grilled-chicken-panini': 'deli-chicken-panini',
+  };
+  for (const f of FAVORITES) {
+    assert.ok(findItem(f.id), `${f.id} no está en MENU`);
+    assert.equal(f.img, PHOTO_OF[f.id], `${f.id} lleva la foto ${f.img}`);
+    assert.ok(existsSync(new URL(`../web/assets/img/${f.img}-480.webp`, import.meta.url)), `falta ${f.img}-480.webp`);
+  }
 });
 
 test('La portada ya no carga Swiper ni tiene reseñas de ejemplo', () => {

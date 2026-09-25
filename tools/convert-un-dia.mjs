@@ -15,7 +15,7 @@ const IMAGES = {
   'mediodia-mesa-caliente': 'descargas-24-sep/01 (7).png',
   'deli-ruben':             'zip-18-sep/A-1.jpg',
   'deli-candela-burger':    'zip-18-sep/E-1.jpg',
-  'deli-cheese-steak':      'zip-18-sep/D-1.jpg',
+  'deli-chopped-cheese':    'zip-18-sep/D-1.jpg',
   'deli-chicken-panini':    'zip-18-sep/C-1.jpg',
   'noche-neon':             'descargas-24-sep/WhatsApp Image 2026-09-24 at 14.13.31.jpeg',
   'lugar-neon-sub':         'descargas-24-sep/01 (13).png',

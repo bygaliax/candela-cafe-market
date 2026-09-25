@@ -15,16 +15,18 @@ initNav();
 const $ = id => document.getElementById(id);
 
 /* ── «Ahora en Candela», horario y mesa caliente (hora de Miami) ── */
+// Solo se escribe si cambia: #nowState es una región viva y reescribirla la vuelve a anunciar.
+const lastHTML = new Map();
+const setHTML = (el, html) => { if (lastHTML.get(el) !== html) { el.innerHTML = html; lastHTML.set(el, html); } };
 function updateNow() {
   const lang = getLang();
   const st = statusAt(new Date(), HOURS, DAYPARTS);
   const { cls, text } = renderStatus(st, lang);
   const bar = $('now');
-  bar.classList.remove('is-open', 'is-soon', 'is-closed');
-  bar.classList.add(cls);
-  $('nowState').textContent = text;
-  $('hoursBody').innerHTML = renderHours(HOURS, st.day, lang);
-  $('board').innerHTML = renderBoard(DAILY_MENU, st.day, lang);
+  if (!bar.classList.contains(cls)) { bar.classList.remove('is-open', 'is-soon', 'is-closed'); bar.classList.add(cls); }
+  if ($('nowState').textContent !== text) $('nowState').textContent = text;
+  setHTML($('hoursBody'), renderHours(HOURS, st.day, lang));
+  setHTML($('board'), renderBoard(DAILY_MENU, st.day, lang));
 }
 
 /* ── contenido que cambia con el idioma ───────────────────── */
@@ -40,6 +42,20 @@ function renderAll() {
 }
 renderAll();
 document.addEventListener('langchange', renderAll);
+
+/* ── anclas al llegar desde otra página (menu.html → #visit) ──
+   Chrome corta el scroll suave al fragmento mientras la página carga y cambia de alto;
+   se re-ancla sin animación en cada punto de carga, salvo que el usuario ya se haya movido. */
+let userMoved = false;
+['wheel', 'touchstart', 'keydown'].forEach(ev => addEventListener(ev, () => { userMoved = true; }, { once: true, passive: true }));
+function reanchor() {
+  if (userMoved || !location.hash) return;
+  const target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+  if (target) target.scrollIntoView({ behavior: 'instant', block: 'start' });
+}
+reanchor();
+addEventListener('load', () => { reanchor(); setTimeout(reanchor, 300); });
+if (document.fonts) document.fonts.ready.then(reanchor);
 setInterval(() => { if (!document.hidden) updateNow(); }, 60000);
 document.addEventListener('visibilitychange', () => { if (!document.hidden) updateNow(); });
 
@@ -107,6 +123,7 @@ $('resGo').addEventListener('click', () => {
 /* ── hero + entradas al hacer scroll (GSAP es deferred) ───── */
 addEventListener('DOMContentLoaded', () => {
   initHero();
+  reanchor();
   const reveals = document.querySelectorAll('.reveal');
   if (!window.gsap || !window.ScrollTrigger || matchMedia('(prefers-reduced-motion: reduce)').matches) {
     reveals.forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });

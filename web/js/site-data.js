@@ -33,7 +33,7 @@ export const GOOGLE = { rating: 4.6, count: 142, asOf: '2026-09-24', url: MAPS_L
 export const FAVORITES = [
   { id: 'ny-the-ruben-sandwich',     img: 'deli-ruben',          h: 720 },
   { id: 'bg-candela-burger',         img: 'deli-candela-burger', h: 320 },
-  { id: 'ny-phili-cheese-steak',     img: 'deli-cheese-steak',   h: 320 },
+  { id: 'ny-chopped-cheese',         img: 'deli-chopped-cheese', h: 320 },
   { id: 'pn-grilled-chicken-panini', img: 'deli-chicken-panini', h: 320 },
 ];
 
