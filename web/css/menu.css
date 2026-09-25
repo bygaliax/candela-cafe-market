@@ -2,15 +2,7 @@
    Crema, carteles en Anton y precios a mano en rojo. Complementa base.css. */
 html{scroll-padding-top:var(--menu-top,128px)}
 .page-menu{--precio:#C42A1F;--verde-txt:#3F7021;--raya:#d8c9b4;background:var(--claro);color:var(--ink)}
-.page-menu :focus-visible{outline:3px solid var(--ink);outline-offset:2px}
-.page-menu .nav :focus-visible,.page-menu .footer :focus-visible{outline-color:var(--verde)}
-
-/* nav negra y compacta desde arriba: la transparente no se ve sobre crema */
-.page-menu .nav{background:rgba(13,13,13,.97)}
-.page-menu .nav-inner{padding-top:12px;padding-bottom:12px}
-/* con 40 px de margen, a 320 el nombre se parte en dos líneas y la nav crece; el selector tiene que ganar
-   también a `.nav.is-scrolled .nav-inner` de base.css, que se aplica en cuanto se hace scroll */
-@media(max-width:600px){.page-menu .nav .nav-inner,.page-menu .nav.is-scrolled .nav-inner{padding-left:20px;padding-right:20px}}
+.page-menu .footer{margin-top:0}
 
 /* cabecera */
 .menu-head{padding:112px 0 22px}

@@ -56,3 +56,19 @@ test('La portada ya no carga Swiper ni tiene reseñas de ejemplo', () => {
   assert.doesNotMatch(INDEX, /swiper/i);
   assert.doesNotMatch(INDEX, /Jonathan R\.|Carla M\.|Luis D\./);
 });
+
+test('Barra y pie nuevos en la portada y en la carta', () => {
+  for (const [name, html] of [['index', INDEX], ['menu', MENUP]]) {
+    assert.match(html, /<div class="nav-menu" id="navMenu"[^>]*hidden>/, `${name}: menú de la hamburguesa`);
+    assert.match(html, /aria-controls="navMenu"/, `${name}: la hamburguesa lo controla`);
+    assert.equal(html.split('class="lang-toggle"').length - 1, 2, `${name}: selector en la barra y en el menú`);
+    assert.match(html, /class="btn btn-p nav-go" href="https:\/\/www\.google\.com\/maps\/dir\//, `${name}: «Cómo llegar» en la barra`);
+    assert.doesNotMatch(html, /data-i18n="nav\.order"/, `${name}: la barra ya no lleva «Order Now»`);
+    assert.match(html, /<p class="footer-tag">Born in NY, raised Dominican,<br>served in Miami\.<\/p>/, `${name}: frase en el pie`);
+    assert.match(html, /id="footWa"/, `${name}: WhatsApp en el pie`);
+  }
+});
+
+test('En español, el enlace de la carta dice «Carta»', () => {
+  assert.equal(DICT['nav.menu'].es, 'Carta');
+});

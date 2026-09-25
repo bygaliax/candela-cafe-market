@@ -34,21 +34,35 @@
 <body class="page-menu">
 
 <nav class="nav" id="nav" aria-label="Main navigation" data-i18n-aria="nav.main"><div class="nav-inner">
-  <a class="nav-logo" href="index.html">
-    <img src="assets/img/logo-96.webp" alt="Candela &amp; Café logo" width="46" height="46">
-    <b>CANDELA &amp; CAFÉ</b>
-  </a>
-  <div class="nav-links" id="navLinks">
-    <a href="menu.html" data-i18n="nav.menu">Menu</a>
+  <a class="nav-logo" href="./"><img src="assets/img/logo-96.webp" alt="" width="46" height="46"><b>Candela &amp; Café</b></a>
+  <div class="nav-links">
+    <a href="menu.html" aria-current="page" data-i18n="nav.menu">Menu</a>
     <a href="index.html#market" data-i18n="nav.market">Market</a>
     <a href="index.html#noche" data-i18n="nav.nights">Nights</a>
     <a href="index.html#visit" data-i18n="nav.visit">Visit Us</a>
-    <button class="lang-toggle" type="button">ES</button>
   </div>
-  <button class="nav-burger" id="burger" type="button" aria-label="Open menu" data-i18n-aria="nav.burger" aria-expanded="false" aria-controls="navLinks">
-    <span></span><span></span><span></span>
-  </button>
+  <button class="lang-toggle" type="button"><span data-l="en">EN</span> / <span data-l="es">ES</span></button>
+  <a class="btn btn-p nav-go" href="https://www.google.com/maps/dir/?api=1&amp;destination=507+N+Miami+Ave%2C+Miami%2C+FL+33136" target="_blank" rel="noopener" data-i18n="visit.directions">Get directions</a>
+  <button class="nav-burger" id="burger" type="button" aria-label="Open menu" data-i18n-aria="nav.burger" aria-expanded="false" aria-controls="navMenu"><span></span><span></span><span></span></button>
 </div></nav>
+<div class="nav-menu" id="navMenu" role="dialog" aria-modal="true" aria-label="Site menu" data-i18n-aria="nav.dialog" hidden>
+  <div class="nav-menu-top">
+    <a class="nav-logo" href="./"><img src="assets/img/logo-96.webp" alt="" width="46" height="46"><b>Candela &amp; Café</b></a>
+    <button class="nav-x" id="navClose" type="button" aria-label="Close menu" data-i18n-aria="nav.close">✕</button>
+  </div>
+  <nav class="nav-menu-links" aria-label="Sections" data-i18n-aria="nav.sections">
+    <a href="menu.html"><span data-i18n="nav.menu">Menu</span><i aria-hidden="true">→</i></a>
+    <a href="index.html#market"><span data-i18n="nav.market">Market</span><i aria-hidden="true">→</i></a>
+    <a href="index.html#noche"><span data-i18n="nav.nights">Nights</span><i aria-hidden="true">→</i></a>
+    <a href="index.html#visit"><span data-i18n="nav.visit">Visit Us</span><i aria-hidden="true">→</i></a>
+  </nav>
+  <div class="nav-menu-bot">
+    <p class="status is-open" id="navStatus"><i class="dot" aria-hidden="true"></i><span>Open daily from 8 am</span></p>
+    <a class="btn btn-p" href="https://www.google.com/maps/dir/?api=1&amp;destination=507+N+Miami+Ave%2C+Miami%2C+FL+33136" target="_blank" rel="noopener" data-i18n="visit.directions">Get directions</a>
+    <div class="nav-menu-two"><a class="btn btn-ghost" href="tel:+17862547577" data-i18n="mbar.call">Call</a><a class="btn btn-ghost" id="navWa" href="https://wa.me/17862547577" target="_blank" rel="noopener">WhatsApp</a></div>
+    <button class="lang-toggle" type="button"><span data-l="en">EN</span> / <span data-l="es">ES</span></button>
+  </div>
+</div>
 
 <header class="menu-head">
   <div class="wrap">
@@ -91,19 +105,27 @@
   </footer>
 </aside>
 
-<footer class="footer">
-  <div class="wrap"><div class="footer-grid">
-    <div><div class="brand"><img src="assets/img/logo-96.webp" alt="Candela &amp; Café Market logo" width="50" height="50"><b>CANDELA &amp; CAFÉ</b></div>
-      <p style="margin-top:14px;max-width:38ch" data-i18n="footer.tag">NY Deli · Market &amp; Café — made with candela in Downtown Miami.</p></div>
-    <nav aria-label="Footer navigation" data-i18n-aria="footer.nav"><h4 data-i18n="footer.explore">Explore</h4>
-      <a href="menu.html" data-i18n="nav.menu">Menu</a><a href="index.html#market" data-i18n="nav.market">Market</a><a href="index.html#noche" data-i18n="nav.nights">Nights</a><a href="index.html#visit" data-i18n="nav.visit">Visit Us</a></nav>
-    <div><h4 data-i18n="footer.orders">Orders &amp; Social</h4>
+<footer class="footer"><div class="wrap">
+  <div class="footer-grid">
+    <div>
+      <a class="brand" href="./"><img src="assets/img/logo-96.webp" alt="" width="46" height="46"><b>Candela &amp; Café</b></a>
+      <p class="footer-tag">Born in NY, raised Dominican,<br>served in Miami.</p>
+    </div>
+    <nav aria-label="Footer navigation" data-i18n-aria="footer.nav">
+      <h2 class="footer-h" data-i18n="footer.explore">Explore</h2>
+      <a href="menu.html" data-i18n="nav.menu">Menu</a><a href="index.html#market" data-i18n="nav.market">Market</a><a href="index.html#noche" data-i18n="nav.nights">Nights</a><a href="index.html#visit" data-i18n="nav.visit">Visit Us</a>
+    </nav>
+    <div>
+      <h2 class="footer-h" data-i18n="footer.orders">Orders &amp; social</h2>
+      <a id="footWa" href="https://wa.me/17862547577" target="_blank" rel="noopener">WhatsApp</a>
       <a href="https://www.ubereats.com/store/candela-y-cafe-market/oa35cIfwWWuJm-ND4o9G1g" target="_blank" rel="noopener">Uber Eats</a>
       <a href="https://www.doordash.com/store/candela-y-caf%C3%A9-market-miami-26069377/" target="_blank" rel="noopener">DoorDash</a>
       <a href="https://www.instagram.com/candelaycafe/" target="_blank" rel="noopener">@candelaycafe</a>
-      <a href="tel:+17862547577">+1 (786) 254-7577</a></div>
-  </div><div class="foot-bottom"><span>&copy; 2026 Candela &amp; Café Market</span><span>507 N Miami Ave, Miami FL</span></div></div>
-</footer>
+      <a href="tel:+17862547577">+1 (786) 254-7577</a>
+    </div>
+  </div>
+  <div class="foot-bottom"><span>&copy; 2026 Candela &amp; Café Market</span><span>507 N Miami Ave, Miami, FL 33136</span></div>
+</div></footer>
 
 <script type="module" src="js/menu.js"></script>
 </body>

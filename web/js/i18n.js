@@ -1,9 +1,8 @@
 export const DICT = {
   /* ---- nav ---- */
-  'nav.menu':      { en: 'Menu',        es: 'Menú' },
+  'nav.menu':      { en: 'Menu',        es: 'Carta' },
   'nav.market':    { en: 'Market',      es: 'Market' },
   'nav.visit':     { en: 'Visit Us',    es: 'Visítanos' },
-  'nav.order':     { en: 'Order Now',   es: 'Ordena Ya' },
 
   /* ---- hero ---- */
   'hero.sub':      { en: 'Enjoy our special mixed grill today.',
@@ -17,8 +16,6 @@ export const DICT = {
   'visit.directions': { en: 'Get directions', es: 'Cómo llegar' },
 
   /* ---- footer ---- */
-  'footer.tag':     { en: 'NY Deli · Market & Café — made with candela in Downtown Miami.',
-                      es: 'NY Deli · Market & Café — hecho con candela en Downtown Miami.' },
   'footer.delivery': { en: 'Also on', es: 'También en' },
 
   /* ---- menú page / carrito ---- */
@@ -55,7 +52,7 @@ export const DICT = {
   'res.greeting':  { en: 'Hi Candela & Café! I\'d like to reserve for live music', es: '¡Hola Candela & Café! Quiero reservar para la música en vivo' },
   'reviews.write': { en: 'Write a review', es: 'Escribe tu reseña' },
   'footer.explore':{ en: 'Explore', es: 'Explora' },
-  'footer.orders': { en: 'Orders & Social', es: 'Pedidos & Redes' },
+  'footer.orders': { en: 'Orders & social', es: 'Pedidos y redes' },
 
   /* ============ «Un día en Candela» (2026-09-24) ============ */
   'nav.nights':        { en: 'Nights', es: 'Noches' },
@@ -149,6 +146,9 @@ export const DICT = {
 
   /* ============ portada en blanco (2026-09-25) ============ */
   'home.dom.today':    { en: 'Today at the hot table:', es: 'Hoy en la mesa caliente:' },
+  'nav.dialog':        { en: 'Site menu', es: 'Menú del sitio' },
+  'nav.close':         { en: 'Close menu', es: 'Cerrar menú' },
+  'nav.sections':      { en: 'Sections', es: 'Secciones' },
 };
 
 const KEY = 'candela-lang';
@@ -173,7 +173,7 @@ export function apply() {
   document.querySelectorAll('[data-i18n-aria]').forEach(el => { const e = DICT[el.dataset.i18nAria]; if (e) el.setAttribute('aria-label', e[lang]); });
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { const e = DICT[el.dataset.i18nPlaceholder]; if (e) el.placeholder = e[lang]; });
   document.querySelectorAll('.lang-toggle').forEach(b => {
-    b.textContent = lang === 'en' ? 'ES' : 'EN';
+    b.querySelectorAll('[data-l]').forEach(s => s.classList.toggle('is-on', s.dataset.l === lang));
     b.setAttribute('aria-label', DICT['lang.switch'][lang]);
     b.setAttribute('lang', lang === 'en' ? 'es' : 'en');
   });
