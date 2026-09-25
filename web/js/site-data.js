@@ -3,7 +3,6 @@
 
 export const ADDRESS = { street: '507 N Miami Ave', city: 'Downtown Miami, FL 33136' };
 export const MAPS_DIRECTIONS = 'https://www.google.com/maps/dir/?api=1&destination=507+N+Miami+Ave%2C+Miami%2C+FL+33136';
-export const MAPS_PLACE = 'https://www.google.com/maps/search/?api=1&query=Candela+y+Caf%C3%A9+Market%2C+507+N+Miami+Ave%2C+Miami%2C+FL';
 
 // 0 = domingo … 6 = sábado. null = cerrado. Sin cierres después de medianoche.
 export const HOURS = [
@@ -24,8 +23,11 @@ export const DAYPARTS = [
   { id: 'noche',    from: '19:00' },
 ];
 
-// Nota real del Perfil de Google. Se actualiza a mano, con su fecha.
-export const GOOGLE = { rating: 4.6, count: 136, asOf: '2026-07-27', url: MAPS_PLACE, reviewUrl: MAPS_PLACE };
+// Ficha exacta de Google Maps (CID del perfil «Candela y Café Market»).
+export const MAPS_LISTING = 'https://www.google.com/maps?cid=6497021305409967970';
+
+// Nota real del Perfil de Google. Se actualiza a mano, con su fecha (leída en Google Maps).
+export const GOOGLE = { rating: 4.6, count: 142, asOf: '2026-09-24', url: MAPS_LISTING, reviewUrl: MAPS_LISTING };
 
 // Favoritos del deli: id de MENU + foto nueva (h = alto de la variante de 480).
 export const FAVORITES = [
