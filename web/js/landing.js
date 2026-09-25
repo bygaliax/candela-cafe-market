@@ -50,7 +50,8 @@ let userMoved = false;
 ['wheel', 'touchstart', 'keydown'].forEach(ev => addEventListener(ev, () => { userMoved = true; }, { once: true, passive: true }));
 function reanchor() {
   if (userMoved || !location.hash) return;
-  const target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+  let target = null;
+  try { target = document.getElementById(decodeURIComponent(location.hash.slice(1))); } catch { return; } // hash mal codificado
   if (target) target.scrollIntoView({ behavior: 'instant', block: 'start' });
 }
 reanchor();

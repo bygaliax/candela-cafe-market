@@ -25,9 +25,9 @@ export function renderFavorites(favs, lang) {
   return favs.map(f => {
     const hit = findItem(f.id);
     if (!hit) return '';
-    const { cat, item } = hit;
+    const { item } = hit;
     const src = `assets/img/${esc(f.img)}`;
-    return `<a class="fav" href="menu.html#${esc(cat)}">`
+    return `<a class="fav" href="menu.html#${esc(item.id)}">`
       + `<span class="fav-ph"><img src="${src}-480.webp" srcset="${src}-480.webp 480w, ${src}-960.webp 960w" sizes="(max-width:768px) 45vw, 280px" alt="${esc(item.name)}" loading="lazy" width="480" height="${Number(f.h)}"></span>`
       + `<span class="fav-n">${esc(item.name)}</span>`
       + `<span class="fav-d">${esc(item.desc ? item.desc[lang] : '')}</span>`

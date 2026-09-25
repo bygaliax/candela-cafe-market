@@ -16,12 +16,12 @@ test('findItem encuentra el plato y su categoría', () => {
   assert.equal(findItem('no-existe'), null);
 });
 
-test('renderFavorites: 4 tarjetas con nombre, precio real y enlace a su categoría', () => {
+test('renderFavorites: 4 tarjetas con nombre, precio real y enlace a su plato en la carta', () => {
   const html = renderFavorites(FAVORITES, 'es');
   assert.equal(count(html, 'class="fav"'), 4);
   assert.match(html, /The Ruben Sandwich/);
   assert.match(html, /\$15\.49/);
-  assert.match(html, /href="menu\.html#ny-signature"/);
+  assert.match(html, /href="menu\.html#ny-the-ruben-sandwich"/);
   assert.match(html, /deli-ruben-480\.webp/);
   assert.match(html, /Pastrami, queso suizo/);
 });
