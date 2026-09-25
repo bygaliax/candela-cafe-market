@@ -60,7 +60,7 @@ h1.display{font-family:var(--disp);line-height:1.02}
 .lang-toggle:hover{background:var(--verde);color:#10210a}
 .nav-burger{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:44px;height:44px}
 .nav-burger span{width:24px;height:2px;background:var(--crema)}
-@media(max-width:860px){
+@media(max-width:1024px){
   .nav-links{display:none;position:fixed;inset:0;background:var(--negro);flex-direction:column;justify-content:center;font-size:1.1rem;gap:34px}
   .nav-links.open{display:flex}
   .nav-burger{display:flex;z-index:101}
@@ -77,4 +77,4 @@ h1.display{font-family:var(--disp);line-height:1.02}
 .foot-bottom{margin-top:40px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:.82rem}
 /* ============ MOTION ============ */
 .js .reveal{opacity:0;transform:translateY(26px)}  /* solo se oculta si hay JS (no-JS = visible) */
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.js .reveal{opacity:1;transform:none}*,*::before,*::after{animation:none!important;transition:none!important}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.js .reveal{opacity:1;transform:none}.js .hero-copy > *{opacity:1}*,*::before,*::after{animation:none!important;transition:none!important}}

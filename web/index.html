@@ -19,9 +19,9 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Anton&family=Architects+Daughter&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Architects+Daughter&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Architects+Daughter&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap"></noscript>
-<link rel="preload" as="image" href="assets/img/hero-fire-1440.webp"
-      imagesrcset="assets/img/hero-fire-960.webp 960w, assets/img/hero-fire-1440.webp 1440w"
-      imagesizes="100vw" fetchpriority="high">
+<link rel="preload" as="image" href="assets/img/hero-grill.webp"
+      imagesrcset="assets/img/hero-grill-480.webp 480w, assets/img/hero-grill.webp 582w"
+      imagesizes="(max-width:700px) 90vw, 740px" fetchpriority="high">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/landing.css">
 <link rel="stylesheet" href="css/sections.css">
@@ -63,12 +63,12 @@
 <header class="hero" id="hero">
   <img class="hero-fire" src="assets/img/hero-fire-1440.webp"
        srcset="assets/img/hero-fire-960.webp 960w, assets/img/hero-fire-1440.webp 1440w"
-       sizes="100vw" alt="" fetchpriority="high" aria-hidden="true">
+       sizes="100vw" alt="" aria-hidden="true">
   <img class="dec dec-chips" src="assets/img/hero-chips-b.webp" alt="" width="185" height="213" aria-hidden="true">
-  <img class="dec dec-drink" src="assets/img/hero-drink.webp" alt="" width="330" height="484" aria-hidden="true">
+  <picture><source media="(max-width:700px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><img class="dec dec-drink" src="assets/img/hero-drink.webp" alt="" width="330" height="484" aria-hidden="true"></picture>
   <img class="dec dec-leaf-a" src="assets/img/hero-leaf-a.webp" alt="" width="70" height="102" aria-hidden="true">
   <img class="dec dec-leaf-b" src="assets/img/hero-leaf-b.webp" alt="" width="64" height="70" aria-hidden="true">
-  <img class="dec dec-ringburger" src="assets/img/hero-burger-ring.webp" alt="" width="283" height="330" aria-hidden="true">
+  <picture><source media="(max-width:700px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><img class="dec dec-ringburger" src="assets/img/hero-burger-ring.webp" alt="" width="283" height="330" aria-hidden="true"></picture>
   <img class="dec dec-burger" src="assets/img/hero-burger.webp" alt="" width="307" height="334" aria-hidden="true">
   <canvas class="hero-sparks" id="heroSparks" aria-hidden="true"></canvas>
   <div class="hero-copy">
@@ -82,7 +82,7 @@
   <div class="hero-platter" aria-hidden="true">
     <div class="platter-disc" id="platterDisc">
       <img class="grill-t" src="assets/img/hero-grill.webp" srcset="assets/img/hero-grill-480.webp 480w, assets/img/hero-grill.webp 582w"
-           sizes="(max-width:700px) 90vw, 740px" alt="" width="582" height="313">
+           sizes="(max-width:700px) 90vw, 740px" alt="" width="582" height="313" fetchpriority="high">
       <img class="grill-b" src="assets/img/hero-grill.webp" srcset="assets/img/hero-grill-480.webp 480w, assets/img/hero-grill.webp 582w"
            sizes="(max-width:700px) 90vw, 740px" alt="" width="582" height="313">
     </div>

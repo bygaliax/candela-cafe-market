@@ -26,8 +26,12 @@
   background:linear-gradient(180deg,#FFB546 0%,#FF7A33 45%,#ED3B2F 100%);
   transform:translateY(101%);transition:transform .35s var(--ease)}
 .hbtn:active{transform:scale(.97)}
-.hbtn-terra{background:#D4542C}
-.hbtn-green{background:#6CB41C}
+.hbtn-terra{background:#C24A22}                 /* blanco = 4,9:1 (antes 4,1:1) */
+.hbtn-green{background:#6CB41C;color:#10210a}   /* texto oscuro = 6,4:1 (antes 2,6:1) */
+@media(hover:hover) and (pointer:fine){.hbtn-green:hover{color:#fff}}
+/* el texto del hero arranca oculto SOLO con JS; GSAP lo muestra. Red de seguridad a los 2,5 s */
+.js .hero-copy > *{opacity:0;animation:heroShow 0s 2.5s forwards}
+@keyframes heroShow{to{opacity:1}}
 @media(hover:hover) and (pointer:fine){
   .hbtn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(255,120,40,.5)}
   .hbtn:hover::before{transform:translateY(0)}

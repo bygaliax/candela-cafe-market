@@ -1,14 +1,18 @@
 // Hero (diseño aprobado el 2026-06-10): entrada del texto, flotación, plato giratorio,
-// parallax y chispas. Movido desde landing.js; los arreglos (#13 #21) llegan en la Task 6.
+// parallax y chispas. Se pausa fuera de pantalla (#21) y el texto no parpadea (#13).
 export function initHero() {
   const hero = document.getElementById('hero');
   if (!hero) return;
+  const copy = hero.querySelectorAll('.hero-copy > *');
+  const show = () => copy.forEach(el => { el.style.opacity = 1; });
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) { show(); return; }
   sparks(hero);
-  if (!window.gsap || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  gsap.from('.hero-copy > *', { y: 34, opacity: 0, stagger: .1, duration: .9, ease: 'power3.out' });
-  [['.dec-chips', 12, 3.6], ['.dec-leaf-a', 10, 2.8], ['.dec-leaf-b', 9, 3.2]].forEach(([sel, amp, dur]) =>
-    gsap.to(sel, { y: -amp, duration: dur, yoyo: true, repeat: -1, ease: 'sine.inOut' }));
-  gsap.to('#platterDisc', { rotation: 360, duration: 48, repeat: -1, ease: 'none' });
+  if (!window.gsap) { show(); return; }
+  gsap.fromTo(copy, { y: 34, opacity: 0 }, { y: 0, opacity: 1, stagger: .1, duration: .9, ease: 'power3.out' }); // #13
+  const loops = [['.dec-chips', 12, 3.6], ['.dec-leaf-a', 10, 2.8], ['.dec-leaf-b', 9, 3.2]]
+    .map(([sel, amp, dur]) => gsap.to(sel, { y: -amp, duration: dur, yoyo: true, repeat: -1, ease: 'sine.inOut' }));
+  loops.push(gsap.to('#platterDisc', { rotation: 360, duration: 48, repeat: -1, ease: 'none' }));
+  new IntersectionObserver(([e]) => loops.forEach(tw => (e.isIntersecting ? tw.resume() : tw.pause()))).observe(hero); // #21
   parallax(hero);
 }
 
@@ -44,7 +48,8 @@ function sparks(hero) {
   fit(); addEventListener('resize', fit, { passive: true });
   const P = [], COLORS = ['255,155,64', '255,90,60', '255,210,122'];
   let lx = -1, ly = -1, raf = 0, visible = true;
-  new IntersectionObserver(en => { visible = en[0].isIntersecting; if (visible && !raf) raf = requestAnimationFrame(tick); }).observe(hero);
+  const kick = () => { if (!raf && visible) raf = requestAnimationFrame(tick); };
+  new IntersectionObserver(en => { visible = en[0].isIntersecting; if (visible) kick(); }).observe(hero);
   hero.addEventListener('mousemove', e => {
     const r = hero.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
     if (lx < 0 || Math.hypot(x - lx, y - ly) > 13) {
@@ -53,6 +58,7 @@ function sparks(hero) {
         x, y, vx: (Math.random() - .5) * 1.1, vy: -.4 - Math.random() * 1.1,
         r: 1.2 + Math.random() * 2.2, a: 1, d: .012 + Math.random() * .02, c: COLORS[Math.random() * 3 | 0],
       });
+      kick();
     }
   }, { passive: true });
   document.querySelectorAll('.hbtn').forEach(btn => {
@@ -66,6 +72,7 @@ function sparks(hero) {
           vx: (Math.random() - .5) * .7, vy: -.5 - Math.random() * .8,
           r: .8 + Math.random() * 1.3, a: 1, d: .022 + Math.random() * .025, c: COLORS[Math.random() * 3 | 0],
         });
+        kick();
       }, 150);
     });
     btn.addEventListener('mouseleave', () => clearInterval(iv));
@@ -81,7 +88,6 @@ function sparks(hero) {
       g.addColorStop(0, `rgba(${p.c},${p.a})`); g.addColorStop(1, `rgba(${p.c},0)`);
       ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 3, 0, 7); ctx.fill();
     }
-    if (visible) raf = requestAnimationFrame(tick);
+    if (visible && P.length) raf = requestAnimationFrame(tick); else ctx.clearRect(0, 0, W, H);
   }
-  raf = requestAnimationFrame(tick);
 }
