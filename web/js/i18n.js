@@ -8,6 +8,7 @@ export const DICT = {
   'visit.kicker':   { en: 'Visit Us', es: 'Visítanos' },
   'visit.hours.title': { en: 'Hours', es: 'Horario' },
   'visit.directions': { en: 'Get directions', es: 'Cómo llegar' },
+  'visit.map':      { en: 'Map: Candela & Café', es: 'Mapa: Candela & Café' },
 
   /* ---- menú page / carrito ---- */
   'menu.title':     { en: 'The menu.', es: 'La carta.' },
@@ -135,6 +136,8 @@ export function setLang(lang) {
   apply();
 }
 export function t(key) { const e = DICT[key]; return e ? e[getLang()] : key; }
+/** Nombre accesible del selector: empieza por el texto que se ve («EN / ES»), para el control por voz (WCAG 2.5.3). */
+export const langToggleLabel = lang => `EN / ES · ${DICT['lang.switch'][lang]}`;
 
 export function apply() {
   const lang = getLang();
@@ -143,9 +146,10 @@ export function apply() {
   document.querySelectorAll('[data-i18n-alt]').forEach(el => { const e = DICT[el.dataset.i18nAlt]; if (e) el.alt = e[lang]; });
   document.querySelectorAll('[data-i18n-aria]').forEach(el => { const e = DICT[el.dataset.i18nAria]; if (e) el.setAttribute('aria-label', e[lang]); });
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { const e = DICT[el.dataset.i18nPlaceholder]; if (e) el.placeholder = e[lang]; });
+  document.querySelectorAll('[data-i18n-title]').forEach(el => { const e = DICT[el.dataset.i18nTitle]; if (e) el.title = e[lang]; });
   document.querySelectorAll('.lang-toggle').forEach(b => {
     b.querySelectorAll('[data-l]').forEach(s => s.classList.toggle('is-on', s.dataset.l === lang));
-    b.setAttribute('aria-label', DICT['lang.switch'][lang]);
+    b.setAttribute('aria-label', langToggleLabel(lang));
     b.setAttribute('lang', lang === 'en' ? 'es' : 'en');
   });
   document.dispatchEvent(new CustomEvent('langchange', { detail: lang }));

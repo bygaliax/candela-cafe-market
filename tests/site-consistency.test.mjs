@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
-import { DICT } from '../web/js/i18n.js';
+import { DICT, langToggleLabel } from '../web/js/i18n.js';
 import { HOURS, GOOGLE, FAVORITES } from '../web/js/site-data.js';
 import { findItem } from '../web/js/sections.js';
 
@@ -33,7 +33,7 @@ test('La nota de Google del HTML (sin JS) es la de site-data', () => {
 
 test('i18n: toda clave usada existe en EN y en ES', () => {
   const keys = new Set();
-  for (const html of [INDEX, MENUP]) for (const m of html.matchAll(/data-i18n(?:-alt|-aria|-placeholder)?="([^"]+)"/g)) keys.add(m[1]);
+  for (const html of [INDEX, MENUP]) for (const m of html.matchAll(/data-i18n(?:-alt|-aria|-placeholder|-title)?="([^"]+)"/g)) keys.add(m[1]);
   for (const f of readdirSync(new URL('../web/js/', import.meta.url))) {
     for (const m of read(`web/js/${f}`).matchAll(/\b(?:t|tx)\('([\w.-]+)'/g)) keys.add(m[1]);
   }
@@ -52,7 +52,8 @@ test('Cada favorito existe en la carta y lleva la foto de ESE plato', () => {
   for (const f of FAVORITES) {
     assert.ok(findItem(f.id), `${f.id} no está en MENU`);
     assert.equal(f.img, PHOTO_OF[f.id], `${f.id} lleva la foto ${f.img}`);
-    assert.ok(existsSync(new URL(`../web/assets/img/${f.img}-480.webp`, import.meta.url)), `falta ${f.img}-480.webp`);
+    for (const w of [480, 960]) // renderFavorites pide las dos en el srcset
+      assert.ok(existsSync(new URL(`../web/assets/img/${f.img}-${w}.webp`, import.meta.url)), `falta ${f.img}-${w}.webp`);
   }
 });
 
@@ -112,7 +113,7 @@ test('No quedan imágenes que no use nadie', () => {
 
 test('Toda clave de i18n se usa en alguna página o módulo', () => {
   const used = new Set();
-  for (const m of (INDEX + MENUP).matchAll(/data-i18n(?:-alt|-aria|-placeholder)?="([^"]+)"/g)) used.add(m[1]);
+  for (const m of (INDEX + MENUP).matchAll(/data-i18n(?:-alt|-aria|-placeholder|-title)?="([^"]+)"/g)) used.add(m[1]);
   for (const m of SOURCES.matchAll(/\b(?:t|tx)\('([\w.-]+)'|DICT\['([\w.-]+)'\]/g)) used.add(m[1] || m[2]);
   assert.deepEqual(Object.keys(DICT).filter(k => !used.has(k)), []);
 });
@@ -127,4 +128,13 @@ test('Las fuentes se sirven desde el propio sitio (sin Google Fonts) y existen',
   assert.deepEqual(files.sort(), ['anton-latin.woff2', 'architects-daughter-latin.woff2', 'dm-sans-latin.woff2']);
   for (const f of files) assert.ok(existsSync(new URL(`../web/assets/fonts/${f}`, import.meta.url)), `falta ${f}`);
   assert.equal(css.match(/font-display:swap/g).length, 3);
+});
+
+test('El título del mapa pasa por i18n', () => {
+  assert.match(INDEX, /<iframe class="map"[^>]*data-i18n-title="visit.map"/);
+});
+
+test('El selector de idioma lleva en su nombre accesible el texto que se ve (WCAG 2.5.3)', () => {
+  assert.equal(langToggleLabel('en'), 'EN / ES · Ver en español');
+  assert.equal(langToggleLabel('es'), 'EN / ES · View in English');
 });
