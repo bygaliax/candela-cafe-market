@@ -30,8 +30,6 @@ export const DICT = {
                       es: 'Este menú necesita JavaScript. Llámanos al +1 (786) 254-7577 — 507 N Miami Ave.' },
 
   /* ============ claves del rediseño (2026-06-10) ============ */
-  'res.title.a':   { en: 'Reserve your', es: 'Reserva tu' },
-  'res.title.b':   { en: 'Friday', es: 'viernes' },
   'res.sub':       { en: 'Live music every Friday. Fill this in and we confirm by WhatsApp.', es: 'Música en vivo todos los viernes. Completa y confirmamos por WhatsApp.' },
   'res.name':      { en: 'Name', es: 'Nombre' },
   'res.phone':     { en: 'Phone', es: 'Teléfono' },
@@ -127,6 +125,7 @@ export const DICT = {
   'home.place.google':   { en: 'on Google', es: 'en Google' },
   'home.place.reviews':  { en: 'reviews', es: 'reseñas' },
   'home.place.read':     { en: 'Read the reviews', es: 'Leer reseñas' },
+  'res.title':           { en: 'Reserve your Friday', es: 'Reserva tu viernes' },
 };
 
 const KEY = 'candela-lang';

@@ -86,3 +86,11 @@ test('La portada: un solo h1 y las anclas de siempre', () => {
   assert.equal(INDEX.split('<h1').length - 1, 1);
   for (const id of ['hero', 'market', 'noche', 'visit']) assert.match(INDEX, new RegExp(`id="${id}"`), id);
 });
+
+test('La portada: barra fija del móvil y modal de reserva en papel', () => {
+  assert.match(INDEX, /<nav class="mbar" id="mbar"/);
+  assert.match(INDEX, /<div class="modal" id="resModal" aria-hidden="true">/);
+  assert.match(INDEX, /<h2 id="resTitle" class="modal-title" data-i18n="res\.title">/);
+  assert.match(INDEX, /data-open-res/);
+  assert.doesNotMatch(INDEX, /modal-seal/);
+});
