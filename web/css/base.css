@@ -21,6 +21,7 @@ ul{list-style:none}
 :focus-visible{outline:2px solid var(--verde);outline-offset:2px}
 /* ============ UTILIDADES ============ */
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 40px}
+@media(max-width:600px){.wrap{padding:0 20px}}
 .section{position:relative;overflow:hidden;padding:96px 0}
 .kick{font-size:.72rem;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--verde);display:inline-flex;align-items:center;gap:10px}
 .kick::before{content:"";width:26px;height:2px;background:var(--verde)}

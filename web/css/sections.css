@@ -9,7 +9,7 @@
 .sign--dark{background:#1b1b1b}
 .sign--glass{background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.2)}
 .sec{position:relative;padding:clamp(56px,8vw,100px) 0}
-.stack{font-family:var(--disp);font-weight:400;font-size:clamp(3.4rem,8vw,7.2rem);line-height:.92;letter-spacing:-.01em;margin:.3em 0 .28em}
+.stack{font-family:var(--disp);font-weight:400;font-size:clamp(2.9rem,8vw,7.2rem);line-height:.92;letter-spacing:-.01em;margin:.3em 0 .28em}
 .stack span{display:block}
 .stack--one{font-size:clamp(3rem,7vw,6.2rem)}
 .lead{font-size:1.06rem;line-height:1.6;max-width:34rem;margin:0 0 1.3rem}
@@ -47,6 +47,7 @@
 /* ── mañana ─────────────────────────────────────────────── */
 .morning{background:var(--claro);color:var(--ink)}
 .m-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:center}
+.m-grid > *{min-width:0}
 .morning .lead{color:#3a332d}
 .tags{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 26px;padding:0;list-style:none}
 .tags li{font:400 .9rem/1 var(--sign);letter-spacing:.1em;text-transform:uppercase;border:2px solid var(--negro);padding:.55em .7em .5em}
