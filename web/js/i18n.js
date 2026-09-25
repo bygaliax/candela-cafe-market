@@ -9,9 +9,6 @@ export const DICT = {
   'visit.hours.title': { en: 'Hours', es: 'Horario' },
   'visit.directions': { en: 'Get directions', es: 'Cómo llegar' },
 
-  /* ---- footer ---- */
-  'footer.delivery': { en: 'Also on', es: 'También en' },
-
   /* ---- menú page / carrito ---- */
   'menu.title':     { en: 'The menu.', es: 'La carta.' },
   'menu.sub':       { en: 'Order online — we confirm by WhatsApp.', es: 'Ordena online — confirmamos por WhatsApp.' },
@@ -22,7 +19,6 @@ export const DICT = {
   'cart.less':      { en: 'Less', es: 'Menos' },
   'cart.more':      { en: 'More', es: 'Más' },
   'cart.add':       { en: 'Add', es: 'Agregar' },
-  'cart.items':     { en: 'items', es: 'items' },
   'cart.note':      { en: 'Pickup / delivery details are confirmed by WhatsApp.', es: 'Recogida / delivery se confirman por WhatsApp.' },
   'cart.ask':       { en: 'Ask in store', es: 'Pregunta en tienda' },
   'wa.greeting':    { en: 'Hi Candela & Café! I\'d like to order:', es: '¡Hola Candela & Café! Quiero ordenar:' },
@@ -38,7 +34,6 @@ export const DICT = {
   'res.guests':    { en: 'Guests', es: 'Personas' },
   'res.go':        { en: 'Confirm via WhatsApp', es: 'Confirmar por WhatsApp' },
   'res.note':      { en: 'We\'ll reply to confirm availability.', es: 'Te responderemos para confirmar disponibilidad.' },
-  'res.greeting':  { en: 'Hi Candela & Café! I\'d like to reserve for live music', es: '¡Hola Candela & Café! Quiero reservar para la música en vivo' },
   'reviews.write': { en: 'Write a review', es: 'Escribe tu reseña' },
   'footer.explore':{ en: 'Explore', es: 'Explora' },
   'footer.orders': { en: 'Orders & social', es: 'Pedidos y redes' },
@@ -49,7 +44,6 @@ export const DICT = {
   'lang.switch':       { en: 'Ver en español', es: 'View in English' },
   'modal.close':       { en: 'Close', es: 'Cerrar' },
   'wa.hello':          { en: 'Hi Candela & Café!', es: '¡Hola Candela & Café!' },
-  'now.fallback':      { en: 'Open daily from 8 am', es: 'Abierto todos los días desde las 8 am' },
   'now.open':          { en: 'Open now', es: 'Abierto ahora' },
   'now.until':         { en: 'until', es: 'hasta las' },
   'now.soon':          { en: 'Closing soon', es: 'Cierra pronto' },

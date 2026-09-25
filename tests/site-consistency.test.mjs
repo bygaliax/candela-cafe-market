@@ -7,6 +7,10 @@ import { findItem } from '../web/js/sections.js';
 
 const read = p => readFileSync(new URL(`../${p}`, import.meta.url), 'utf8');
 const INDEX = read('web/index.html'), MENUP = read('web/menu.html');
+const IMG_DIR = new URL('../web/assets/img/', import.meta.url);
+const SOURCES = [INDEX, MENUP,
+  ...readdirSync(new URL('../web/js/', import.meta.url)).map(f => read(`web/js/${f}`)),
+  ...readdirSync(new URL('../web/css/', import.meta.url)).map(f => read(`web/css/${f}`))].join('\n');
 
 test('JSON-LD: el horario coincide con HOURS', () => {
   const ld = JSON.parse(INDEX.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
@@ -93,4 +97,22 @@ test('La portada: barra fija del móvil y modal de reserva en papel', () => {
   assert.match(INDEX, /<h2 id="resTitle" class="modal-title" data-i18n="res\.title">/);
   assert.match(INDEX, /data-open-res/);
   assert.doesNotMatch(INDEX, /modal-seal/);
+});
+
+test('Toda imagen que citan las páginas existe', () => {
+  const refs = new Set([...(INDEX + MENUP).matchAll(/assets\/img\/([\w-]+\.(?:webp|jpg|png))/g)].map(m => m[1]));
+  assert.deepEqual([...refs].filter(f => !existsSync(new URL(f, IMG_DIR))), []);
+});
+
+test('No quedan imágenes que no use nadie', () => {
+  const base = f => f.replace(/-(?:96|240|480|960|1440)(?=\.)/, '').replace(/\.(?:webp|jpg|png)$/, '');
+  const images = readdirSync(IMG_DIR).filter(f => /\.(?:webp|jpg|png)$/.test(f));
+  assert.deepEqual(images.filter(f => !SOURCES.includes(base(f))), []);
+});
+
+test('Toda clave de i18n se usa en alguna página o módulo', () => {
+  const used = new Set();
+  for (const m of (INDEX + MENUP).matchAll(/data-i18n(?:-alt|-aria|-placeholder)?="([^"]+)"/g)) used.add(m[1]);
+  for (const m of SOURCES.matchAll(/\b(?:t|tx)\('([\w.-]+)'|DICT\['([\w.-]+)'\]/g)) used.add(m[1] || m[2]);
+  assert.deepEqual(Object.keys(DICT).filter(k => !used.has(k)), []);
 });
