@@ -4,13 +4,14 @@ import { MENU, CATEGORIES, PARTS } from './menu-data.js';
 import { initLangToggle, getLang } from './i18n.js';
 import { cart, refresh, initCartUI, syncFromStorage } from './cart.js';
 import { initNav } from './nav.js';
-import { renderMenu, renderChips } from './menu-render.js';
+import { renderMenu, renderChips, filterMenu, searchStatus, askUrl, normalize } from './menu-render.js';
 
 initLangToggle();
 initNav();
 
 const $ = id => document.getElementById(id);
 const chips = $('chips'), main = $('menuMain');
+const search = $('menuSearch'), live = $('searchStatus'), empty = $('menuEmpty');
 const reduce = matchMedia('(prefers-reduced-motion: reduce)');
 
 /* ── alto de nav + chips: anclas y foco quedan justo debajo (scroll-padding-top en menu.css) ── */
@@ -57,13 +58,37 @@ chips.addEventListener('click', e => {
   addEventListener('scrollend', () => { pausedUntil = Date.now() + 150; }, { once: true });
 });
 
+/* ── buscador: oculta lo que no coincide (qué se ve lo decide filterMenu) ── */
+let query = '', speakT = null;
+function applyFilter({ speak = true } = {}) {
+  const f = filterMenu(CATEGORIES, MENU, query);
+  const active = normalize(query).length >= 2;
+  main.classList.toggle('is-searching', active);
+  main.querySelectorAll('[data-id]').forEach(el => { el.hidden = !f.items.has(el.dataset.id); });
+  main.querySelectorAll('.card').forEach(el => el.classList.toggle('card--wide', f.wide.has(el.dataset.id)));
+  main.querySelectorAll('.cards, .rows').forEach(ul => { ul.hidden = !ul.querySelector(':scope > li:not([hidden])'); });
+  main.querySelectorAll('.cat').forEach(el => { el.hidden = !f.cats.has(el.id); });
+  main.querySelectorAll('.part').forEach(el => { el.hidden = !f.parts.has(el.dataset.part); });
+  chips.querySelectorAll('.chip').forEach(el => { el.hidden = !f.cats.has(el.dataset.cat); });
+  empty.hidden = !(active && f.count === 0);
+  if (!empty.hidden) $('menuAsk').href = askUrl(query, getLang());
+  clearTimeout(speakT);
+  if (speak) speakT = setTimeout(() => { live.textContent = active ? searchStatus(f.count, getLang()) : ''; }, 500);
+  syncActive();
+}
+search.addEventListener('input', () => { query = search.value; applyFilter(); });
+search.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && search.value) { e.preventDefault(); search.value = ''; query = ''; applyFilter(); }
+});
+$('searchForm').addEventListener('submit', e => { e.preventDefault(); search.blur(); });
+
 /* ── pintar (y repintar al cambiar de idioma) ─────────────── */
 function render() {
   const lang = getLang();
   chips.innerHTML = renderChips(CATEGORIES, PARTS, lang);
   main.innerHTML = renderMenu(CATEGORIES, MENU, PARTS, lang);
   initSpy();
-  syncActive();
+  applyFilter({ speak: false });
 }
 render();
 document.addEventListener('langchange', render);

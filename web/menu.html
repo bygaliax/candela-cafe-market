@@ -55,10 +55,21 @@
     <p class="menu-kick" data-i18n="menu.kicker">Order · pick up at 507</p>
     <h1 id="menuTitle" tabindex="-1" data-i18n="menu.title">The menu.</h1>
     <p class="ssub" data-i18n="menu.sub">Order online — we confirm by WhatsApp.</p>
+    <form class="menu-search" id="searchForm" role="search" action="#">
+      <label class="sr-only" for="menuSearch" data-i18n="menu.search.label">Search the menu</label>
+      <input id="menuSearch" type="search" autocomplete="off" enterkeyhint="search" spellcheck="false"
+        placeholder="Cortadito, burger, empanadas…" data-i18n-placeholder="menu.search.ph">
+    </form>
+    <p class="sr-only" id="searchStatus" role="status"></p>
   </div>
 </header>
 
 <nav class="chips" id="chips" aria-label="Menu categories" data-i18n-aria="menu.chips"><!-- chips render JS --></nav>
+
+<div class="wrap menu-empty" id="menuEmpty" hidden>
+  <p data-i18n="menu.search.none">We couldn't find that.</p>
+  <a class="btn btn-g" id="menuAsk" href="#" target="_blank" rel="noopener" data-i18n="menu.search.ask">Ask us on WhatsApp</a>
+</div>
 
 <main class="wrap menu-main" id="menuMain">
   <noscript><p class="noscript" data-i18n="noscript">This menu needs JavaScript. Call us at +1 (786) 254-7577 — 507 N Miami Ave.</p></noscript>
