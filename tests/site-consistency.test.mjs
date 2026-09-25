@@ -116,3 +116,15 @@ test('Toda clave de i18n se usa en alguna página o módulo', () => {
   for (const m of SOURCES.matchAll(/\b(?:t|tx)\('([\w.-]+)'|DICT\['([\w.-]+)'\]/g)) used.add(m[1] || m[2]);
   assert.deepEqual(Object.keys(DICT).filter(k => !used.has(k)), []);
 });
+
+test('Las fuentes se sirven desde el propio sitio (sin Google Fonts) y existen', () => {
+  const css = read('web/css/base.css');
+  for (const [name, html] of [['index', INDEX], ['menu', MENUP]]) {
+    assert.doesNotMatch(html, /fonts\.(googleapis|gstatic)\.com/, `${name}: no pide Google Fonts`);
+    assert.match(html, /<link rel="preload" as="font" type="font\/woff2" href="assets\/fonts\/architects-daughter-latin\.woff2" crossorigin>/, `${name}: precarga la fuente del título`);
+  }
+  const files = [...css.matchAll(/url\("\.\.\/assets\/fonts\/([\w-]+\.woff2)"\)/g)].map(m => m[1]);
+  assert.deepEqual(files.sort(), ['anton-latin.woff2', 'architects-daughter-latin.woff2', 'dm-sans-latin.woff2']);
+  for (const f of files) assert.ok(existsSync(new URL(`../web/assets/fonts/${f}`, import.meta.url)), `falta ${f}`);
+  assert.equal(css.match(/font-display:swap/g).length, 3);
+});
