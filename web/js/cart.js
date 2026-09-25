@@ -1,11 +1,16 @@
 import { createCart, buildWaUrl } from './cart-core.js';
 import { t } from './i18n.js';
-import { PHONE } from './menu-data.js';
+import { PHONE, MENU } from './menu-data.js';
+import { trapFocus } from './focus-trap.js';
 
 const LS = 'candela-cart';
-let stored = null;
-try { stored = localStorage.getItem(LS); } catch { /* private mode */ }
-export const cart = createCart(stored);
+const read = () => { try { return localStorage.getItem(LS); } catch { return null; } };
+const lookup = id => { for (const items of Object.values(MENU)) { const it = items.find(i => i.id === id); if (it) return it; } return null; };
+export const cart = createCart(read());
+cart.revalidate(lookup);
+
+/** Relee lo guardado (otra pestaña o volver atrás) antes de tocar el carrito (#5). */
+export function syncFromStorage() { cart.load(read()); cart.revalidate(lookup); }
 
 const fab = document.getElementById('cartFab');
 const sheet = document.getElementById('cartSheet');
@@ -13,6 +18,12 @@ const overlay = document.getElementById('overlay');
 
 export function refresh() {
   try { localStorage.setItem(LS, cart.serialize()); } catch { /* private mode */ }
+  render();
+}
+
+function render() {
+  const focused = document.activeElement && document.activeElement.closest('#sheetBody button[data-d]');
+  const keep = focused ? { id: focused.closest('.qty').dataset.id, d: focused.dataset.d } : null;
   const n = cart.count();
   fab.hidden = n === 0 && !sheet.classList.contains('open');
   document.getElementById('fabCount').textContent = n;
@@ -41,7 +52,7 @@ export function refresh() {
 
       const btnMinus = document.createElement('button');
       btnMinus.dataset.d = '-1';
-      btnMinus.setAttribute('aria-label', t('cart.less'));
+      btnMinus.setAttribute('aria-label', `${t('cart.less')} · ${l.name}`);
       btnMinus.textContent = '−';
 
       const qtyNum = document.createElement('b');
@@ -49,7 +60,7 @@ export function refresh() {
 
       const btnPlus = document.createElement('button');
       btnPlus.dataset.d = '1';
-      btnPlus.setAttribute('aria-label', t('cart.more'));
+      btnPlus.setAttribute('aria-label', `${t('cart.more')} · ${l.name}`);
       btnPlus.textContent = '+';
 
       qtySpan.append(btnMinus, qtyNum, btnPlus);
@@ -66,12 +77,26 @@ export function refresh() {
   const wa = document.getElementById('waSend');
   wa.setAttribute('aria-disabled', String(n === 0));
   wa.href = n === 0 ? '#' : buildWaUrl(cart, PHONE, t('wa.greeting'));
+
+  // Tras rehacer el DOM, el foco vuelve al mismo botón (o a «cerrar» si la línea desapareció) (#16).
+  if (keep) {
+    const again = body.querySelector(`.qty[data-id="${CSS.escape(keep.id)}"] button[data-d="${keep.d}"]`);
+    (again || document.getElementById('cartClose')).focus();
+  }
 }
 
 export function initCartUI() {
-  const close = () => { sheet.classList.remove('open'); overlay.hidden = true; fab.focus(); refresh(); };
+  let release = null;
+  const close = () => {
+    sheet.classList.remove('open'); overlay.hidden = true;
+    if (release) release(); release = null;
+    refresh();
+    (fab.hidden ? document.getElementById('menuTitle') : fab).focus();
+  };
   fab.addEventListener('click', () => {
+    syncFromStorage();
     sheet.classList.add('open'); overlay.hidden = false; refresh();
+    release = trapFocus(sheet);
     document.getElementById('cartClose').focus();
   });
   document.getElementById('cartClose').addEventListener('click', close);
@@ -85,11 +110,14 @@ export function initCartUI() {
   document.getElementById('sheetBody').addEventListener('click', e => {
     const b = e.target.closest('button[data-d]');
     if (!b) return;
+    syncFromStorage();
     const id = b.closest('.qty').dataset.id;
     const line = cart.lines().find(l => l.id === id);
-    cart.setQty(id, line.qty + Number(b.dataset.d));
+    if (line) cart.setQty(id, line.qty + Number(b.dataset.d));
     refresh();
   });
-  document.addEventListener('langchange', refresh);
+  addEventListener('pageshow', e => { if (e.persisted) { syncFromStorage(); render(); } });
+  addEventListener('storage', e => { if (e.key === LS) { syncFromStorage(); render(); } });
+  document.addEventListener('langchange', render);
   refresh();
 }

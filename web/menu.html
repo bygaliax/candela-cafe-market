@@ -7,7 +7,7 @@
 <meta name="description" content="Full menu of Candela &amp; Café Market: NY deli sandwiches, Dominican Spot, breakfast, coffee &amp; more. Order online via WhatsApp. 507 N Miami Ave, Miami.">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="canonical" href="https://candelaycafe.com/menu">
-<meta property="og:type" content="restaurant">
+<meta property="og:type" content="website">
 <meta property="og:title" content="Menu — Candela & Café Market | Order via WhatsApp">
 <meta property="og:description" content="Full menu: NY deli sandwiches, Dominican Spot, breakfast, coffee & more. Order online via WhatsApp.">
 <meta property="og:image" content="https://candelaycafe.com/assets/img/og-image.jpg">
@@ -43,16 +43,16 @@
     <a href="index.html#market" data-i18n="nav.market">Market</a>
     <a href="index.html#noche" data-i18n="nav.nights">Nights</a>
     <a href="index.html#visit" data-i18n="nav.visit">Visit Us</a>
-    <button class="lang-toggle">ES</button>
+    <button class="lang-toggle" type="button">ES</button>
   </div>
-  <button class="nav-burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">
+  <button class="nav-burger" id="burger" type="button" aria-label="Open menu" data-i18n-aria="nav.burger" aria-expanded="false" aria-controls="navLinks">
     <span></span><span></span><span></span>
   </button>
 </div></nav>
 
 <header class="menu-hero">
   <div class="wrap">
-    <h1 class="display" data-i18n="menu.title">The Menu</h1>
+    <h1 class="display" id="menuTitle" tabindex="-1" data-i18n="menu.title">The Menu</h1>
     <p class="ssub" data-i18n="menu.sub">Order online — we confirm by WhatsApp.</p>
   </div>
 </header>
@@ -70,7 +70,7 @@
 </button>
 <div class="overlay" id="overlay" hidden></div>
 <aside class="cart-sheet" id="cartSheet" role="dialog" aria-modal="true" aria-label="Your order">
-  <header><b data-i18n="cart.label">Your order</b><button id="cartClose" aria-label="Close">&#x2715;</button></header>
+  <header><b data-i18n="cart.label">Your order</b><button id="cartClose" type="button" aria-label="Close" data-i18n-aria="modal.close">&#x2715;</button></header>
   <div class="sheet-body" id="sheetBody"></div>
   <footer class="sheet-footer">
     <p class="cart-note" data-i18n="cart.note">Pickup / delivery details are confirmed by WhatsApp.</p>

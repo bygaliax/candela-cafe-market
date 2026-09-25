@@ -1,18 +1,10 @@
 import { MENU, CATEGORIES } from './menu-data.js';
 import { initLangToggle, t, getLang } from './i18n.js';
-import { cart, refresh, initCartUI } from './cart.js';
+import { cart, refresh, initCartUI, syncFromStorage } from './cart.js';
+import { initNav } from './nav.js';
 
 initLangToggle();
-
-/* navbar (compartida con la landing) */
-const nav = document.getElementById('nav');
-addEventListener('scroll', () => nav.classList.toggle('is-scrolled', scrollY > 40), { passive: true });
-const burger = document.getElementById('burger');
-const navLinks = document.getElementById('navLinks');
-burger.addEventListener('click', () => {
-  const open = navLinks.classList.toggle('open');
-  burger.setAttribute('aria-expanded', String(open));
-});
+initNav();
 
 const chips = document.getElementById('chips');
 const main  = document.getElementById('menuMain');
@@ -56,10 +48,10 @@ function render() {
     ${MENU[c.id].map(it => `
       <div class="menu-item${it.img ? ' has-img' : ''}" data-id="${esc(it.id)}" data-cat="${esc(c.id)}">
         ${it.img ? `<img src="assets/img/${esc(it.img)}-480.webp" alt="${esc(it.name)}" loading="lazy" width="84" height="84">` : ''}
-        <span class="mi-name">${esc(it.name)}</span>${it.badge ? `<span class="badge">${esc(it.badge)}</span>` : ''}
+        <span class="mi-name">${esc(it.name)}${it.badge ? ` <span class="badge">${esc(it.badge)}</span>` : ''}</span>
         ${it.price > 0
           ? `<span class="mi-price">$${it.price.toFixed(2)}</span>
-             <button class="mi-add" aria-label="Add ${esc(it.name)}">+</button>`
+             <button class="mi-add" aria-label="${esc(t('cart.add'))} ${esc(it.name)}">+</button>`
           : `<span class="mi-ask">${esc(t('cart.ask'))}</span><span></span>`}
         ${it.desc ? `<span class="mi-desc">${esc(it.desc[lang])}</span>` : ''}
       </div>`).join('')}`
@@ -69,6 +61,10 @@ function render() {
 }
 render();
 document.addEventListener('langchange', render);
+chips.addEventListener('click', e => {
+  const ch = e.target.closest('.chip');
+  if (ch) chips.querySelectorAll('.chip').forEach(x => x.classList.toggle('active', x === ch));
+});
 
 main.addEventListener('click', e => {
   const btn = e.target.closest('.mi-add');
@@ -76,6 +72,7 @@ main.addEventListener('click', e => {
   const el  = btn.closest('.menu-item');
   const item = MENU[el.dataset.cat].find(i => i.id === el.dataset.id);
   if (!item || item.price <= 0) return;
+  syncFromStorage();
   cart.add(item);
   btn.animate(
     [{ transform: 'scale(1)' }, { transform: 'scale(1.35)' }, { transform: 'scale(1)' }],
