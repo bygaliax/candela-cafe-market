@@ -32,18 +32,3 @@ export const FAVORITES = [
 // Mesa caliente por día de la semana (0 = dom), p. ej. { 3: [{ en: 'Beef stew', es: 'Carne guisada' }] }.
 // ⚠ La rellena el cliente. Vacío = se muestra el especial del día. NUNCA poner platos inventados.
 export const DAILY_MENU = {};
-
-// Cartas «Coffee now» / «Wine later». ⚠ Líneas y horas a confirmar con el cliente antes de publicar.
-export const DAY_NIGHT = [
-  { id: 'day', title: 'Coffee now', from: '08:00', to: '19:00', items: [
-    { en: 'Espresso & cortadito', es: 'Espresso y cortadito' },
-    { en: 'Cappuccino & latte',   es: 'Cappuccino y latte' },
-    { en: 'Fresh juices',         es: 'Jugos naturales' },
-  ] },
-  { id: 'night', title: 'Wine later', from: '19:00', to: 'close', items: [
-    { en: 'Red, white & rosé wine', es: 'Vino tinto, blanco y rosado' },
-    { en: 'By the glass or bottle', es: 'Por copa o por botella' },
-    { en: 'Cold beers',             es: 'Cervezas frías' },
-    { en: 'Coffee until close',     es: 'Café hasta el cierre' },
-  ] },
-];

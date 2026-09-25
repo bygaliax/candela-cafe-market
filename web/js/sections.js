@@ -1,5 +1,5 @@
-// Secciones dinámicas de la portada «Un día en Candela». Funciones PURAS: devuelven HTML
-// en texto (testeadas en tests/sections.test.mjs). Todo dato pasa por esc().
+// Secciones dinámicas de la portada. Funciones PURAS: devuelven HTML en texto
+// (testeadas en tests/sections.test.mjs). Todo dato pasa por esc().
 import { DICT } from './i18n.js';
 import { MENU, DAILY_SPECIAL } from './menu-data.js';
 import { fmtTime } from './status.js';
@@ -40,20 +40,6 @@ export function renderMarketList(cats, lang) {
   return cats.map(c => `<li><b>${esc(c.name[lang])}</b><span>${esc(c.examples[lang])}</span></li>`).join('');
 }
 
-export function renderMarket(cats, lang) {
-  return cats.map(c => `<figure class="tile"><img src="assets/img/${esc(c.img)}-480.webp" alt="" loading="lazy" width="480" height="${Number(c.h)}">`
-    + `<figcaption><b>${esc(c.name[lang])}</b><span>${esc(c.examples[lang])}</span></figcaption></figure>`).join('');
-}
-
-export function renderArches(list, lang) {
-  return list.map(a => {
-    const to = a.to === 'close' ? tx('nightmenu.close', lang) : fmtTime(a.to);
-    return `<article class="arch arch--${esc(a.id)}"><h3>${esc(a.title)}</h3>`
-      + `<p class="arch-hrs">${esc(fmtTime(a.from))} – ${esc(to)}</p>`
-      + `<ul>${a.items.map(i => `<li>${esc(i[lang])}</li>`).join('')}</ul></article>`;
-  }).join('');
-}
-
 export function renderBoard(daily, weekday, lang) {
   const dishes = daily[weekday];
   if (!dishes || !dishes.length) return `<p class="note">${esc(DAILY_SPECIAL[lang])}</p>`;
@@ -87,15 +73,4 @@ export function statusHTML(st, lang, suffix = '') {
   const [head, ...rest] = text.split(' · ');
   if (suffix) rest.push(suffix);
   return { cls, html: `<b>${esc(head)}</b>${rest.map(p => ` · ${esc(p)}`).join('')}` };
-}
-
-/** Sello de estrella (starburst) de 22 puntas, como los stickers de Frank's. */
-export function burstSvg(color) {
-  const n = 22, R = 100, r = 88, pts = [];
-  for (let i = 0; i < n * 2; i++) {
-    const a = Math.PI * i / n, rad = i % 2 ? r : R;
-    pts.push(`${(100 + rad * Math.cos(a)).toFixed(1)},${(100 + rad * Math.sin(a)).toFixed(1)}`);
-  }
-  return `<svg viewBox="0 0 200 200" aria-hidden="true" focusable="false"><polygon points="${pts.join(' ')}" fill="${esc(color)}"/>`
-    + '<circle cx="100" cy="100" r="74" fill="none" stroke="#fff" stroke-width="2" stroke-dasharray="3 6"/></svg>';
 }

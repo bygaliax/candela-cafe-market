@@ -1,0 +1,153 @@
+/* HOME.CSS — portada en blanco, al estilo del menú (2026-09-25).
+   Spec: docs/superpowers/specs/2026-09-25-candela-portada-blanca-design.md. Complementa base.css. */
+html{scroll-padding-top:92px}
+.page-home{--precio:#C42A1F;--verde-txt:#3F7021;--raya:#d8c9b4;--sombra:0 1px 0 rgba(28,28,28,.07),0 12px 30px -18px rgba(28,28,28,.4)}
+.page-home main{padding-top:80px}
+
+/* ── piezas comunes ── */
+.sec{padding-top:92px}
+.kick{display:flex;align-items:center;gap:16px;font:700 .8125rem/1 var(--body);letter-spacing:.24em;text-transform:uppercase;color:var(--verde-txt)}
+.kick::after{content:"";flex:1;height:1px;background:rgba(28,28,28,.18)}
+.sec-title{margin-top:14px;font:400 clamp(2.75rem,5.4vw,4.25rem)/1 var(--sign);text-transform:uppercase;text-wrap:balance}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px}
+.sign{display:inline-block;padding:9px 12px 8px;background:var(--ink);color:#fff;font:400 1rem/1 var(--sign);letter-spacing:.12em;text-transform:uppercase}
+.sign--red{background:var(--rojo-txt)}
+.note{font:400 2rem/1.15 var(--disp);color:var(--precio)}
+.lead{font-size:1.375rem;line-height:1.5}
+.photo{display:block;width:100%;height:auto;object-fit:cover;border-radius:18px;background:var(--arena)}
+.ctas{display:flex;flex-wrap:wrap;gap:12px}
+.btn-lg{min-height:54px;padding:0 28px;font-size:.875rem}
+.btn-sm{min-height:44px;padding:0 20px;font-size:.75rem}
+.show-m{display:none}
+
+/* ── portada ── */
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:64px;align-items:center;padding-top:48px}
+.hero-title{font:400 clamp(3.625rem,8vw,6.5rem)/1 var(--disp);text-wrap:balance}
+.signs{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.tagline{max-width:22ch;margin-top:24px;font:400 1.8125rem/1.25 var(--disp);color:var(--precio)}
+.hero .status{margin-top:28px}
+.hero .ctas{margin-top:26px}
+.hero-photo{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:50% 0;border-radius:22px;background:var(--arena)}
+
+/* ── los favoritos ── */
+.favs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-top:30px}
+.fav{display:flex;flex-direction:column;background:#fff;border-radius:14px;padding:7px 7px 16px;box-shadow:var(--sombra);transition:box-shadow .2s}
+.fav:hover{box-shadow:0 0 0 2px var(--ink)}
+.fav img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:10px;background:var(--arena)}
+.fav-n{margin:13px 7px 0;font:400 1.3125rem/1.1 var(--sign);text-transform:uppercase;overflow-wrap:anywhere}
+.fav-d{margin:6px 7px 0;font-size:.875rem;line-height:1.4;color:var(--ink-2);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.fav-p{margin:auto 7px 0;padding-top:12px;font:400 1.625rem/1 var(--disp);color:var(--precio)}
+
+/* ── comida dominicana ── */
+.split{display:grid;grid-template-columns:1.3fr 1fr;gap:48px;align-items:center;margin-top:30px}
+.split .photo{aspect-ratio:16/10}
+#board{margin-top:18px}
+.board-h{font-weight:700}
+.board-list{display:grid;gap:6px;margin-top:8px}
+.board-list li::before{content:"· ";color:var(--precio)}
+.split .btn{margin-top:26px}
+
+/* ── café y market ── */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:stretch;margin-top:30px}
+.big{display:flex;flex-direction:column;background:#fff;border-radius:18px;padding:10px 10px 28px;box-shadow:var(--sombra)}
+.big img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;border-radius:12px;background:var(--arena)}
+.big-title{margin:22px 16px 0;font:400 2.5rem/1 var(--sign);text-transform:uppercase}
+.big-body{margin:10px 16px 0;font-size:1.0625rem;line-height:1.5;color:var(--ink-2)}
+.big .btn{align-self:flex-start;margin:22px 16px 0}
+.shop{padding:34px 26px 30px}
+.shop .kick::after{content:none}
+.shop .big-title{margin:12px 0 0}
+.shop-list{margin-top:18px}
+.shop-list li{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:10px 0;border-bottom:1.5px dashed var(--raya)}
+.shop-list b{font:400 1.3125rem/1 var(--sign);text-transform:uppercase}
+.shop-list span{font-size:.9375rem;color:var(--ink-2);text-align:right}
+.shop .note{margin:20px 0 0;font-size:1.6875rem}
+.shop .btn{margin:18px 0 0}
+
+/* ── los viernes ── */
+.fri{display:grid;grid-template-columns:1.2fr 1fr;gap:52px;align-items:center;background:#fff;border-radius:24px;padding:18px 52px 18px 18px;box-shadow:var(--sombra)}
+.fri .photo{aspect-ratio:4/3;object-position:50% 18%} /* que se lea el neón entero */
+.fri .sec-title{font-size:clamp(2.5rem,4.6vw,3.75rem)}
+.fri-body{margin-top:16px;font-size:1.1875rem;line-height:1.5;color:var(--ink-2)}
+.fri .btn{margin-top:26px}
+
+/* ── el local ── */
+.place{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:30px}
+.place img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:18px;background:var(--arena)}
+.google{margin-top:26px;font-size:1.125rem}
+.google .star{color:var(--rojo-txt)}
+.google a{text-decoration:underline;text-underline-offset:4px}
+.google a:hover{color:var(--rojo-txt)}
+
+/* ── visítanos ── */
+.visit-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+.num{margin-top:24px;font:400 13.125rem/.8 var(--sign)}
+.street{margin-top:14px;font:400 3.5rem/1 var(--sign);text-transform:uppercase}
+.city{margin-top:10px;font-size:1.1875rem;color:var(--ink-2)}
+.visit .ctas{margin-top:28px}
+.hours{width:100%;border-collapse:collapse;font-size:1.0625rem}
+.hours th,.hours td{padding:13px 12px;border-bottom:1px solid rgba(28,28,28,.12);text-align:left;font-weight:400}
+.hours td{text-align:right;white-space:nowrap}
+.hours tr.today th,.hours tr.today td{background:var(--arena);font-weight:700}
+.map{display:block;width:100%;height:200px;margin-top:22px;border:0;border-radius:16px;background:var(--arena)}
+.page-home .footer{margin-top:72px}
+
+/* ── tableta ── */
+@media(max-width:900px){
+  .hero,.split,.duo,.visit-grid{grid-template-columns:1fr}
+  .hero{gap:0}
+  .hero-photo{aspect-ratio:4/3;margin-top:26px;border-radius:18px}
+  .split,.duo{gap:18px}
+  .visit-grid{gap:28px}
+  .fri{grid-template-columns:1fr;gap:18px;padding:10px 10px 26px}
+  .fri-copy{padding:0 10px}
+  .favs{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .place{grid-template-columns:1fr 1fr}
+  .place img{aspect-ratio:1}
+  .place img:first-child{grid-column:span 2;aspect-ratio:4/3}
+}
+
+/* ── móvil ── */
+@media(max-width:600px){
+  html{scroll-padding-top:76px}
+  .page-home main{padding-top:64px}
+  .sec{padding-top:56px}
+  .hero{padding-top:30px}
+  .signs{gap:6px;margin-top:16px}
+  .sign{padding:7px 9px 6px;font-size:.8125rem}
+  .tagline{margin-top:16px;font-size:1.375rem}
+  .status{font-size:.9375rem}
+  .hero .status{margin-top:18px}
+  .hero .ctas{margin-top:18px}
+  .btn-lg{min-height:50px;padding:0 22px;font-size:.8125rem}
+  .kick{font-size:.6875rem;letter-spacing:.2em}
+  .hide-m{display:none}
+  .show-m{display:inline-flex;margin-top:18px}
+  .favs{gap:10px;margin-top:20px}
+  .fav-n{font-size:1rem}
+  .fav-d{font-size:.75rem}
+  .fav-p{font-size:1.3125rem}
+  .split,.duo{margin-top:20px}
+  .lead{font-size:1.125rem}
+  .note{font-size:1.5625rem}
+  .big-title{margin:18px 12px 0;font-size:2rem}
+  .big-body{margin:8px 12px 0;font-size:.9375rem}
+  .big .btn{margin:18px 12px 0}
+  .shop{padding:26px 18px 24px}
+  .shop .big-title{margin:10px 0 0}
+  .shop-list b{font-size:1.0625rem}
+  .shop-list span{font-size:.8125rem}
+  .shop .note{font-size:1.375rem}
+  .shop .btn{margin:16px 0 0}
+  .fri .sec-title{font-size:2.5rem}
+  .fri-body{font-size:1rem}
+  .place{gap:10px;margin-top:20px}
+  .google{font-size:.9375rem}
+  .num{font-size:9.375rem}
+  .street{font-size:2.5rem}
+  .city{font-size:1rem}
+  .visit .ctas{margin-top:20px}
+  .hours{font-size:.9375rem}
+  .hours th,.hours td{padding:11px 8px}
+  .page-home .footer{margin-top:60px}
+}

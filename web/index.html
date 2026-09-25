@@ -3,7 +3,6 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>document.documentElement.classList.add('js')</script>
 <title>Candela &amp; Café Market — NY Deli, Dominican Soul &amp; Live Music | Downtown Miami</title>
 <meta name="description" content="Coffee now, wine later: breakfast, Dominican food made daily, NY deli sandwiches, a neighborhood market and live music on Fridays. 507 N Miami Ave, Downtown Miami.">
 <link rel="icon" type="image/png" href="favicon.png">
@@ -19,14 +18,11 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Anton&family=Architects+Daughter&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Architects+Daughter&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Architects+Daughter&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap"></noscript>
-<link rel="preload" as="image" href="assets/img/hero-grill.webp"
-      imagesrcset="assets/img/hero-grill-480.webp 480w, assets/img/hero-grill.webp 582w"
-      imagesizes="(max-width:700px) 90vw, 740px" fetchpriority="high">
+<link rel="preload" as="image" href="assets/img/manana-fachada-960.webp"
+      imagesrcset="assets/img/manana-fachada-480.webp 480w, assets/img/manana-fachada-960.webp 960w"
+      imagesizes="(max-width:900px) 92vw, 470px" fetchpriority="high">
 <link rel="stylesheet" href="css/base.css">
-<link rel="stylesheet" href="css/landing.css">
-<link rel="preload" as="style" href="css/sections.css">
-<link rel="stylesheet" href="css/sections.css" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="css/sections.css"></noscript>
+<link rel="stylesheet" href="css/home.css">
 <script type="application/ld+json">
 { "@context": "https://schema.org", "@type": "Restaurant",
   "name": "Candela & Café Market",
@@ -45,7 +41,7 @@
   "sameAs": ["https://www.instagram.com/candelaycafe/"] }
 </script>
 </head>
-<body>
+<body class="page-home">
 
 <nav class="nav" id="nav" aria-label="Main navigation" data-i18n-aria="nav.main"><div class="nav-inner">
   <a class="nav-logo" href="#hero"><img src="assets/img/logo-96.webp" alt="" width="46" height="46"><b>Candela &amp; Café</b></a>
@@ -78,170 +74,101 @@
   </div>
 </div>
 
-<main>
+<main id="main">
 
-<header class="hero" id="hero">
-  <img class="hero-fire" src="assets/img/hero-fire-1440.webp"
-       srcset="assets/img/hero-fire-960.webp 960w, assets/img/hero-fire-1440.webp 1440w"
-       sizes="100vw" alt="" aria-hidden="true">
-  <img class="dec dec-chips" src="assets/img/hero-chips-b.webp" alt="" width="185" height="213" aria-hidden="true">
-  <picture><source media="(max-width:700px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><img class="dec dec-drink" src="assets/img/hero-drink.webp" alt="" width="330" height="484" aria-hidden="true"></picture>
-  <img class="dec dec-leaf-a" src="assets/img/hero-leaf-a.webp" alt="" width="70" height="102" aria-hidden="true">
-  <img class="dec dec-leaf-b" src="assets/img/hero-leaf-b.webp" alt="" width="64" height="70" aria-hidden="true">
-  <picture><source media="(max-width:700px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><img class="dec dec-ringburger" src="assets/img/hero-burger-ring.webp" alt="" width="283" height="330" aria-hidden="true"></picture>
-  <img class="dec dec-burger" src="assets/img/hero-burger.webp" alt="" width="307" height="334" aria-hidden="true">
-  <canvas class="hero-sparks" id="heroSparks" aria-hidden="true"></canvas>
-  <div class="hero-copy">
-    <h1 class="display hero-title" data-i18n="hero.title">Authentic Flavors!</h1>
-    <p class="hero-sub" data-i18n="hero.sub">Enjoy our special mixed grill today.</p>
-    <div class="hero-ctas">
-      <a class="hbtn hbtn-terra" href="menu.html"><span data-i18n="hero.cta.menu">View menu</span></a>
-      <a class="hbtn hbtn-green" href="menu.html"><span data-i18n="hero.cta.order">Order Now!</span></a>
+<header class="hero wrap" id="hero">
+  <div>
+    <h1 class="hero-title">Candela &amp; Café</h1>
+    <ul class="signs" role="list">
+      <li class="sign" data-i18n="home.sign.deli">NY Deli</li>
+      <li class="sign sign--red" data-i18n="home.sign.dominican">Dominican food</li>
+      <li class="sign" data-i18n="home.sign.coffee">Coffee &amp; juices</li>
+      <li class="sign" data-i18n="home.sign.market">Market</li>
+    </ul>
+    <p class="tagline">Born in NY, raised Dominican, served in Miami.</p>
+    <p class="status is-open" id="heroStatus" role="status"><i class="dot" aria-hidden="true"></i><span id="heroStatusText">Open daily from 8 am · 507 N Miami Ave</span></p>
+    <div class="ctas" id="heroCtas">
+      <a class="btn btn-p btn-lg" href="https://www.google.com/maps/dir/?api=1&amp;destination=507+N+Miami+Ave%2C+Miami%2C+FL+33136" target="_blank" rel="noopener" data-i18n="visit.directions">Get directions</a>
+      <a class="btn btn-ghost btn-lg" href="menu.html" data-i18n="home.cta.menu">See the menu</a>
     </div>
   </div>
-  <div class="hero-platter" aria-hidden="true">
-    <div class="platter-disc" id="platterDisc">
-      <img class="grill-t" src="assets/img/hero-grill.webp" srcset="assets/img/hero-grill-480.webp 480w, assets/img/hero-grill.webp 582w"
-           sizes="(max-width:700px) 90vw, 740px" alt="" width="582" height="313" fetchpriority="high">
-      <img class="grill-b" src="assets/img/hero-grill.webp" srcset="assets/img/hero-grill-480.webp 480w, assets/img/hero-grill.webp 582w"
-           sizes="(max-width:700px) 90vw, 740px" alt="" width="582" height="313">
-    </div>
-  </div>
+  <img class="hero-photo" src="assets/img/manana-fachada-960.webp" srcset="assets/img/manana-fachada-480.webp 480w, assets/img/manana-fachada-960.webp 960w" sizes="(max-width:900px) 92vw, 470px" width="480" height="640" fetchpriority="high" alt="Breakfast plate at the door of 507 N Miami Ave" data-i18n-alt="home.hero.alt">
 </header>
 
-<div class="now" id="now">
-  <span class="now-dot" aria-hidden="true"></span>
-  <b class="now-state" id="nowState" role="status" data-i18n="now.fallback">Open daily from 8 am</b>
-  <span class="now-addr">507 N Miami Ave · Downtown Miami</span>
-  <a class="now-go" href="https://www.google.com/maps/dir/?api=1&amp;destination=507+N+Miami+Ave%2C+Miami%2C+FL+33136" target="_blank" rel="noopener" data-i18n="visit.directions">Get directions</a>
-</div>
-
-<div class="dawn" aria-hidden="true"></div>
-
-<section class="sec morning" id="manana" aria-labelledby="mananaTitle">
-  <div class="wrap m-grid">
-    <div class="reveal">
-      <span class="sign" data-i18n="day.morning.sign">8:00 am · Coffee now</span>
-      <h2 class="stack" id="mananaTitle"><span data-i18n="day.morning.w1">Coffee.</span> <span data-i18n="day.morning.w2">Juices.</span> <span class="fire" data-i18n="day.morning.w3">Breakfast.</span></h2>
-      <p class="lead" data-i18n="day.morning.body">Coffee, cortadito and fresh juices. New York breakfasts — pancakes, omelettes, bacon, egg &amp; cheese — and empanadas fresh out of the oven.</p>
-      <ul class="tags"><li>Cortadito</li><li>Pancakes</li><li>Omelettes</li><li>Bacon, egg &amp; cheese</li><li>Empanadas</li><li data-i18n="day.morning.juices">Fresh juices</li></ul>
-      <div class="ctas"><a class="btn btn-p" href="menu.html#breakfast" data-i18n="day.morning.cta">See breakfast</a><a class="btn btn-ghost" href="#visit" data-i18n="visit.directions">Get directions</a></div>
-    </div>
-    <div class="m-art">
-      <figure class="m-main ht"><img src="assets/img/manana-fachada-480.webp" srcset="assets/img/manana-fachada-480.webp 480w, assets/img/manana-fachada-960.webp 960w" sizes="(max-width:768px) 62vw, 360px" width="480" height="640" loading="lazy" alt="Breakfast plate at the door of 507 N Miami Ave" data-i18n-alt="day.morning.alt"></figure>
-      <img class="sticker st-1" src="assets/img/manana-tres-golpes-240.webp" srcset="assets/img/manana-tres-golpes-240.webp 240w, assets/img/manana-tres-golpes-480.webp 480w" sizes="(max-width:768px) 130px, 200px" width="240" height="320" loading="lazy" alt="">
-      <img class="sticker st-2" src="assets/img/manana-jugo-240.webp" srcset="assets/img/manana-jugo-240.webp 240w, assets/img/manana-jugo-480.webp 480w" sizes="(max-width:768px) 96px, 140px" width="240" height="320" loading="lazy" alt="">
-      <img class="sticker st-3" src="assets/img/manana-pastelitos-240.webp" srcset="assets/img/manana-pastelitos-240.webp 240w, assets/img/manana-pastelitos-480.webp 480w" sizes="(max-width:768px) 110px, 160px" width="240" height="240" loading="lazy" alt="">
-      <span class="burst b-open" data-burst="#D8352A"><span data-i18n="day.morning.burst">Open 8 am</span></span>
-    </div>
-  </div>
+<section class="sec wrap" id="favoritos" aria-labelledby="favsTitle">
+  <p class="kick" data-i18n="home.favs.kick">From the New York deli</p>
+  <div class="sec-head"><h2 class="sec-title" id="favsTitle" data-i18n="home.favs.title">The favorites</h2><a class="btn btn-ghost btn-sm hide-m" href="menu.html" data-i18n="home.favs.cta">See the menu →</a></div>
+  <div class="favs" id="favs"></div>
+  <a class="btn btn-ghost show-m" href="menu.html" data-i18n="home.favs.cta.m">See the full menu</a>
 </section>
 
-<section class="sec midday" id="mediodia" aria-labelledby="mediodiaTitle">
-  <div class="wrap">
-    <div class="redpanel reveal">
-      <div class="rp-copy">
-        <span class="sign" data-i18n="day.midday.sign">12:00 pm · Midday</span>
-        <h2 class="script" id="mediodiaTitle" data-i18n="day.midday.title">Today's food.</h2>
-        <p data-i18n="day.midday.body">The hot table: Dominican food made today, just like home. Ask about the special.</p>
-        <div class="ctas"><a class="btn btn-light" href="#mesa" data-i18n="day.midday.cta">What's on today</a><a class="btn btn-ghost" id="middayWa" href="https://wa.me/17862547577" target="_blank" rel="noopener" data-i18n="day.midday.wa">Order on WhatsApp</a></div>
-      </div>
-      <div class="rp-pic">
-        <figure class="rp-plate ht"><img src="assets/img/mediodia-sancocho-480.webp" srcset="assets/img/mediodia-sancocho-480.webp 480w, assets/img/mediodia-sancocho-960.webp 960w" sizes="(max-width:768px) 70vw, 460px" width="480" height="640" loading="lazy" alt="Bowl of sancocho with white rice and avocado" data-i18n-alt="day.midday.alt"></figure>
-        <span class="burst b-today" data-burst="#0d0d0d"><span data-i18n="day.midday.burst">Made today</span></span>
-      </div>
-    </div>
-    <div class="board-row" id="mesa">
-      <figure class="steam ht"><img src="assets/img/mediodia-mesa-caliente-960.webp" srcset="assets/img/mediodia-mesa-caliente-480.webp 480w, assets/img/mediodia-mesa-caliente-960.webp 960w, assets/img/mediodia-mesa-caliente-1440.webp 1440w" sizes="(max-width:768px) 85vw, 640px" width="480" height="270" loading="lazy" alt="The hot table with today's trays" data-i18n-alt="day.board.alt"></figure>
-      <div class="board">
-        <h3 data-i18n="day.board.title">Today at the hot table</h3>
-        <p class="board-sub" data-i18n="day.board.sub">Changes every day</p>
-        <div id="board"><p class="board-special">Ask about our daily food specials!</p></div>
-      </div>
-    </div>
-    <div class="favs-head">
-      <div><span class="sign sign--red" data-i18n="day.favs.sign">From the New York deli</span><h3 class="favs-title" data-i18n="day.favs.title">The favorites</h3></div>
-      <a class="btn btn-ghost" href="menu.html" data-i18n="day.favs.cta">See the full menu →</a>
-    </div>
-    <div class="favs" id="favs"></div>
-  </div>
-</section>
-
-<section class="sec tarde" id="market" aria-labelledby="marketTitle">
-  <div class="awning" aria-hidden="true">CANDELA &amp; CAFÉ · MARKET · GROCERY · DELI · COFFEE</div>
-  <div class="wrap">
-    <div class="t-head reveal">
-      <div><span class="sign" data-i18n="day.market.sign">3:00 pm · Afternoon</span><h2 class="stack stack--one" id="marketTitle" data-i18n="day.market.title">The market.</h2></div>
-      <p class="lead" data-i18n="day.market.body">The house basics, around the corner: pantry, fruit and veg, natural products and everyday essentials. If you don't see it, ask us.</p>
-    </div>
-    <div class="shelf" id="shelf"></div>
-    <div class="t-cta"><a class="btn btn-cream" id="marketAsk" href="https://wa.me/17862547577" target="_blank" rel="noopener" data-i18n="day.market.cta">Got it? Ask on WhatsApp</a><p data-i18n="day.market.note">Come by and pick it up — we're open every day from 8 am.</p></div>
-  </div>
-</section>
-
-<div class="dusk" aria-hidden="true"></div>
-
-<section class="sec noche" id="noche" aria-labelledby="nocheTitle">
-  <div class="wrap">
-    <div class="n-banner reveal">
-      <img class="n-bg" src="assets/img/noche-neon-960.webp" srcset="assets/img/noche-neon-480.webp 480w, assets/img/noche-neon-960.webp 960w" sizes="(max-width:768px) 100vw, 1180px" width="480" height="701" loading="lazy" alt="The «Coffee now, Wine later» neon over the red banquette" data-i18n-alt="day.night.alt">
-      <div class="n-copy">
-        <span class="sign sign--glass" data-i18n="day.night.sign">7:00 pm · Night</span>
-        <h2 class="neon-big" id="nocheTitle">Wine later.</h2>
-        <p class="lead" data-i18n="day.night.body">Wine, coffee until close and good music. On Fridays, it's live.</p>
-        <div class="ctas"><button class="btn btn-p" type="button" data-open-res data-i18n="day.night.reserve">Reserve a table</button><a class="btn btn-ghost btn-neon" href="#cartas" data-i18n="day.night.cta">See the night menu</a></div>
-      </div>
-      <svg class="stamp" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
-        <defs><path id="stampPath" d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0"/></defs>
-        <circle cx="100" cy="100" r="97" fill="#0a0a0a" stroke="#76C043" stroke-width="3"/>
-        <circle cx="100" cy="100" r="58" fill="none" stroke="#76C043" stroke-width="1.5" stroke-dasharray="3 5"/>
-        <text font-family="Anton, sans-serif" font-size="17" letter-spacing="4" fill="#dff5cd"><textPath href="#stampPath" data-i18n="day.night.stamp">EVERY FRIDAY · LIVE MUSIC · </textPath></text>
-        <text x="100" y="98" text-anchor="middle" font-family="Anton, sans-serif" font-size="30" fill="#fff">8 PM</text>
-        <text x="100" y="124" text-anchor="middle" font-family="Architects Daughter, cursive" font-size="18" fill="#9be26a" data-i18n="day.night.live">live</text>
-      </svg>
-    </div>
-    <div class="arches" id="cartas"></div>
-    <div class="music reveal">
-      <div>
-        <span class="sign sign--dark" data-i18n="day.music.p1">Fridays</span>
-        <h3 class="neon-big neon-mid" data-i18n="day.music.title">Live music.</h3>
-        <div class="pills"><span class="pill-neon" data-i18n="day.music.p1">Fridays</span><span class="pill-neon" data-i18n="music.p3">From 8pm</span></div>
-        <button class="btn btn-p" type="button" data-open-res data-i18n="day.night.reserve">Reserve a table</button>
-      </div>
-      <div class="music-glow" aria-hidden="true"><span>8 pm</span></div>
-    </div>
-  </div>
-</section>
-
-<section class="sec lugar" id="lugar" aria-labelledby="lugarTitle">
-  <div class="wrap">
-    <span class="sign sign--dark" data-i18n="day.place.sign">The place</span>
-    <h2 class="stack stack--one" id="lugarTitle"><span data-i18n="day.place.title.a">Come</span> <span class="fire" data-i18n="day.place.title.b">see it.</span></h2>
-    <div class="mosaic">
-      <figure class="ht"><img src="assets/img/lugar-neon-sub-960.webp" srcset="assets/img/lugar-neon-sub-480.webp 480w, assets/img/lugar-neon-sub-960.webp 960w" sizes="(max-width:768px) 92vw, 460px" width="480" height="640" loading="lazy" alt="Boar's Head sub under the neon sign" data-i18n-alt="day.place.alt1"></figure>
-      <figure><img src="assets/img/lugar-terraza-480.webp" width="480" height="640" loading="lazy" alt="Philly cheesesteak on the terrace" data-i18n-alt="day.place.alt2"></figure>
-      <figure class="ht"><img src="assets/img/manana-fachada-480.webp" width="480" height="640" loading="lazy" alt="Breakfast plate at the door of 507 N Miami Ave" data-i18n-alt="day.morning.alt"></figure>
-      <figure><img src="assets/img/lugar-interior-480.webp" width="480" height="523" loading="lazy" alt="Prosciutto sandwich by the red banquette" data-i18n-alt="day.place.alt3"></figure>
-      <figure class="ht"><img src="assets/img/lugar-flan-480.webp" width="480" height="640" loading="lazy" alt="Flan on the terrace" data-i18n-alt="day.place.alt4"></figure>
-    </div>
-    <div class="g-row">
-      <span class="burst b-google" data-burst="#D8352A"><span><b id="gRating">4.6</b><small data-i18n="day.place.ongoogle">on Google</small></span></span>
-      <p><b><span id="gReviews">142</span> <span data-i18n="day.place.reviews">reviews on Google.</span></b> <span data-i18n="day.place.body">What the neighborhood says, straight from our Google profile.</span></p>
-      <div class="ctas"><a class="btn btn-ghost" id="gRead" href="https://www.google.com/maps?cid=6497021305409967970" target="_blank" rel="noopener" data-i18n="day.place.read">Read the reviews</a><a class="btn btn-ghost" id="gWrite" href="https://www.google.com/maps?cid=6497021305409967970" target="_blank" rel="noopener" data-i18n="reviews.write">Write a review</a></div>
-    </div>
-  </div>
-</section>
-
-<section class="sec visit" id="visit" aria-labelledby="visitTitle">
-  <div class="wrap v-grid">
+<section class="sec wrap" id="dominicana" aria-labelledby="domTitle">
+  <p class="kick" data-i18n="home.dom.kick">Made every day</p>
+  <h2 class="sec-title" id="domTitle" data-i18n="home.dom.title">Dominican food</h2>
+  <div class="split">
+    <img class="photo" src="assets/img/mediodia-sancocho-960.webp" srcset="assets/img/mediodia-sancocho-480.webp 480w, assets/img/mediodia-sancocho-960.webp 960w" sizes="(max-width:900px) 92vw, 620px" width="480" height="640" loading="lazy" alt="Bowl of sancocho with white rice and avocado" data-i18n-alt="home.dom.alt">
     <div>
-      <span class="sign sign--dark" data-i18n="visit.kicker">Visit Us</span>
+      <p class="lead" data-i18n="home.dom.body">The hot table: Dominican food made today, just like home.</p>
+      <div id="board"><p class="note">Ask about our daily food specials!</p></div>
+      <a class="btn btn-ghost" id="domWa" href="https://wa.me/17862547577" target="_blank" rel="noopener" data-i18n="home.dom.wa">Order on WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<section class="sec wrap" id="market" aria-labelledby="cmTitle">
+  <p class="kick" data-i18n="home.cm.kick">All day</p>
+  <h2 class="sec-title" id="cmTitle" data-i18n="home.cm.title">Coffee &amp; market</h2>
+  <div class="duo">
+    <article class="big">
+      <img src="assets/img/manana-jugo-960.webp" srcset="assets/img/manana-jugo-480.webp 480w, assets/img/manana-jugo-960.webp 960w" sizes="(max-width:900px) 92vw, 540px" width="480" height="640" loading="lazy" alt="Fresh juice on the terrace" data-i18n-alt="home.coffee.alt">
+      <h3 class="big-title" data-i18n="home.coffee.title">Coffee &amp; breakfast</h3>
+      <p class="big-body" data-i18n="home.coffee.body">From 8 am: coffee, fresh juices, breakfast and bakery.</p>
+      <a class="btn btn-ghost btn-sm" href="menu.html#breakfast" data-i18n="home.coffee.cta">See breakfast</a>
+    </article>
+    <article class="big shop">
+      <p class="kick" data-i18n="home.market.kick">Basics &amp; natural products</p>
+      <h3 class="big-title" data-i18n="home.market.title">The market</h3>
+      <ul class="shop-list" id="shopList" role="list"></ul>
+      <p class="note" data-i18n="home.market.note">Got it? Ask us before you come.</p>
+      <a class="btn btn-ghost btn-sm" id="marketAsk" href="https://wa.me/17862547577" target="_blank" rel="noopener" data-i18n="home.market.cta">Ask on WhatsApp</a>
+    </article>
+  </div>
+</section>
+
+<section class="sec wrap" id="noche" aria-labelledby="friTitle">
+  <div class="fri">
+    <img class="photo" src="assets/img/noche-neon-960.webp" srcset="assets/img/noche-neon-480.webp 480w, assets/img/noche-neon-960.webp 960w" sizes="(max-width:900px) 92vw, 600px" width="480" height="701" loading="lazy" alt="The «Coffee now, Wine later» neon over the red banquette" data-i18n-alt="home.fri.alt">
+    <div class="fri-copy">
+      <p class="kick" data-i18n="home.fri.kick">Fridays</p>
+      <h2 class="sec-title" id="friTitle" data-i18n="home.fri.title">Wine &amp; live music</h2>
+      <p class="fri-body" data-i18n="home.fri.body">Wine, coffee until close and live music from 8 pm.</p>
+      <button class="btn btn-p btn-lg" type="button" data-open-res data-i18n="home.fri.cta">Reserve a table</button>
+    </div>
+  </div>
+</section>
+
+<section class="sec wrap" id="lugar" aria-labelledby="placeTitle">
+  <p class="kick" data-i18n="home.place.kick">The place</p>
+  <h2 class="sec-title" id="placeTitle" data-i18n="home.place.title">Come see it</h2>
+  <div class="place">
+    <img src="assets/img/lugar-interior-960.webp" srcset="assets/img/lugar-interior-480.webp 480w, assets/img/lugar-interior-960.webp 960w" sizes="(max-width:900px) 92vw, 360px" width="480" height="523" loading="lazy" alt="Prosciutto sandwich by the red banquette" data-i18n-alt="home.place.alt1">
+    <img src="assets/img/local-interior-960.webp" srcset="assets/img/local-interior-480.webp 480w, assets/img/local-interior-960.webp 960w, assets/img/local-interior-1440.webp 1440w" sizes="(max-width:900px) 45vw, 360px" width="480" height="640" loading="lazy" alt="Grilled chicken with rice and salad in the dining room" data-i18n-alt="home.place.alt2">
+    <img src="assets/img/lugar-terraza-960.webp" srcset="assets/img/lugar-terraza-480.webp 480w, assets/img/lugar-terraza-960.webp 960w" sizes="(max-width:900px) 45vw, 360px" width="480" height="640" loading="lazy" alt="Philly cheesesteak on the terrace" data-i18n-alt="home.place.alt3">
+  </div>
+  <p class="google"><span class="star" aria-hidden="true">★</span> <b><span id="gRating">4.6</span> <span data-i18n="home.place.google">on Google</span></b> · <span id="gReviews">142</span> <span data-i18n="home.place.reviews">reviews</span> · <a id="gRead" href="https://www.google.com/maps?cid=6497021305409967970" target="_blank" rel="noopener" data-i18n="home.place.read">Read the reviews</a> · <a id="gWrite" href="https://www.google.com/maps?cid=6497021305409967970" target="_blank" rel="noopener" data-i18n="reviews.write">Write a review</a></p>
+</section>
+
+<section class="sec wrap visit" id="visit" aria-labelledby="visitTitle">
+  <div class="visit-grid">
+    <div>
+      <p class="kick" data-i18n="visit.kicker">Visit Us</p>
       <h2 class="num" id="visitTitle" aria-label="507 N Miami Ave">507</h2>
-      <p class="addr">N Miami Ave<small>Downtown Miami, FL 33136</small></p>
-      <div class="ctas"><a class="btn btn-p" href="https://www.google.com/maps/dir/?api=1&amp;destination=507+N+Miami+Ave%2C+Miami%2C+FL+33136" target="_blank" rel="noopener" data-i18n="visit.directions">Get directions</a><a class="btn btn-ghost" href="tel:+17862547577" data-i18n="visit.call">Call us</a><a class="btn btn-ghost" id="visitWa" href="https://wa.me/17862547577" target="_blank" rel="noopener">WhatsApp</a></div>
+      <p class="street">N Miami Ave</p>
+      <p class="city">Downtown Miami, FL 33136</p>
+      <div class="ctas"><a class="btn btn-p" href="https://www.google.com/maps/dir/?api=1&amp;destination=507+N+Miami+Ave%2C+Miami%2C+FL+33136" target="_blank" rel="noopener" data-i18n="visit.directions">Get directions</a><a class="btn btn-ghost" href="tel:+17862547577" data-i18n="mbar.call">Call</a><a class="btn btn-ghost" id="visitWa" href="https://wa.me/17862547577" target="_blank" rel="noopener">WhatsApp</a></div>
     </div>
     <div>
-      <table class="hours-t"><caption class="sr-only" data-i18n="visit.hours.title">Hours</caption>
+      <table class="hours"><caption class="sr-only" data-i18n="visit.hours.title">Hours</caption>
         <tbody id="hoursBody"><tr><th scope="row" data-i18n="visit.fallback1">Sun–Tue · 8 am – 10 pm</th><td></td></tr><tr><th scope="row" data-i18n="visit.fallback2">Wed–Sat · 8 am – 11:30 pm</th><td></td></tr></tbody>
       </table>
       <iframe class="map" loading="lazy" title="Map: Candela &amp; Café" src="https://www.google.com/maps?q=507+N+Miami+Ave,+Miami,+FL+33136&amp;output=embed"></iframe>
@@ -273,36 +200,6 @@
   <div class="foot-bottom"><span>&copy; 2026 Candela &amp; Café Market</span><span>507 N Miami Ave, Miami, FL 33136</span></div>
 </div></footer>
 
-<nav class="mbar" id="mbar" aria-label="Quick actions" data-i18n-aria="mbar.label">
-  <a class="mbar-go" href="https://www.google.com/maps/dir/?api=1&amp;destination=507+N+Miami+Ave%2C+Miami%2C+FL+33136" target="_blank" rel="noopener" data-i18n="mbar.go">Directions</a>
-  <a href="tel:+17862547577" data-i18n="mbar.call">Call</a>
-  <a href="menu.html" data-i18n="nav.menu">Menu</a>
-</nav>
-
-<!-- MODAL DE RESERVA -->
-<div class="modal" id="resModal" aria-hidden="true">
-  <div class="modal-ov" data-close></div>
-  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="resTitle">
-    <button class="modal-x" type="button" data-close aria-label="Close" data-i18n-aria="modal.close">×</button>
-    <div class="modal-seal"><img src="assets/img/logo-96.webp" alt="" width="54" height="54"></div>
-    <h3 id="resTitle" class="modal-title"><span data-i18n="res.title.a">Reserve your</span> <span class="fire" data-i18n="res.title.b">Friday</span></h3>
-    <p class="modal-sub" data-i18n="res.sub">Live music every Friday. Fill this in and we confirm by WhatsApp.</p>
-    <label class="fld"><span data-i18n="res.name">Name</span><input id="resName" type="text" autocomplete="name"></label>
-    <label class="fld"><span data-i18n="res.phone">Phone</span><input id="resPhone" type="tel" autocomplete="tel" placeholder="(786) 000-0000"></label>
-    <div class="fld-row">
-      <label class="fld"><span data-i18n="res.day">Friday</span><select id="resDate"></select></label>
-      <label class="fld"><span data-i18n="res.time">Time</span><select id="resTime"><option>8:00 PM</option><option>9:00 PM</option><option>10:00 PM</option></select></label>
-    </div>
-    <div class="fld"><span data-i18n="res.guests">Guests</span><div class="stepper"><button type="button" id="gMinus" aria-label="Less" data-i18n-aria="cart.less">−</button><b id="gCount">2</b><button type="button" id="gPlus" aria-label="More" data-i18n-aria="cart.more">+</button></div></div>
-    <button class="btn btn-g modal-go" type="button" id="resGo" data-i18n="res.go">Confirm via WhatsApp</button>
-    <p class="modal-note" data-i18n="res.note">We'll reply to confirm availability.</p>
-  </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer
-  integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer
-  integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous"></script>
 <script type="module" src="js/landing.js"></script>
 </body>
 </html>

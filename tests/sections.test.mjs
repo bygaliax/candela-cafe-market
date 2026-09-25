@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { esc, findItem, renderFavorites, renderMarketList, renderMarket, renderArches, renderBoard, renderHours, renderStatus, statusHTML, burstSvg } from '../web/js/sections.js';
-import { FAVORITES, DAY_NIGHT, HOURS } from '../web/js/site-data.js';
+import { esc, findItem, renderFavorites, renderMarketList, renderBoard, renderHours, renderStatus, statusHTML } from '../web/js/sections.js';
+import { FAVORITES, HOURS } from '../web/js/site-data.js';
 import { MARKET_CATEGORIES } from '../web/js/market-data.js';
 import { DAILY_SPECIAL } from '../web/js/menu-data.js';
 
@@ -32,21 +32,6 @@ test('renderFavorites: un id que no está en la carta no pinta nada', () => {
   assert.equal(renderFavorites([{ id: 'no-existe', img: 'x', h: 1 }], 'es'), '');
 });
 
-test('renderMarket: 6 baldas sin precios', () => {
-  const html = renderMarket(MARKET_CATEGORIES, 'es');
-  assert.equal(count(html, '<figure class="tile">'), 6);
-  assert.match(html, /Despensa/);
-  assert.doesNotMatch(html, /\$/);
-});
-
-test('renderArches: dos cartas con su franja', () => {
-  const html = renderArches(DAY_NIGHT, 'es');
-  assert.match(html, /Coffee now/);
-  assert.match(html, /Wine later/);
-  assert.match(html, /7 pm – cierre/);
-  assert.match(html, /Cervezas frías/);
-});
-
 test('renderBoard: sin platos, el aviso del especial escrito a mano y ninguna lista', () => {
   assert.equal(renderBoard({}, 3, 'es'), `<p class="note">${esc(DAILY_SPECIAL.es)}</p>`);
   assert.equal(renderBoard({ 3: [] }, 3, 'en'), `<p class="note">${esc(DAILY_SPECIAL.en)}</p>`);
@@ -72,13 +57,6 @@ test('renderStatus: abierto, cierra pronto y cerrado en ES y EN', () => {
   assert.deepEqual(renderStatus({ open: true, soon: true, closesAt: '22:00', day: 2 }, 'en'), { cls: 'is-soon', text: 'Closing soon · at 10 pm' });
   assert.deepEqual(renderStatus({ open: false, opensAt: '08:00', opensDay: 3, day: 2 }, 'es'), { cls: 'is-closed', text: 'Cerrado · abrimos mañana a las 8 am' });
   assert.deepEqual(renderStatus({ open: false, opensAt: '08:00', opensDay: 2, day: 2 }, 'en'), { cls: 'is-closed', text: 'Closed · opens today at 8 am' });
-});
-
-test('burstSvg: estrella de 44 vértices con el color escapado', () => {
-  const svg = burstSvg('#ED3B2F');
-  assert.equal(svg.match(/points="([^"]+)"/)[1].split(' ').length, 44);
-  assert.match(svg, /fill="#ED3B2F"/);
-  assert.match(burstSvg('"><x'), /fill="&quot;&gt;&lt;x"/);
 });
 
 test('renderMarketList: 6 filas con nombre y ejemplos, sin precios', () => {

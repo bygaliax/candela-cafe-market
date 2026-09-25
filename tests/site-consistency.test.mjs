@@ -72,3 +72,17 @@ test('Barra y pie nuevos en la portada y en la carta', () => {
 test('En español, el enlace de la carta dice «Carta»', () => {
   assert.equal(DICT['nav.menu'].es, 'Carta');
 });
+
+test('La portada nueva: su hoja, sin GSAP, sin hero de fuego ni market de banco de imágenes', () => {
+  assert.match(INDEX, /<link rel="stylesheet" href="css\/home\.css">/);
+  for (const gone of [/gsap/i, /ScrollTrigger/, /hero-(fire|grill|burger|chips|drink|leaf)/, /mk-(despensa|aceite|cereal|frutas|verdes|cafe)/,
+    /landing\.css/, /sections\.css/, /class="dawn"/, /class="dusk"/, /id="cartas"/, /class="now"/, /Order Now/])
+    assert.doesNotMatch(INDEX, gone, String(gone));
+  assert.match(INDEX, /<link rel="preload" as="image" href="assets\/img\/manana-fachada-960\.webp"/);
+  assert.match(INDEX, /<img class="hero-photo"[^>]*fetchpriority="high"/);
+});
+
+test('La portada: un solo h1 y las anclas de siempre', () => {
+  assert.equal(INDEX.split('<h1').length - 1, 1);
+  for (const id of ['hero', 'market', 'noche', 'visit']) assert.match(INDEX, new RegExp(`id="${id}"`), id);
+});
