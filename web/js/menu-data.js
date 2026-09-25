@@ -10,25 +10,37 @@ export const DAILY_SPECIAL = {
   es: '¡Pregunta por nuestros especiales del día!',
 };
 
-export const CATEGORIES = [
-  { id: 'breakfast',      label: { en: 'Breakfast',                es: 'Desayunos' } },
-  { id: 'appetizers',     label: { en: 'Appetizers & Sides',       es: 'Aperitivos' } },
-  { id: 'avocado-toast',  label: { en: 'Avocado Toast',            es: 'Avocado Toast' } },
-  { id: 'salads-wraps',   label: { en: 'Salads & Wraps',           es: 'Ensaladas y Wraps' } },
-  { id: 'dominican-spot', label: { en: 'Dominican Spot',           es: 'Rincón Dominicano' } },
-  { id: 'soups',          label: { en: 'Soups',                    es: 'Sopas' } },
-  { id: 'signature',      label: { en: 'Signature Sandwiches',     es: 'Sándwiches de la Casa' } },
-  { id: 'ny-signature',   label: { en: 'NY Signature Sandwiches',  es: 'Sándwiches NY' } },
-  { id: 'panini',         label: { en: 'Panini',                   es: 'Panini' } },
-  { id: 'burgers',        label: { en: 'Burgers',                  es: 'Hamburguesas' } },
-  { id: 'bakery',         label: { en: 'Bakery & More',            es: 'Panadería' } },
-  { id: 'coffee',         label: { en: 'Coffee Bar',               es: 'Barra de Café' } },
-  { id: 'juices',         label: { en: 'Juices',                   es: 'Jugos' } },
-  { id: 'smoothies',      label: { en: 'Smoothies',                es: 'Batidos' } },
-  { id: 'shakes',         label: { en: 'Protein Shakes',           es: 'Batidos de Proteína' } },
+// Momentos del día de la carta (spec del menú, §4.2). CATEGORIES va en este orden.
+export const PARTS = [
+  { id: 'morning', label: { en: 'Morning',         es: 'Mañana' } },
+  { id: 'coffee',  label: { en: 'Coffee & juices', es: 'Café y jugos' } },
+  { id: 'midday',  label: { en: 'Midday',          es: 'Mediodía' } },
 ];
 
-// item: { id, name, desc:{en,es}|null, price:Number, badge:String|null, img:slug|null }
+// cover = foto de cabecera cuando la foto enseña varios productos o el lugar; w = anchos que existen en assets/img.
+export const CATEGORIES = [
+  { id: 'breakfast',      part: 'morning', label: { en: 'Breakfast',               es: 'Desayunos' } },
+  { id: 'avocado-toast',  part: 'morning', label: { en: 'Avocado Toast',           es: 'Avocado Toast' } },
+  { id: 'bakery',         part: 'morning', label: { en: 'Bakery & More',           es: 'Panadería' },
+    cover: { img: 'manana-pastelitos', w: [480, 960] } },
+  { id: 'coffee',         part: 'coffee',  label: { en: 'Coffee Bar',              es: 'Barra de Café' },
+    cover: { img: 'noche-neon', w: [480, 960], focus: '50% 88%' } },
+  { id: 'juices',         part: 'coffee',  label: { en: 'Juices',                  es: 'Jugos' } },
+  { id: 'smoothies',      part: 'coffee',  label: { en: 'Smoothies',               es: 'Batidos' } },
+  { id: 'shakes',         part: 'coffee',  label: { en: 'Protein Shakes',          es: 'Batidos de Proteína' } },
+  { id: 'ny-signature',   part: 'midday',  label: { en: 'NY Signature Sandwiches', es: 'Sándwiches NY' } },
+  { id: 'signature',      part: 'midday',  label: { en: 'Signature Sandwiches',    es: 'Sándwiches de la Casa' } },
+  { id: 'panini',         part: 'midday',  label: { en: 'Panini',                  es: 'Panini' } },
+  { id: 'burgers',        part: 'midday',  label: { en: 'Burgers',                 es: 'Hamburguesas' } },
+  { id: 'dominican-spot', part: 'midday',  label: { en: 'Dominican Spot',          es: 'Rincón Dominicano' },
+    cover: { img: 'mediodia-mesa-caliente', w: [480, 960, 1440] }, note: DAILY_SPECIAL },
+  { id: 'salads-wraps',   part: 'midday',  label: { en: 'Salads & Wraps',          es: 'Ensaladas y Wraps' } },
+  { id: 'soups',          part: 'midday',  label: { en: 'Soups',                   es: 'Sopas' },
+    cover: { img: 'menu-sopa', w: [480, 960, 1440], focus: '50% 55%' } },
+  { id: 'appetizers',     part: 'midday',  label: { en: 'Appetizers & Sides',      es: 'Aperitivos' } },
+];
+
+// item: { id, name, desc:{en,es}|null, price:Number, badge:String|null, img:slug|null, focus?:'X% Y%' }
 export const MENU = {
   breakfast: [
     {
@@ -51,7 +63,8 @@ export const MENU = {
       },
       price: 13.99,
       badge: null,
-      img: null,
+      img: 'manana-fachada',
+      focus: '50% 78%',
     },
     {
       id: 'bk-make-your-own-omelette',
@@ -197,7 +210,7 @@ export const MENU = {
       },
       price: 12.99,
       badge: null,
-      img: null,
+      img: 'menu-quesadilla',
     },
     {
       id: 'sw-build-your-own-salad',
@@ -230,7 +243,8 @@ export const MENU = {
       },
       price: 13.99,
       badge: null,
-      img: null,
+      img: 'menu-greek-salad',
+      focus: '45% 45%',
     },
     {
       id: 'sw-caprese-salad',
@@ -364,7 +378,8 @@ export const MENU = {
       },
       price: 15.49,
       badge: "Boar's Head",
-      img: 'hero-sandwich',
+      img: 'lugar-interior',
+      focus: '50% 72%',
     },
     {
       id: 'sg-california-turkey-sandwich',
@@ -375,7 +390,8 @@ export const MENU = {
       },
       price: 13.99,
       badge: "Boar's Head",
-      img: null,
+      img: 'menu-california-turkey',
+      focus: '50% 45%',
     },
     {
       id: 'sg-the-heat',
@@ -433,7 +449,8 @@ export const MENU = {
       },
       price: 15.49,
       badge: "Boar's Head",
-      img: 'pastrami',
+      img: 'deli-ruben',
+      focus: '50% 58%',
     },
     {
       id: 'ny-central-park-club-sandwiches',
@@ -444,7 +461,7 @@ export const MENU = {
       },
       price: 13.99,
       badge: "Boar's Head",
-      img: null,
+      img: 'menu-central-park-club',
     },
     {
       id: 'ny-chopped-cheese',
@@ -455,7 +472,7 @@ export const MENU = {
       },
       price: 13.99,
       badge: "Boar's Head",
-      img: null,
+      img: 'deli-chopped-cheese',
     },
     {
       id: 'ny-manhattan-hero',
@@ -466,7 +483,8 @@ export const MENU = {
       },
       price: 13.99,
       badge: "Boar's Head",
-      img: null,
+      img: 'lugar-neon-sub',
+      focus: '50% 58%',
     },
     {
       id: 'ny-east-side-el-monstruo',
@@ -499,7 +517,8 @@ export const MENU = {
       },
       price: 13.99,
       badge: "Boar's Head",
-      img: null,
+      img: 'lugar-terraza',
+      focus: '50% 62%',
     },
   ],
 
@@ -513,7 +532,7 @@ export const MENU = {
       },
       price: 12.99,
       badge: null,
-      img: null,
+      img: 'deli-chicken-panini',
     },
     {
       id: 'pn-roaster-beef-panini',
@@ -560,7 +579,8 @@ export const MENU = {
       },
       price: 15.99,
       badge: null,
-      img: null,
+      img: 'menu-candela-burger',
+      focus: '50% 42%',
     },
     {
       id: 'bg-bacon-cheese-burger',
