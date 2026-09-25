@@ -15,7 +15,11 @@ const search = $('menuSearch'), live = $('searchStatus'), empty = $('menuEmpty')
 const reduce = matchMedia('(prefers-reduced-motion: reduce)');
 
 /* ── alto de nav + chips: anclas y foco quedan justo debajo (scroll-padding-top en menu.css) ── */
-const setMenuTop = () => document.documentElement.style.setProperty('--menu-top', `${$('nav').offsetHeight + chips.offsetHeight}px`);
+const setMenuTop = () => {
+  const root = document.documentElement.style, navH = $('nav').offsetHeight;
+  root.setProperty('--nav-h', `${navH}px`); // los chips se pegan justo debajo de la nav, mida lo que mida
+  root.setProperty('--menu-top', `${navH + chips.offsetHeight}px`);
+};
 const sizes = new ResizeObserver(setMenuTop); // la nav cambia de alto cuando carga la fuente del logo
 sizes.observe(chips);
 sizes.observe($('nav'));

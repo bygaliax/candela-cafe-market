@@ -8,8 +8,9 @@ html{scroll-padding-top:var(--menu-top,128px)}
 /* nav negra y compacta desde arriba: la transparente no se ve sobre crema */
 .page-menu .nav{background:rgba(13,13,13,.97)}
 .page-menu .nav-inner{padding-top:12px;padding-bottom:12px}
-/* con 40 px de margen, a 320 el nombre se parte en dos líneas y la nav tapa los chips (top:70px) */
-@media(max-width:600px){.page-menu .nav-inner{padding-left:20px;padding-right:20px}}
+/* con 40 px de margen, a 320 el nombre se parte en dos líneas y la nav crece; el selector tiene que ganar
+   también a `.nav.is-scrolled .nav-inner` de base.css, que se aplica en cuanto se hace scroll */
+@media(max-width:600px){.page-menu .nav .nav-inner,.page-menu .nav.is-scrolled .nav-inner{padding-left:20px;padding-right:20px}}
 
 /* cabecera */
 .menu-head{padding:112px 0 22px}
@@ -18,7 +19,7 @@ html{scroll-padding-top:var(--menu-top,128px)}
 .menu-head .ssub{color:var(--ink-2);max-width:48ch}
 
 /* chips fijos bajo la nav */
-.chips{position:sticky;top:70px;z-index:90;display:flex;gap:8px;overflow-x:auto;padding:12px 20px;
+.chips{position:sticky;top:var(--nav-h,70px);z-index:90;display:flex;gap:8px;overflow-x:auto;padding:12px 20px;
   background:var(--claro);border-bottom:2px solid var(--ink);scrollbar-width:none}
 .chips::-webkit-scrollbar{display:none}
 .chip{flex:0 0 auto;font:400 .82rem/1 var(--sign);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;
