@@ -24,11 +24,13 @@ const IMAGES = {
   'lugar-flan':             'descargas-24-sep/01 (18).png',
 };
 const WIDTHS = [480, 960, 1440];
+// Los stickers se ven a ≤200 px: llevan además una variante de 240.
+const STICKERS = new Set(['manana-tres-golpes', 'manana-jugo', 'manana-pastelitos']);
 
 for (const [slug, rel] of Object.entries(IMAGES)) {
   const src = path.join(SRC, rel);
   const { width } = await sharp(src).rotate().toBuffer({ resolveWithObject: true }).then(r => r.info);
-  for (const w of WIDTHS.filter(w => w <= width)) {
+  for (const w of [...(STICKERS.has(slug) ? [240] : []), ...WIDTHS].filter(w => w <= width)) {
     const info = await sharp(src).rotate().resize({ width: w }).webp({ quality: 76 }).toFile(path.join(OUT, `${slug}-${w}.webp`));
     console.log(`${slug}-${w}.webp  ${info.width}x${info.height}  ${Math.round(info.size / 1024)} KB`);
   }

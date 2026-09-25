@@ -24,7 +24,9 @@
       imagesizes="(max-width:700px) 90vw, 740px" fetchpriority="high">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/landing.css">
-<link rel="stylesheet" href="css/sections.css">
+<link rel="preload" as="style" href="css/sections.css">
+<link rel="stylesheet" href="css/sections.css" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="css/sections.css"></noscript>
 <script type="application/ld+json">
 { "@context": "https://schema.org", "@type": "Restaurant",
   "name": "Candela & Café Market",
@@ -109,9 +111,9 @@
     </div>
     <div class="m-art">
       <figure class="m-main ht"><img src="assets/img/manana-fachada-480.webp" srcset="assets/img/manana-fachada-480.webp 480w, assets/img/manana-fachada-960.webp 960w" sizes="(max-width:768px) 62vw, 360px" width="480" height="640" loading="lazy" alt="Breakfast plate at the door of 507 N Miami Ave" data-i18n-alt="day.morning.alt"></figure>
-      <img class="sticker st-1" src="assets/img/manana-tres-golpes-480.webp" width="480" height="640" loading="lazy" alt="">
-      <img class="sticker st-2" src="assets/img/manana-jugo-480.webp" width="480" height="640" loading="lazy" alt="">
-      <img class="sticker st-3" src="assets/img/manana-pastelitos-480.webp" width="480" height="480" loading="lazy" alt="">
+      <img class="sticker st-1" src="assets/img/manana-tres-golpes-240.webp" srcset="assets/img/manana-tres-golpes-240.webp 240w, assets/img/manana-tres-golpes-480.webp 480w" sizes="(max-width:768px) 130px, 200px" width="240" height="320" loading="lazy" alt="">
+      <img class="sticker st-2" src="assets/img/manana-jugo-240.webp" srcset="assets/img/manana-jugo-240.webp 240w, assets/img/manana-jugo-480.webp 480w" sizes="(max-width:768px) 96px, 140px" width="240" height="320" loading="lazy" alt="">
+      <img class="sticker st-3" src="assets/img/manana-pastelitos-240.webp" srcset="assets/img/manana-pastelitos-240.webp 240w, assets/img/manana-pastelitos-480.webp 480w" sizes="(max-width:768px) 110px, 160px" width="240" height="240" loading="lazy" alt="">
       <span class="burst b-open" data-burst="#ED3B2F"><span data-i18n="day.morning.burst">Open 8 am</span></span>
     </div>
   </div>
@@ -127,12 +129,12 @@
         <div class="ctas"><a class="btn btn-light" href="#mesa" data-i18n="day.midday.cta">What's on today</a><a class="btn btn-ghost" id="middayWa" href="https://wa.me/17862547577" target="_blank" rel="noopener" data-i18n="day.midday.wa">Order on WhatsApp</a></div>
       </div>
       <div class="rp-pic">
-        <figure class="rp-plate ht"><img src="assets/img/mediodia-sancocho-480.webp" srcset="assets/img/mediodia-sancocho-480.webp 480w, assets/img/mediodia-sancocho-960.webp 960w" sizes="(max-width:768px) 90vw, 460px" width="480" height="640" loading="lazy" alt="Bowl of sancocho with white rice and avocado" data-i18n-alt="day.midday.alt"></figure>
+        <figure class="rp-plate ht"><img src="assets/img/mediodia-sancocho-480.webp" srcset="assets/img/mediodia-sancocho-480.webp 480w, assets/img/mediodia-sancocho-960.webp 960w" sizes="(max-width:768px) 70vw, 460px" width="480" height="640" loading="lazy" alt="Bowl of sancocho with white rice and avocado" data-i18n-alt="day.midday.alt"></figure>
         <span class="burst b-today" data-burst="#0d0d0d"><span data-i18n="day.midday.burst">Made today</span></span>
       </div>
     </div>
     <div class="board-row" id="mesa">
-      <figure class="steam ht"><img src="assets/img/mediodia-mesa-caliente-960.webp" srcset="assets/img/mediodia-mesa-caliente-480.webp 480w, assets/img/mediodia-mesa-caliente-960.webp 960w, assets/img/mediodia-mesa-caliente-1440.webp 1440w" sizes="(max-width:768px) 92vw, 640px" width="480" height="270" loading="lazy" alt="The hot table with today's trays" data-i18n-alt="day.board.alt"></figure>
+      <figure class="steam ht"><img src="assets/img/mediodia-mesa-caliente-960.webp" srcset="assets/img/mediodia-mesa-caliente-480.webp 480w, assets/img/mediodia-mesa-caliente-960.webp 960w, assets/img/mediodia-mesa-caliente-1440.webp 1440w" sizes="(max-width:768px) 85vw, 640px" width="480" height="270" loading="lazy" alt="The hot table with today's trays" data-i18n-alt="day.board.alt"></figure>
       <div class="board">
         <h3 data-i18n="day.board.title">Today at the hot table</h3>
         <p class="board-sub" data-i18n="day.board.sub">Changes every day</p>
