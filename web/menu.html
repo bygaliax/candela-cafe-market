@@ -15,9 +15,9 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap"></noscript>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Anton&family=Architects+Daughter&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Architects+Daughter&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Architects+Daughter&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap"></noscript>
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/menu.css">
 <script type="application/ld+json">
@@ -31,9 +31,9 @@
       "addressLocality": "Miami", "addressRegion": "FL", "postalCode": "33136", "addressCountry": "US" } } }
 </script>
 </head>
-<body>
+<body class="page-menu">
 
-<nav class="nav" id="nav" aria-label="Main navigation"><div class="nav-inner">
+<nav class="nav" id="nav" aria-label="Main navigation" data-i18n-aria="nav.main"><div class="nav-inner">
   <a class="nav-logo" href="index.html">
     <img src="assets/img/logo-96.webp" alt="Candela &amp; Café logo" width="46" height="46">
     <b>CANDELA &amp; CAFÉ</b>
@@ -50,14 +50,15 @@
   </button>
 </div></nav>
 
-<header class="menu-hero">
+<header class="menu-head">
   <div class="wrap">
-    <h1 class="display" id="menuTitle" tabindex="-1" data-i18n="menu.title">The Menu</h1>
+    <p class="menu-kick" data-i18n="menu.kicker">Order · pick up at 507</p>
+    <h1 id="menuTitle" tabindex="-1" data-i18n="menu.title">The menu.</h1>
     <p class="ssub" data-i18n="menu.sub">Order online — we confirm by WhatsApp.</p>
   </div>
 </header>
 
-<nav class="chips" id="chips" aria-label="Menu categories"><!-- chips render JS --></nav>
+<nav class="chips" id="chips" aria-label="Menu categories" data-i18n-aria="menu.chips"><!-- chips render JS --></nav>
 
 <main class="wrap menu-main" id="menuMain">
   <noscript><p class="noscript" data-i18n="noscript">This menu needs JavaScript. Call us at +1 (786) 254-7577 — 507 N Miami Ave.</p></noscript>
@@ -69,7 +70,7 @@
   <b id="fabTotal">$0.00</b>
 </button>
 <div class="overlay" id="overlay" hidden></div>
-<aside class="cart-sheet" id="cartSheet" role="dialog" aria-modal="true" aria-label="Your order">
+<aside class="cart-sheet" id="cartSheet" role="dialog" aria-modal="true" aria-label="Your order" data-i18n-aria="cart.label">
   <header><b data-i18n="cart.label">Your order</b><button id="cartClose" type="button" aria-label="Close" data-i18n-aria="modal.close">&#x2715;</button></header>
   <div class="sheet-body" id="sheetBody"></div>
   <footer class="sheet-footer">
@@ -83,7 +84,7 @@
   <div class="wrap"><div class="footer-grid">
     <div><div class="brand"><img src="assets/img/logo-96.webp" alt="Candela &amp; Café Market logo" width="50" height="50"><b>CANDELA &amp; CAFÉ</b></div>
       <p style="margin-top:14px;max-width:38ch" data-i18n="footer.tag">NY Deli · Market &amp; Café — made with candela in Downtown Miami.</p></div>
-    <nav aria-label="Footer navigation"><h4 data-i18n="footer.explore">Explore</h4>
+    <nav aria-label="Footer navigation" data-i18n-aria="footer.nav"><h4 data-i18n="footer.explore">Explore</h4>
       <a href="menu.html" data-i18n="nav.menu">Menu</a><a href="index.html#market" data-i18n="nav.market">Market</a><a href="index.html#noche" data-i18n="nav.nights">Nights</a><a href="index.html#visit" data-i18n="nav.visit">Visit Us</a></nav>
     <div><h4 data-i18n="footer.orders">Orders &amp; Social</h4>
       <a href="https://www.ubereats.com/store/candela-y-cafe-market/oa35cIfwWWuJm-ND4o9G1g" target="_blank" rel="noopener">Uber Eats</a>

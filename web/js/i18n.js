@@ -22,7 +22,7 @@ export const DICT = {
   'footer.delivery': { en: 'Also on', es: 'También en' },
 
   /* ---- menú page / carrito ---- */
-  'menu.title':     { en: 'The Menu', es: 'El Menú' },
+  'menu.title':     { en: 'The menu.', es: 'La carta.' },
   'menu.sub':       { en: 'Order online — we confirm by WhatsApp.', es: 'Ordena online — confirmamos por WhatsApp.' },
   'cart.label':     { en: 'Your order', es: 'Tu pedido' },
   'cart.empty':     { en: 'Your order is empty. Add something tasty!', es: 'Tu pedido está vacío. ¡Agrega algo rico!' },
@@ -142,6 +142,10 @@ export const DICT = {
   'menu.search.none':  { en: "We couldn't find that.", es: 'No lo encontramos.' },
   'menu.search.ask':   { en: 'Ask us on WhatsApp', es: 'Pregúntanos por WhatsApp' },
   'menu.search.wa':    { en: 'Hi Candela & Café! Do you have {q}?', es: '¡Hola Candela & Café! ¿Tienen {q}?' },
+  'menu.kicker':       { en: 'Order · pick up at 507', es: 'Pide · recoge en el 507' },
+  'menu.chips':        { en: 'Menu categories', es: 'Categorías de la carta' },
+  'nav.main':          { en: 'Main navigation', es: 'Navegación principal' },
+  'footer.nav':        { en: 'Footer navigation', es: 'Navegación del pie de página' },
 };
 
 const KEY = 'candela-lang';

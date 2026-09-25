@@ -1,83 +1,105 @@
-import { MENU, CATEGORIES } from './menu-data.js';
-import { initLangToggle, t, getLang } from './i18n.js';
+// Carta «Carta de papel» (2026-09). Spec: docs/superpowers/specs/2026-09-24-candela-menu-design.md
+// El HTML lo pinta menu-render.js (puro, testeado); aquí solo se conecta el DOM.
+import { MENU, CATEGORIES, PARTS } from './menu-data.js';
+import { initLangToggle, getLang } from './i18n.js';
 import { cart, refresh, initCartUI, syncFromStorage } from './cart.js';
 import { initNav } from './nav.js';
+import { renderMenu, renderChips } from './menu-render.js';
 
 initLangToggle();
 initNav();
 
-const chips = document.getElementById('chips');
-const main  = document.getElementById('menuMain');
+const $ = id => document.getElementById(id);
+const chips = $('chips'), main = $('menuMain');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)');
 
-/** Escape HTML special chars — defense-in-depth for static data rendered via innerHTML. */
-function esc(str) {
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
+/* ── alto de nav + chips: anclas y foco quedan justo debajo (scroll-padding-top en menu.css) ── */
+const setMenuTop = () => document.documentElement.style.setProperty('--menu-top', `${$('nav').offsetHeight + chips.offsetHeight}px`);
+const sizes = new ResizeObserver(setMenuTop); // la nav cambia de alto cuando carga la fuente del logo
+sizes.observe(chips);
+sizes.observe($('nav'));
+
+/* ── chip activo: la categoría que cruza el 30 % de la pantalla ── */
+let pausedUntil = 0;
+function setActive(id) {
+  let on = null;
+  chips.querySelectorAll('.chip').forEach(ch => {
+    const is = ch.dataset.cat === id;
+    ch.classList.toggle('active', is);
+    if (is) { ch.setAttribute('aria-current', 'true'); on = ch; } else ch.removeAttribute('aria-current');
+  });
+  if (on && chips.scrollWidth > chips.clientWidth) {
+    chips.scrollTo({ left: on.offsetLeft - (chips.clientWidth - on.offsetWidth) / 2, behavior: reduce.matches ? 'auto' : 'smooth' });
+  }
 }
-
-/* scroll-spy de chips (re-creado en cada render) */
+function syncActive() {
+  const line = innerHeight * 0.3;
+  const visible = [...main.querySelectorAll('.cat:not([hidden])')];
+  const cur = visible.find(s => { const r = s.getBoundingClientRect(); return r.top <= line && r.bottom > line; });
+  setActive((cur || visible[0] || {}).id);
+}
 let spy = null;
 function initSpy() {
   if (spy) spy.disconnect();
   spy = new IntersectionObserver(entries => {
-    entries.forEach(en => {
-      if (!en.isIntersecting) return;
-      document.querySelectorAll('.chip').forEach(ch =>
-        ch.classList.toggle('active', ch.dataset.cat === en.target.id));
-    });
-  }, { rootMargin: '-15% 0px -75% 0px' });
-  document.querySelectorAll('.cat-title').forEach(h => spy.observe(h));
+    if (Date.now() < pausedUntil) return;
+    const hit = entries.find(en => en.isIntersecting);
+    if (hit) setActive(hit.target.id);
+  }, { rootMargin: '-30% 0px -69% 0px' });
+  main.querySelectorAll('.cat').forEach(s => spy.observe(s));
 }
+// Al tocar un chip, el spy calla hasta que acaba el scroll suave; si no, el chip parpadea entre categorías.
+chips.addEventListener('click', e => {
+  const ch = e.target.closest('.chip');
+  if (!ch) return;
+  setActive(ch.dataset.cat);
+  pausedUntil = Date.now() + 1500;
+  addEventListener('scrollend', () => { pausedUntil = Date.now() + 150; }, { once: true });
+});
 
+/* ── pintar (y repintar al cambiar de idioma) ─────────────── */
 function render() {
   const lang = getLang();
-
-  // All values come from the static MENU/CATEGORIES bundle — not user input.
-  // Every interpolated string is passed through esc() for defense-in-depth.
-  chips.innerHTML = CATEGORIES.map(c =>
-    `<a class="chip" href="#${esc(c.id)}" data-cat="${esc(c.id)}">${esc(c.label[lang])}</a>`
-  ).join('');
-
-  // Same static-data guarantee applies to main.innerHTML below.
-  main.innerHTML = CATEGORIES.map(c => `
-    <h2 class="cat-title" id="${esc(c.id)}">${esc(c.label[lang])}</h2>
-    ${MENU[c.id].map(it => `
-      <div class="menu-item${it.img ? ' has-img' : ''}" data-id="${esc(it.id)}" data-cat="${esc(c.id)}">
-        ${it.img ? `<img src="assets/img/${esc(it.img)}-480.webp" alt="${esc(it.name)}" loading="lazy" width="84" height="84">` : ''}
-        <span class="mi-name">${esc(it.name)}${it.badge ? ` <span class="badge">${esc(it.badge)}</span>` : ''}</span>
-        ${it.price > 0
-          ? `<span class="mi-price">$${it.price.toFixed(2)}</span>
-             <button class="mi-add" aria-label="${esc(t('cart.add'))} ${esc(it.name)}">+</button>`
-          : `<span class="mi-ask">${esc(t('cart.ask'))}</span><span></span>`}
-        ${it.desc ? `<span class="mi-desc">${esc(it.desc[lang])}</span>` : ''}
-      </div>`).join('')}`
-  ).join('');
-
+  chips.innerHTML = renderChips(CATEGORIES, PARTS, lang);
+  main.innerHTML = renderMenu(CATEGORIES, MENU, PARTS, lang);
   initSpy();
+  syncActive();
 }
 render();
 document.addEventListener('langchange', render);
-chips.addEventListener('click', e => {
-  const ch = e.target.closest('.chip');
-  if (ch) chips.querySelectorAll('.chip').forEach(x => x.classList.toggle('active', x === ch));
-});
 
+/* ── menu.html#categoría o #plato ─────────────────────────────
+   La carta se pinta con JS y Chrome corta el scroll al fragmento mientras la página cambia de alto:
+   se re-ancla sin animación en cada punto de carga, salvo que el usuario ya se haya movido. */
+let userMoved = false, marked = false;
+['wheel', 'touchstart', 'keydown'].forEach(ev => addEventListener(ev, () => { userMoved = true; }, { once: true, passive: true }));
+function reanchor() {
+  if (userMoved || !location.hash) return;
+  let el = null;
+  try { el = document.getElementById(decodeURIComponent(location.hash.slice(1))); } catch { return; } // hash mal codificado
+  if (!el || !main.contains(el)) return;
+  el.scrollIntoView({ behavior: 'instant', block: 'start' });
+  syncActive();
+  if (el.dataset.id && !marked) { // es un plato: se marca un momento
+    marked = true;
+    el.classList.add('is-target');
+    setTimeout(() => el.classList.remove('is-target'), 2500);
+  }
+}
+setMenuTop();
+reanchor();
+addEventListener('load', () => { reanchor(); setTimeout(reanchor, 300); });
+if (document.fonts) document.fonts.ready.then(reanchor);
+
+/* ── «+» → carrito ───────────────────────────────────────── */
 main.addEventListener('click', e => {
-  const btn = e.target.closest('.mi-add');
+  const btn = e.target.closest('.it-add');
   if (!btn) return;
-  const el  = btn.closest('.menu-item');
-  const item = MENU[el.dataset.cat].find(i => i.id === el.dataset.id);
+  const item = (MENU[btn.closest('.cat').id] || []).find(i => i.id === btn.closest('[data-id]').dataset.id);
   if (!item || item.price <= 0) return;
   syncFromStorage();
   cart.add(item);
-  btn.animate(
-    [{ transform: 'scale(1)' }, { transform: 'scale(1.35)' }, { transform: 'scale(1)' }],
-    240
-  );
+  if (!reduce.matches) btn.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.3)' }, { transform: 'scale(1)' }], 240);
   refresh();
 });
 
