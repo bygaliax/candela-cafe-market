@@ -39,12 +39,12 @@ test('renderMenu: tarjetas = platos con foto, antes que las filas', () => {
   assert.equal(count(ny, '<li class="card'), 5);
   assert.equal(count(ny, '<li class="row"'), 2);
   assert.ok(ny.indexOf('<ul class="cards">') < ny.indexOf('<ul class="rows">'));
-  assert.equal(count(ES, '<li class="card'), 16);
+  assert.equal(count(ES, '<li class="card'), 13);
 });
 
 test('renderMenu: con tarjetas impares la primera va ancha', () => {
   const wides = [...ES.matchAll(/<li class="card card--wide" id="([^"]+)"/g)].map(m => m[1]);
-  assert.deepEqual(wides, ['ny-the-ruben-sandwich', 'bg-candela-burger', 'dm-fritura-mixta-2ps', 'sw-chicken-steak-quesadilla']);
+  assert.deepEqual(wides, ['bk-pancakes-french-toast-wafles', 'ny-the-ruben-sandwich', 'pn-grilled-chicken-panini', 'bg-candela-burger', 'sw-chicken-steak-quesadilla']);
 });
 
 test('renderMenu: precio 0 → «Pregunta en tienda» sin «+»; con precio, «+» con el nombre del plato', () => {
@@ -68,7 +68,7 @@ test('renderMenu: foto de tarjeta con srcset 480/960, tamaño fijo, decorativa y
 
 test('renderMenu: solo las fotos de Desayunos se cargan sin lazy', () => {
   assert.equal(count(sectionOf(ES, 'breakfast'), 'loading="lazy"'), 0);
-  assert.equal(count(ES, '<img') - count(ES, 'loading="lazy"'), 2);
+  assert.equal(count(ES, '<img') - count(ES, 'loading="lazy"'), 1);
 });
 
 test('renderMenu: cabeceras decorativas con sus anchos y el aviso del especial en Rincón Dominicano', () => {

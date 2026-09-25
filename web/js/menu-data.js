@@ -52,7 +52,7 @@ export const MENU = {
       },
       price: 11.49,
       badge: null,
-      img: 'breakfast-platter',
+      img: null,
     },
     {
       id: 'bk-pancakes-french-toast-wafles',
@@ -321,7 +321,7 @@ export const MENU = {
       desc: null,
       price: 29.99,
       badge: null,
-      img: 'food-2',
+      img: null,
     },
     {
       id: 'dm-fritura-mixta-4ps',
@@ -565,7 +565,7 @@ export const MENU = {
       },
       price: 12.99,
       badge: null,
-      img: 'food-3',
+      img: null,
     },
   ],
 

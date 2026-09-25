@@ -44,11 +44,9 @@ test('Cada foto de la carta es la de ESE plato (parejas aprobadas por Robert el 
     'sw-chicken-steak-quesadilla': 'menu-quesadilla',
     'sw-greek-salad': 'menu-greek-salad',
     'bk-pancakes-french-toast-wafles': 'manana-fachada',
-    // fotos que ya tenía la carta y se mantienen
-    'bk-downtown-platter': 'breakfast-platter',
+    // de las fotos que ya tenía la carta solo coincide la César: las del Downtown Platter,
+    // la Fritura Mixta y el Italian Panini eran tortitas, una quesadilla y costillas (visto el 24-sep)
     'sw-chicken-caesar-salad': 'caesar-salad',
-    'dm-fritura-mixta-2ps': 'food-2',
-    'pn-italian-panini': 'food-3',
   };
   const withImg = Object.fromEntries(allItems().filter(i => i.img).map(i => [i.id, i.img]));
   assert.deepEqual(withImg, PHOTO_OF);
