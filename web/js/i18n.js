@@ -146,6 +146,9 @@ export const DICT = {
   'menu.chips':        { en: 'Menu categories', es: 'Categorías de la carta' },
   'nav.main':          { en: 'Main navigation', es: 'Navegación principal' },
   'footer.nav':        { en: 'Footer navigation', es: 'Navegación del pie de página' },
+
+  /* ============ portada en blanco (2026-09-25) ============ */
+  'home.dom.today':    { en: 'Today at the hot table:', es: 'Hoy en la mesa caliente:' },
 };
 
 const KEY = 'candela-lang';

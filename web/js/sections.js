@@ -28,11 +28,16 @@ export function renderFavorites(favs, lang) {
     const { item } = hit;
     const src = `assets/img/${esc(f.img)}`;
     return `<a class="fav" href="menu.html#${esc(item.id)}">`
-      + `<span class="fav-ph"><img src="${src}-480.webp" srcset="${src}-480.webp 480w, ${src}-960.webp 960w" sizes="(max-width:768px) 45vw, 280px" alt="${esc(item.name)}" loading="lazy" width="480" height="${Number(f.h)}"></span>`
-      + `<span class="fav-n">${esc(item.name)}</span>`
-      + `<span class="fav-d">${esc(item.desc ? item.desc[lang] : '')}</span>`
-      + `<span class="fav-p">$${item.price.toFixed(2)}</span></a>`;
+      + `<img src="${src}-480.webp" srcset="${src}-480.webp 480w, ${src}-960.webp 960w" sizes="(max-width:900px) 45vw, 270px" alt="" loading="lazy" width="480" height="${Number(f.h)}">`
+      + `<h3 class="fav-n">${esc(item.name)}</h3>`
+      + `<p class="fav-d">${esc(item.desc ? item.desc[lang] : '')}</p>`
+      + `<p class="fav-p">$${item.price.toFixed(2)}</p></a>`;
   }).join('');
+}
+
+/** Filas del cartel del market: nombre en Anton y ejemplos a la derecha. */
+export function renderMarketList(cats, lang) {
+  return cats.map(c => `<li><b>${esc(c.name[lang])}</b><span>${esc(c.examples[lang])}</span></li>`).join('');
 }
 
 export function renderMarket(cats, lang) {
@@ -51,8 +56,9 @@ export function renderArches(list, lang) {
 
 export function renderBoard(daily, weekday, lang) {
   const dishes = daily[weekday];
-  if (!dishes || !dishes.length) return `<p class="board-special">${esc(DAILY_SPECIAL[lang])}</p>`;
-  return `<ul>${dishes.map(d => `<li>${esc(d[lang])}</li>`).join('')}</ul>`;
+  if (!dishes || !dishes.length) return `<p class="note">${esc(DAILY_SPECIAL[lang])}</p>`;
+  return `<p class="board-h">${esc(tx('home.dom.today', lang))}</p>`
+    + `<ul class="board-list">${dishes.map(d => `<li>${esc(d[lang])}</li>`).join('')}</ul>`;
 }
 
 export function renderHours(hours, today, lang) {
@@ -73,6 +79,14 @@ export function renderStatus(st, lang) {
     : st.opensDay === (st.day + 1) % 7 ? tx('now.tomorrow', lang)
     : `${DAY_NAMES[lang][st.opensDay]} ${tx('now.at', lang)}`;
   return { cls: 'is-closed', text: `${tx('now.closed', lang)} · ${tx('now.opens', lang)} ${when} ${fmtTime(st.opensAt)}` };
+}
+
+/** Estado con la primera parte en negrita: «<b>Abierto ahora</b> · hasta las 11:30 pm · 507 N Miami Ave». */
+export function statusHTML(st, lang, suffix = '') {
+  const { cls, text } = renderStatus(st, lang);
+  const [head, ...rest] = text.split(' · ');
+  if (suffix) rest.push(suffix);
+  return { cls, html: `<b>${esc(head)}</b>${rest.map(p => ` · ${esc(p)}`).join('')}` };
 }
 
 /** Sello de estrella (starburst) de 22 puntas, como los stickers de Frank's. */

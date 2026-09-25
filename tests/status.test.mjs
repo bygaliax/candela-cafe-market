@@ -1,9 +1,9 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { statusAt, zonedNow, fmtTime } from '../web/js/status.js';
-import { HOURS, DAYPARTS } from '../web/js/site-data.js';
+import { HOURS } from '../web/js/site-data.js';
 
-const at = iso => statusAt(new Date(iso), HOURS, DAYPARTS);
+const at = iso => statusAt(new Date(iso), HOURS);
 
 test('zonedNow usa la hora de Miami (EDT en septiembre)', () => {
   assert.deepEqual(zonedNow(new Date('2026-09-22T11:59:00Z')), { day: 2, min: 7 * 60 + 59 });
@@ -16,12 +16,12 @@ test('martes 7:59 am: cerrado, abre hoy a las 8', () => {
   assert.equal(s.opensDay, 2);
 });
 
-test('martes 9:30 pm: abierto, cierra pronto a las 10 pm, franja noche', () => {
+test('martes 9:30 pm: abierto y cierra pronto a las 10 pm; ya no hay franjas', () => {
   const s = at('2026-09-23T01:30:00Z');
   assert.equal(s.open, true);
   assert.equal(s.soon, true);
   assert.equal(s.closesAt, '22:00');
-  assert.equal(s.part, 'noche');
+  assert.equal('part' in s, false);
 });
 
 test('martes 9:00 pm: faltan 60 min, todavía no «cierra pronto»', () => {
@@ -42,11 +42,11 @@ test('sábado 11:29 pm: abierto y cierra pronto (11:30 pm)', () => {
   assert.equal(s.closesAt, '23:30');
 });
 
-test('miércoles 12:30 pm: abierto, franja mediodía', () => {
+test('miércoles 12:30 pm: abierto y no cierra pronto', () => {
   const s = at('2026-09-23T16:30:00Z');
   assert.equal(s.open, true);
   assert.equal(s.soon, false);
-  assert.equal(s.part, 'mediodia');
+  assert.equal(s.day, 3);
 });
 
 test('invierno (EST): martes 7:30 am sigue cerrado', () => {
@@ -57,8 +57,11 @@ test('invierno (EST): martes 7:30 am sigue cerrado', () => {
 test('el reloj del visitante no importa: siempre hora de Miami', () => {
   const prev = process.env.TZ;
   process.env.TZ = 'Europe/Madrid';
-  try { assert.equal(at('2026-09-23T16:30:00Z').part, 'mediodia'); }
-  finally { process.env.TZ = prev; }
+  try {
+    const s = at('2026-09-23T16:30:00Z');
+    assert.equal(s.open, true);
+    assert.equal(s.day, 3);
+  } finally { process.env.TZ = prev; }
 });
 
 test('fmtTime', () => {

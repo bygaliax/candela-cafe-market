@@ -1,5 +1,5 @@
-// Datos del local — ÚNICA fuente de horario, franjas del día, Google, favoritos y cartas.
-// Los usan «Ahora en Candela», la tabla de Visítanos y el test de coherencia del JSON-LD.
+// Datos del local — ÚNICA fuente de horario, Google, favoritos y mesa caliente.
+// Los usan el estado de la portada, la tabla de Visítanos y el test de coherencia del JSON-LD.
 
 export const ADDRESS = { street: '507 N Miami Ave', city: 'Downtown Miami, FL 33136' };
 export const MAPS_DIRECTIONS = 'https://www.google.com/maps/dir/?api=1&destination=507+N+Miami+Ave%2C+Miami%2C+FL+33136';
@@ -13,14 +13,6 @@ export const HOURS = [
   { open: '08:00', close: '23:30' },
   { open: '08:00', close: '23:30' },
   { open: '08:00', close: '23:30' },
-];
-
-// Franjas del día, en orden. Coinciden con los carteles de cada sección.
-export const DAYPARTS = [
-  { id: 'manana',   from: '08:00' },
-  { id: 'mediodia', from: '12:00' },
-  { id: 'tarde',    from: '15:00' },
-  { id: 'noche',    from: '19:00' },
 ];
 
 // Ficha exacta de Google Maps (CID del perfil «Candela y Café Market»).

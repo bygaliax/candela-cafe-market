@@ -2,7 +2,7 @@
 import { initLangToggle, t, getLang } from './i18n.js';
 import { PHONE } from './menu-data.js';
 import { MARKET_CATEGORIES } from './market-data.js';
-import { HOURS, DAYPARTS, FAVORITES, DAILY_MENU, DAY_NIGHT, GOOGLE } from './site-data.js';
+import { HOURS, FAVORITES, DAILY_MENU, DAY_NIGHT, GOOGLE } from './site-data.js';
 import { statusAt } from './status.js';
 import { renderFavorites, renderMarket, renderArches, renderBoard, renderHours, renderStatus, burstSvg } from './sections.js';
 import { buildReservationUrl, waUrl } from './cart-core.js';
@@ -20,7 +20,7 @@ const lastHTML = new Map();
 const setHTML = (el, html) => { if (lastHTML.get(el) !== html) { el.innerHTML = html; lastHTML.set(el, html); } };
 function updateNow() {
   const lang = getLang();
-  const st = statusAt(new Date(), HOURS, DAYPARTS);
+  const st = statusAt(new Date(), HOURS);
   const { cls, text } = renderStatus(st, lang);
   const bar = $('now');
   if (!bar.classList.contains(cls)) { bar.classList.remove('is-open', 'is-soon', 'is-closed'); bar.classList.add(cls); }
