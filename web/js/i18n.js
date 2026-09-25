@@ -1,71 +1,18 @@
 export const DICT = {
   /* ---- nav ---- */
   'nav.menu':      { en: 'Menu',        es: 'Menú' },
-  'nav.music':     { en: 'Live Music',  es: 'Música en Vivo' },
   'nav.market':    { en: 'Market',      es: 'Market' },
-  'nav.catering':  { en: 'Catering',    es: 'Catering' },
   'nav.visit':     { en: 'Visit Us',    es: 'Visítanos' },
   'nav.order':     { en: 'Order Now',   es: 'Ordena Ya' },
 
   /* ---- hero ---- */
-  'hero.kicker':   { en: 'NY Deli · Dominican Soul · Downtown Miami', es: 'NY Deli · Alma Dominicana · Downtown Miami' },
-  'hero.title.1':  { en: 'New York flavor,', es: 'Sabor neoyorquino,' },
-  'hero.title.2':  { en: 'Caribbean fire',   es: 'fuego caribeño' },
   'hero.sub':      { en: 'Enjoy our special mixed grill today.',
                      es: 'Disfruta hoy nuestra parrillada mixta especial.' },
   'hero.cta.order': { en: 'Order Now!',          es: '¡Ordena Ya!' },
-  'hero.cta.music': { en: 'Live Music Fridays', es: 'Viernes de Música' },
-  'hero.hours':    { en: 'Open daily from 8am', es: 'Abierto todos los días desde las 8am' },
-
-  /* ---- about ---- */
-  'about.kicker':  { en: 'Our Story', es: 'Nuestra Historia' },
-  'about.title':   { en: 'NY in the craft, Dominican at heart', es: 'NY en la ejecución, dominicano en el alma' },
-  'about.body':    { en: 'Candela & Café brings the energy of a classic New York delicatessen to Downtown Miami — Boar\'s Head cold cuts, bagels and pastrami — and lights it up with Dominican warmth: mangú, live merengue and coffee that tastes like home.',
-                     es: 'Candela & Café trae la energía de un delicatessen clásico de Nueva York a Downtown Miami — embutidos Boar\'s Head, bagels y pastrami — y lo enciende con calor dominicano: mangú, merengue en vivo y café que sabe a casa.' },
-
-  /* ---- menu teaser ---- */
-  'teaser.kicker': { en: 'The Menu', es: 'El Menú' },
-  'teaser.title':  { en: 'Made fresh, every day', es: 'Fresco, todos los días' },
-  'teaser.cta':    { en: 'View full menu & order', es: 'Ver menú completo y ordenar' },
-
-  /* ---- live music ---- */
-  'music.kicker':  { en: 'Friday Nights', es: 'Viernes por la Noche' },
-  'music.title':   { en: 'Live Music Fridays', es: 'Viernes de Música en Vivo' },
-  'music.body':    { en: 'Every Friday the deli turns up: live music, wine, beer and the best vibe in Downtown. Come for dinner, stay for the candela.',
-                     es: 'Cada viernes el deli se enciende: música en vivo, vino, cerveza y el mejor ambiente de Downtown. Ven a cenar, quédate por la candela.' },
-  'music.cta':     { en: 'Reserve via WhatsApp', es: 'Reserva por WhatsApp' },
-  'music.wa':      { en: 'Hi! I\'d like to reserve a table for Friday live music.',
-                     es: '¡Hola! Quiero reservar una mesa para el viernes de música en vivo.' },
-
-  /* ---- market ---- */
-  'market.kicker': { en: 'Daily Market · Bodega', es: 'Daily Market · Bodega' },
-  'market.title':  { en: 'Wines, beers & gourmet finds', es: 'Vinos, cervezas y antojos gourmet' },
-  'market.body':   { en: 'A curated selection of wines and craft beers — the perfect pairing for your sandwich or your Friday night.',
-                     es: 'Una selección curada de vinos y cervezas artesanales — el maridaje perfecto para tu sándwich o tu viernes.' },
-
-  /* ---- catering ---- */
-  'catering.kicker': { en: 'Corporate Catering', es: 'Catering Corporativo' },
-  'catering.title':  { en: 'Elevate your events',  es: 'Eleva tus eventos' },
-  'catering.body':   { en: 'Breakfast trays, sandwich platters and Dominican specialties for offices and events. Tell us the date and headcount — we handle the rest.',
-                       es: 'Bandejas de desayuno, tablas de sándwiches y especialidades dominicanas para oficinas y eventos. Dinos fecha y cantidad de personas — nosotros hacemos el resto.' },
-  'catering.cta':    { en: 'Get a quote', es: 'Pide tu cotización' },
-  'catering.wa':     { en: 'Hi! I\'d like a catering quote.', es: '¡Hola! Quiero una cotización de catering.' },
-
-  /* ---- gallery ---- */
-  'gallery.kicker': { en: 'The Vibe', es: 'El Ambiente' },
-  'gallery.title':  { en: 'Follow the candela', es: 'Sigue la candela' },
-  'gallery.cta':    { en: 'Follow @candelaycafe', es: 'Sigue a @candelaycafe' },
-
-  /* ---- reviews ---- */
-  'reviews.kicker': { en: 'What people say', es: 'Lo que dicen' },
-  'reviews.title':  { en: 'Neighbors already know', es: 'El barrio ya lo sabe' },
 
   /* ---- visit ---- */
   'visit.kicker':   { en: 'Visit Us', es: 'Visítanos' },
-  'visit.title':    { en: 'Downtown Miami, with parking', es: 'Downtown Miami, con parking' },
   'visit.hours.title': { en: 'Hours', es: 'Horario' },
-  'visit.hours.1':  { en: 'Sun–Tue · 8:00am – 10:00pm',  es: 'Dom–Mar · 8:00am – 10:00pm' },
-  'visit.hours.2':  { en: 'Wed–Sat · 8:00am – 11:30pm',  es: 'Mié–Sáb · 8:00am – 11:30pm' },
   'visit.call':     { en: 'Call us',        es: 'Llámanos' },
   'visit.directions': { en: 'Get directions', es: 'Cómo llegar' },
 
@@ -92,30 +39,8 @@ export const DICT = {
                       es: 'Este menú necesita JavaScript. Llámanos al +1 (786) 254-7577 — 507 N Miami Ave.' },
 
   /* ============ claves del rediseño (2026-06-10) ============ */
-  'nav.history':   { en: 'Story', es: 'Historia' },
   'hero.title':    { en: 'Authentic Flavors!', es: '¡Sabores auténticos!' },
   'hero.cta.menu': { en: 'View menu', es: 'Ver menú' },
-  'menu.kicker':   { en: 'The Menu · Explore by category', es: 'El Menú · Explora por categoría' },
-  'menu.title.a':  { en: 'Fresh,', es: 'Fresco,' },
-  'menu.title.b':  { en: 'every day', es: 'todos los días' },
-  'hist.kicker':   { en: 'Our Story', es: 'Nuestra historia' },
-  'hist.title.a':  { en: 'From New York to Miami, with Dominican', es: 'De Nueva York a Miami, con' },
-  'hist.title.b':  { en: 'candela', es: 'candela' },
-  'hist.sub':      { en: 'Scroll: the line lights up as the story moves from the roots to today.', es: 'Haz scroll: la línea se enciende mientras la historia avanza de los orígenes hasta hoy.' },
-  'hist.1.tag':    { en: 'The roots', es: 'El origen' },
-  'hist.1.title':  { en: 'New York deli craft', es: 'Oficio deli de Nueva York' },
-  'hist.1.body':   { en: 'Pastrami, bagels, Boar\'s Head cold cuts — the craft of the classic NY delicatessen.', es: 'Pastrami, bagels, embutidos Boar\'s Head — el oficio del delicatessen neoyorquino.' },
-  'hist.2.tag':    { en: 'The soul', es: 'La herencia' },
-  'hist.2.title':  { en: 'Dominican soul', es: 'Alma dominicana' },
-  'hist.2.body':   { en: 'Mangú, fritura, home sazón and coffee that tastes like the neighborhood. The candela that lights it all.', es: 'Mangú, fritura, sazón de casa y café que sabe a barrio. La candela que lo enciende todo.' },
-  'hist.3.tag':    { en: 'The leap', es: 'El salto' },
-  'hist.3.title':  { en: 'Lands in Downtown Miami', es: 'Llega a Downtown Miami' },
-  'hist.3.body':   { en: 'Candela & Café opens at 507 N Miami Ave — apartments above, loyal neighborhood below.', es: 'Candela & Café abre en 507 N Miami Ave — apartamentos arriba, barrio fiel abajo.' },
-  'hist.4.tag':    { en: 'Today', es: 'Hoy' },
-  'hist.4.title':  { en: 'Deli · Market · Music', es: 'Deli · Market · Música' },
-  'hist.4.body':   { en: 'Daily food, mini-market, and live music on Fridays. One place, a thousand flavors.', es: 'Comida diaria, mini-market y música en vivo los viernes. Un solo lugar, mil sabores.' },
-  'music.p1':      { en: 'Every Friday', es: 'Todos los viernes' },
-  'music.p2':      { en: 'Live music', es: 'Música en vivo' },
   'music.p3':      { en: 'From 8pm', es: 'Desde las 8pm' },
   'res.title.a':   { en: 'Reserve your', es: 'Reserva tu' },
   'res.title.b':   { en: 'Friday', es: 'viernes' },
@@ -128,29 +53,86 @@ export const DICT = {
   'res.go':        { en: 'Confirm via WhatsApp', es: 'Confirmar por WhatsApp' },
   'res.note':      { en: 'We\'ll reply to confirm availability.', es: 'Te responderemos para confirmar disponibilidad.' },
   'res.greeting':  { en: 'Hi Candela & Café! I\'d like to reserve for live music', es: '¡Hola Candela & Café! Quiero reservar para la música en vivo' },
-  'market.title.a':{ en: 'The neighborhood', es: 'El mercado del' },
-  'market.title.b':{ en: 'market', es: 'barrio' },
-  'market.sub':    { en: 'The basics and the good stuff, around the corner. Coffee, fresh, pantry and treats — pick up or we deliver.', es: 'Lo básico y lo rico, a la vuelta de tu casa. Café, frescos, despensa y antojos — pide y recoge, o te lo enviamos.' },
-  'market.cta':    { en: 'See the whole market', es: 'Ver todo el market' },
-  'market.add':    { en: 'Add', es: 'Agregar' },
-  'market.instore':{ en: 'In-store', es: 'En tienda' },
-  'catering.title.a':{ en: 'Elevate your', es: 'Eleva tus' },
-  'catering.title.b':{ en: 'events', es: 'eventos' },
-  'catering.b1':   { en: 'Breakfast & coffee trays', es: 'Bandejas de desayuno & café' },
-  'catering.b2':   { en: 'Boar\'s Head sandwich platters', es: 'Tablas de sándwiches Boar\'s Head' },
-  'catering.b3':   { en: 'Dominican specialties', es: 'Especialidades dominicanas' },
-  'gallery.title.a':{ en: 'Follow the', es: 'Sigue la' },
-  'gallery.title.b':{ en: 'candela', es: 'candela' },
-  'reviews.title.a':{ en: 'The neighborhood already', es: 'El barrio ya lo' },
-  'reviews.title.b':{ en: 'knows', es: 'sabe' },
-  'reviews.rating':{ en: 'Real Google reviews', es: 'Reseñas reales de Google' },
   'reviews.write': { en: 'Write a review', es: 'Escribe tu reseña' },
-  'visit.title.a': { en: 'Downtown Miami, with', es: 'Downtown Miami, con' },
-  'visit.title.b': { en: 'parking', es: 'parking' },
-  'visit.h1':      { en: 'Sun–Tue · 8:00am – 10:00pm', es: 'Dom–Mar · 8:00am – 10:00pm' },
-  'visit.h2':      { en: 'Wed–Sat · 8:00am – 11:30pm', es: 'Mié–Sáb · 8:00am – 11:30pm' },
   'footer.explore':{ en: 'Explore', es: 'Explora' },
   'footer.orders': { en: 'Orders & Social', es: 'Pedidos & Redes' },
+
+  /* ============ «Un día en Candela» (2026-09-24) ============ */
+  'nav.nights':        { en: 'Nights', es: 'Noches' },
+  'nav.burger':        { en: 'Open menu', es: 'Abrir menú' },
+  'lang.switch':       { en: 'Ver en español', es: 'View in English' },
+  'modal.close':       { en: 'Close', es: 'Cerrar' },
+  'wa.hello':          { en: 'Hi Candela & Café!', es: '¡Hola Candela & Café!' },
+  'now.fallback':      { en: 'Open daily from 8 am', es: 'Abierto todos los días desde las 8 am' },
+  'now.open':          { en: 'Open now', es: 'Abierto ahora' },
+  'now.until':         { en: 'until', es: 'hasta las' },
+  'now.soon':          { en: 'Closing soon', es: 'Cierra pronto' },
+  'now.closesat':      { en: 'at', es: 'a las' },
+  'now.closed':        { en: 'Closed', es: 'Cerrado' },
+  'now.opens':         { en: 'opens', es: 'abrimos' },
+  'now.today':         { en: 'today at', es: 'hoy a las' },
+  'now.tomorrow':      { en: 'tomorrow at', es: 'mañana a las' },
+  'now.at':            { en: 'at', es: 'a las' },
+  'day.morning.sign':  { en: '8:00 am · Coffee now', es: '8:00 am · Coffee now' },
+  'day.morning.w1':    { en: 'Coffee.', es: 'Café.' },
+  'day.morning.w2':    { en: 'Juices.', es: 'Jugos.' },
+  'day.morning.w3':    { en: 'Breakfast.', es: 'Desayuno.' },
+  'day.morning.body':  { en: 'Coffee, cortadito and fresh juices. New York breakfasts — pancakes, omelettes, bacon, egg & cheese — and empanadas fresh out of the oven.',
+                         es: 'Café, cortadito y jugos naturales. Desayunos de Nueva York —pancakes, omelettes, bacon, egg & cheese— y empanadas recién hechas.' },
+  'day.morning.juices':{ en: 'Fresh juices', es: 'Jugos naturales' },
+  'day.morning.cta':   { en: 'See breakfast', es: 'Ver desayunos' },
+  'day.morning.burst': { en: 'Open 8 am', es: 'Abrimos 8 am' },
+  'day.morning.alt':   { en: 'Breakfast plate at the door of 507 N Miami Ave', es: 'Plato de desayuno en la puerta del 507 N Miami Ave' },
+  'day.midday.sign':   { en: '12:00 pm · Midday', es: '12:00 pm · Mediodía' },
+  'day.midday.title':  { en: "Today's food.", es: 'La comida del día.' },
+  'day.midday.body':   { en: 'The hot table: Dominican food made today, just like home. Ask about the special.',
+                         es: 'La mesa caliente: comida dominicana hecha hoy, como en casa. Pregunta por el especial.' },
+  'day.midday.cta':    { en: "What's on today", es: 'Qué hay hoy' },
+  'day.midday.wa':     { en: 'Order on WhatsApp', es: 'Pedir por WhatsApp' },
+  'day.midday.burst':  { en: 'Made today', es: 'Hecho hoy' },
+  'day.midday.alt':    { en: 'Bowl of sancocho with white rice and avocado', es: 'Plato de sancocho con arroz blanco y aguacate' },
+  'day.board.title':   { en: 'Today at the hot table', es: 'Hoy en la mesa caliente' },
+  'day.board.sub':     { en: 'Changes every day', es: 'Cambia cada día' },
+  'day.board.alt':     { en: "The hot table with today's trays", es: 'La mesa caliente con las bandejas del día' },
+  'day.favs.sign':     { en: 'From the New York deli', es: 'Del deli de Nueva York' },
+  'day.favs.title':    { en: 'The favorites', es: 'Los favoritos' },
+  'day.favs.cta':      { en: 'See the full menu →', es: 'Ver el menú completo →' },
+  'day.market.sign':   { en: '3:00 pm · Afternoon', es: '3:00 pm · Tarde' },
+  'day.market.title':  { en: 'The market.', es: 'El market.' },
+  'day.market.body':   { en: "The house basics, around the corner: pantry, fruit and veg, natural products and everyday essentials. If you don't see it, ask us.",
+                         es: 'Lo básico de la casa, a la vuelta de la esquina: despensa, frutas y verduras, productos naturales y lo del día a día. Si no lo ves, pregúntanos.' },
+  'day.market.cta':    { en: 'Got it? Ask on WhatsApp', es: '¿Lo tienes? Pregunta por WhatsApp' },
+  'day.market.note':   { en: "Come by and pick it up — we're open every day from 8 am.", es: 'Pasa a buscarlo: abrimos todos los días desde las 8 am.' },
+  'day.market.askmsg': { en: 'Hi Candela & Café! Do you have … at the market?', es: '¡Hola Candela & Café! ¿Tienen … en el market?' },
+  'day.night.sign':    { en: '7:00 pm · Night', es: '7:00 pm · Noche' },
+  'day.night.body':    { en: "Wine, coffee until close and good music. On Fridays, it's live.", es: 'Vino, café hasta el cierre y buena música. Los viernes, en vivo.' },
+  'day.night.reserve': { en: 'Reserve a table', es: 'Reservar mesa' },
+  'day.night.cta':     { en: 'See the night menu', es: 'Ver la carta de noche' },
+  'day.night.stamp':   { en: 'EVERY FRIDAY · LIVE MUSIC · ', es: 'TODOS LOS VIERNES · MÚSICA EN VIVO · ' },
+  'day.night.live':    { en: 'live', es: 'en vivo' },
+  'day.night.alt':     { en: 'The «Coffee now, Wine later» neon over the red banquette', es: 'El neón «Coffee now, Wine later» sobre el banco rojo' },
+  'nightmenu.close':   { en: 'close', es: 'cierre' },
+  'day.music.title':   { en: 'Live music.', es: 'Música en vivo.' },
+  'day.music.p1':      { en: 'Fridays', es: 'Viernes' },
+  'day.place.sign':    { en: 'The place', es: 'El lugar' },
+  'day.place.title.a': { en: 'Come', es: 'Ven a' },
+  'day.place.title.b': { en: 'see it.', es: 'verlo.' },
+  'day.place.alt1':    { en: 'Boar\'s Head sub under the neon sign', es: 'Sub de Boar\'s Head bajo el neón' },
+  'day.place.alt2':    { en: 'Philly cheesesteak on the terrace', es: 'Philly cheesesteak en la terraza' },
+  'day.place.alt3':    { en: 'Prosciutto sandwich by the red banquette', es: 'Sándwich de prosciutto junto al banco rojo' },
+  'day.place.alt4':    { en: 'Flan on the terrace', es: 'Flan en la terraza' },
+  'day.place.ongoogle':{ en: 'on Google', es: 'en Google' },
+  'day.place.reviews': { en: 'reviews on Google.', es: 'reseñas en Google.' },
+  'day.place.body':    { en: 'What the neighborhood says, straight from our Google profile.', es: 'Lo que dice el barrio, directo de nuestro perfil de Google.' },
+  'day.place.read':    { en: 'Read the reviews', es: 'Leer las reseñas' },
+  'visit.today':       { en: 'Today', es: 'Hoy' },
+  'visit.closed':      { en: 'Closed', es: 'Cerrado' },
+  'visit.livemusic':   { en: 'live music', es: 'música en vivo' },
+  'visit.fallback1':   { en: 'Sun–Tue · 8 am – 10 pm', es: 'Dom–Mar · 8 am – 10 pm' },
+  'visit.fallback2':   { en: 'Wed–Sat · 8 am – 11:30 pm', es: 'Mié–Sáb · 8 am – 11:30 pm' },
+  'mbar.label':        { en: 'Quick actions', es: 'Acciones rápidas' },
+  'mbar.go':           { en: 'Directions', es: 'Cómo llegar' },
+  'mbar.call':         { en: 'Call', es: 'Llamar' },
 };
 
 const KEY = 'candela-lang';
@@ -170,11 +152,14 @@ export function t(key) { const e = DICT[key]; return e ? e[getLang()] : key; }
 export function apply() {
   const lang = getLang();
   document.documentElement.lang = lang;
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const e = DICT[el.dataset.i18n];
-    if (e) el.textContent = e[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el => { const e = DICT[el.dataset.i18n]; if (e) el.textContent = e[lang]; });
+  document.querySelectorAll('[data-i18n-alt]').forEach(el => { const e = DICT[el.dataset.i18nAlt]; if (e) el.alt = e[lang]; });
+  document.querySelectorAll('[data-i18n-aria]').forEach(el => { const e = DICT[el.dataset.i18nAria]; if (e) el.setAttribute('aria-label', e[lang]); });
+  document.querySelectorAll('.lang-toggle').forEach(b => {
+    b.textContent = lang === 'en' ? 'ES' : 'EN';
+    b.setAttribute('aria-label', DICT['lang.switch'][lang]);
+    b.setAttribute('lang', lang === 'en' ? 'es' : 'en');
   });
-  document.querySelectorAll('.lang-toggle').forEach(b => { b.textContent = lang === 'en' ? 'ES' : 'EN'; });
   document.dispatchEvent(new CustomEvent('langchange', { detail: lang }));
 }
 
