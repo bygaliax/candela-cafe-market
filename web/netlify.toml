@@ -11,6 +11,10 @@
   [headers.values]
     Cache-Control = "public, max-age=604800"
 [[headers]]
+  for = "/assets/vendor/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+[[headers]]
   for = "/*.html"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"

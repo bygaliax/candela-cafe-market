@@ -87,9 +87,16 @@ test('La portada: hero de fuego del banner (vuelve el 1-oct), sin ScrollTrigger 
   const pre = INDEX.match(/<link rel="preload" as="image" href="([^"]+)"/)[1].replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const hero = INDEX.match(/<header[^>]*id="hero"[^>]*>([\s\S]*?)<\/header>/)[1];
   assert.match(hero, new RegExp(`<img[^>]*src="${pre}"[^>]*fetchpriority="high"`));
-  // solo el núcleo de GSAP, con SRI y antes del módulo: hero.js lo necesita al arrancar
-  assert.match(INDEX, /<script src="https:\/\/cdn\.jsdelivr\.net\/npm\/gsap@3\.12\.5\/dist\/gsap\.min\.js" defer\s+integrity="sha384-[^"]+" crossorigin="anonymous"><\/script>/);
-  assert.ok(INDEX.indexOf('gsap.min.js') < INDEX.indexOf('src="js/landing.js"'), 'gsap.min.js va antes de landing.js');
+  // solo el núcleo de GSAP, servido desde el propio sitio (sin conexión a un CDN) y antes del módulo: hero.js lo necesita al arrancar
+  const gsap = INDEX.match(/<script src="(assets\/vendor\/gsap-[\d.]+\.min\.js)" defer><\/script>/);
+  assert.ok(gsap, 'GSAP desde el propio sitio');
+  assert.ok(existsSync(new URL(`../web/${gsap[1]}`, import.meta.url)), `falta web/${gsap[1]}`);
+  assert.ok(INDEX.indexOf(gsap[1]) < INDEX.indexOf('src="js/landing.js"'), 'GSAP va antes de landing.js');
+  assert.doesNotMatch(INDEX, /cdn\.jsdelivr\.net/);
+  // las decoraciones no le quitan ancho de banda a la imagen del plato (el LCP)
+  const decs = hero.match(/<img[^>]*class="dec [^"]*"[^>]*>/g);
+  assert.equal(decs.length, 6);
+  for (const img of decs) assert.match(img, /fetchpriority="low"/, img);
 });
 
 test('Todo id que buscan los scripts existe en su página (uno que falta rompe el resto del módulo)', () => {
