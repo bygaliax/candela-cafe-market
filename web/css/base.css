@@ -4,17 +4,13 @@
   --rojo:#ED3B2F; --rojo-hover:#C92A1F; --verde:#76C043; --verde-d:#4f8a2a;
   --claro:#FBF7F0; --crema:#F5F0E8; --ink:#1c1c1c; --ink-2:#5b534a; --gris-d:#a89f95;
   --fuego:linear-gradient(95deg,#ff5a3c 0%,#ED3B2F 55%,#C92A1F 100%); /* ROJO→ROJO, sin amarillo */
-  --disp:'Architects Daughter',cursive; --body:'DM Sans',system-ui,sans-serif;
+  --body:'DM Sans',system-ui,sans-serif; /* la única tipografía de la web (B-01, Robert 1-oct) */
   --rojo-txt:#D8352A; /* rojo para rellenos con texto blanco: 4,7:1 (AA). El #ED3B2F da 3,99:1 */
-  --sign:'Anton',var(--body); --arena:#F1DFC6; --arena-2:#EBCDAA; --terracota:#9a4a2c; --noche:#0a0a0a;
+  --arena:#F1DFC6; --arena-2:#EBCDAA; --terracota:#9a4a2c; --noche:#0a0a0a;
   --maxw:1180px; --radius:14px; --ease:cubic-bezier(.22,.61,.36,1);
   --swiper-pagination-color:#76C043; --swiper-pagination-bullet-inactive-color:rgba(255,255,255,.5);
 }
-/* ============ FUENTES: servidas desde el propio sitio (subconjunto latino de Google Fonts, licencia OFL) ============ */
-@font-face{font-family:'Anton';font-style:normal;font-weight:400;font-display:swap;src:url("../assets/fonts/anton-latin.woff2") format("woff2");
-  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
-@font-face{font-family:'Architects Daughter';font-style:normal;font-weight:400;font-display:swap;src:url("../assets/fonts/architects-daughter-latin.woff2") format("woff2");
-  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+/* ============ FUENTE: DM Sans, la única, servida desde el propio sitio (subconjunto latino de Google Fonts, licencia OFL) ============ */
 @font-face{font-family:'DM Sans';font-style:normal;font-weight:400 700;font-display:swap;src:url("../assets/fonts/dm-sans-latin.woff2") format("woff2");
   unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 /* ============ RESET ============ */
@@ -64,7 +60,7 @@ html.menu-open{overflow:hidden}
 .nav-inner{max-width:var(--maxw);height:80px;margin:0 auto;padding:0 40px;display:flex;align-items:center;gap:26px}
 .nav-logo{display:flex;align-items:center;gap:12px;margin-right:auto;white-space:nowrap}
 .nav-logo img{width:46px;height:46px;border-radius:50%}
-.nav-logo b{font:400 1.625rem/1 var(--disp)}
+.nav-logo b{font:700 1.625rem/1 var(--body);letter-spacing:-.01em}
 .nav-links{display:flex;align-items:center;gap:28px;font:700 .8125rem/1 var(--body);letter-spacing:.14em;text-transform:uppercase}
 .nav-links a{padding:14px 0 12px;border-bottom:2px solid transparent;transition:border-color .2s}
 .nav-links a:hover,.nav-links a[aria-current="page"]{border-bottom-color:var(--rojo-txt)}
@@ -75,16 +71,16 @@ html.menu-open{overflow:hidden}
 .nav-burger span{width:24px;height:2px;border-radius:2px;background:var(--ink)}
 @media(max-width:1024px){.nav-links,.nav-go{display:none}.nav-burger{display:flex}.nav-inner{gap:10px}}
 @media(max-width:600px){.nav-inner{height:64px;padding:0 20px}.nav-logo{gap:9px}.nav-logo img{width:38px;height:38px}.nav-logo b{font-size:1.3rem}}
-/* móviles estrechos: el nombre no se monta sobre EN / ES (a 360 px se pisaban 4 px); por debajo de 351, solo el logo, que ya lo lleva escrito */
-@media(max-width:374px){.nav .nav-logo b{font-size:1.125rem}}
-@media(max-width:350px){.nav .nav-logo b{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}}
+/* móviles estrechos: el nombre no se monta sobre EN / ES; por debajo de 360, solo el logo, que ya lo lleva escrito */
+@media(max-width:389px){.nav .nav-logo b{font-size:1.125rem}}
+@media(max-width:359px){.nav .nav-logo b{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}}
 /* menú de la hamburguesa, en papel */
 .nav-menu{position:fixed;inset:0;z-index:150;display:flex;flex-direction:column;overflow-y:auto;background:var(--claro);color:var(--ink)}
 .nav-menu-top{flex:none;height:80px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;border-bottom:1px solid rgba(28,28,28,.12)}
 .nav-x{width:44px;height:44px;font-size:1.5rem;line-height:1}
 .nav-menu-links{padding:8px 40px 0}
 .nav-menu-links a{display:flex;justify-content:space-between;align-items:center;padding:18px 0;border-bottom:1px solid rgba(28,28,28,.12);
-  font:400 2.625rem/1 var(--sign);text-transform:uppercase}
+  font:700 2.625rem/1 var(--body);letter-spacing:-.01em;text-transform:uppercase}
 .nav-menu-links i{font:400 1.5rem/1 var(--body);font-style:normal;color:var(--rojo-txt)}
 .nav-menu-bot{margin-top:auto;padding:22px 40px 26px;display:grid;gap:12px}
 .nav-menu-two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -95,8 +91,8 @@ html.menu-open{overflow:hidden}
 .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px}
 .footer .brand{display:inline-flex;align-items:center;gap:12px;color:var(--ink)}
 .footer .brand img{width:46px;height:46px;border-radius:50%}
-.footer .brand b{font:400 1.625rem/1 var(--disp)}
-.footer-tag{margin-top:16px;font:400 1.375rem/1.35 var(--disp);color:var(--ink)}
+.footer .brand b{font:700 1.625rem/1 var(--body);letter-spacing:-.01em}
+.footer-tag{margin-top:16px;font:700 1.375rem/1.35 var(--body);color:var(--ink)}
 .footer-h{margin-bottom:10px;font:700 .75rem/1 var(--body);letter-spacing:.2em;text-transform:uppercase;color:var(--ink)}
 .footer-grid nav a,.footer-grid div > a:not(.brand){display:block;padding:6px 0}
 .footer a:hover{color:var(--rojo-txt)}

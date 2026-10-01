@@ -8,9 +8,9 @@ html{scroll-padding-top:92px}
 .sec{padding-top:92px}
 .kick{display:flex;align-items:center;gap:16px;font:700 .8125rem/1 var(--body);letter-spacing:.24em;text-transform:uppercase;color:var(--verde-txt)}
 .kick::after{content:"";flex:1;height:1px;background:rgba(28,28,28,.18)}
-.sec-title{margin-top:14px;font:400 clamp(2.75rem,5.4vw,4.25rem)/1 var(--sign);text-transform:uppercase;text-wrap:balance}
+.sec-title{margin-top:14px;font:700 clamp(2.75rem,5.4vw,4.25rem)/1 var(--body);letter-spacing:-.02em;text-transform:uppercase;text-wrap:balance}
 .sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px}
-.note{font:400 2rem/1.15 var(--disp);color:var(--precio)}
+.note{font:700 2rem/1.15 var(--body);color:var(--precio)}
 .lead{font-size:1.375rem;line-height:1.5}
 .photo{display:block;width:100%;height:auto;object-fit:cover;border-radius:18px;background:var(--arena)}
 .ctas{display:flex;flex-wrap:wrap;gap:12px}
@@ -38,7 +38,7 @@ html{scroll-padding-top:92px}
 .dec-burger{right:max(-55px,-3vw);top:52%;width:clamp(180px,17.5vw,340px)}
 .hero-sparks{position:absolute;inset:0;z-index:3;pointer-events:none}
 .hero-copy{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;text-align:center;padding:max(19vh,140px) 24px 0}
-.hero-title{font-family:var(--disp);font-size:clamp(2.7rem,5.3vw,6.3rem);line-height:1.02;color:#F4DCC4;text-shadow:0 4px 30px rgba(0,0,0,.55)}
+.hero-title{font-family:var(--body);font-weight:700;letter-spacing:-.03em;font-size:clamp(2.7rem,5.3vw,6.3rem);line-height:1.02;color:#F4DCC4;text-shadow:0 4px 30px rgba(0,0,0,.55)}
 .hero-sub{margin-top:8px;font-size:clamp(1rem,1.8vw,2rem);font-weight:500;color:#FAF3DC;text-shadow:0 2px 18px rgba(0,0,0,.6)}
 .hero-ctas{display:flex;gap:clamp(18px,1.8vw,32px);flex-wrap:wrap;justify-content:center;margin-top:clamp(28px,3.8vh,44px)}
 .hbtn{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;min-width:9.5em;padding:.7em 1.9em;border-radius:999px;
@@ -84,9 +84,9 @@ html{scroll-padding-top:92px}
 .fav{display:flex;flex-direction:column;background:#fff;border-radius:14px;padding:7px 7px 16px;box-shadow:var(--sombra);transition:box-shadow .2s}
 .fav:hover{box-shadow:0 0 0 2px var(--ink)}
 .fav img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:10px;background:var(--arena)}
-.fav-n{margin:13px 7px 0;font:400 1.3125rem/1.1 var(--sign);text-transform:uppercase;overflow-wrap:anywhere}
+.fav-n{margin:13px 7px 0;font:700 1.3125rem/1.1 var(--body);letter-spacing:-.01em;text-transform:uppercase;overflow-wrap:anywhere}
 .fav-d{margin:6px 7px 0;font-size:.875rem;line-height:1.4;color:var(--ink-2);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.fav-p{margin:auto 7px 0;padding-top:12px;font:400 1.625rem/1 var(--disp);color:var(--precio)}
+.fav-p{margin:auto 7px 0;padding-top:12px;font:700 1.625rem/1 var(--body);color:var(--precio)}
 
 /* ── comida dominicana ── */
 .split{display:grid;grid-template-columns:1.3fr 1fr;gap:48px;align-items:center;margin-top:30px}
@@ -101,7 +101,7 @@ html{scroll-padding-top:92px}
 .duo{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:stretch;margin-top:30px}
 .big{display:flex;flex-direction:column;background:#fff;border-radius:18px;padding:10px 10px 28px;box-shadow:var(--sombra)}
 .big img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;border-radius:12px;background:var(--arena)}
-.big-title{margin:22px 16px 0;font:400 2.5rem/1 var(--sign);text-transform:uppercase}
+.big-title{margin:22px 16px 0;font:700 2.5rem/1 var(--body);letter-spacing:-.02em;text-transform:uppercase}
 .big-body{margin:10px 16px 0;font-size:1.0625rem;line-height:1.5;color:var(--ink-2)}
 .big .btn{align-self:flex-start;margin:22px 16px 0}
 .shop{padding:34px 26px 30px}
@@ -109,7 +109,7 @@ html{scroll-padding-top:92px}
 .shop .big-title{margin:12px 0 0}
 .shop-list{margin-top:18px}
 .shop-list li{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:10px 0;border-bottom:1.5px dashed var(--raya)}
-.shop-list b{font:400 1.3125rem/1 var(--sign);text-transform:uppercase}
+.shop-list b{font:700 1.3125rem/1 var(--body);letter-spacing:-.01em;text-transform:uppercase}
 .shop-list span{font-size:.9375rem;color:var(--ink-2);text-align:right}
 .shop .note{margin:20px 0 0;font-size:1.6875rem}
 .shop .btn{margin:18px 0 0}
@@ -132,13 +132,13 @@ html{scroll-padding-top:92px}
 /* ── preguntas frecuentes ── */
 .faq{max-width:860px;margin-top:22px}
 .faq div{padding:18px 0;border-bottom:1.5px dashed var(--raya)}
-.faq dt{font:400 1.375rem/1.15 var(--sign);text-transform:uppercase}
+.faq dt{font:700 1.375rem/1.15 var(--body);letter-spacing:-.01em;text-transform:uppercase}
 .faq dd{margin-top:8px;font-size:1.0625rem;line-height:1.5;color:var(--ink-2)}
 
 /* ── visítanos ── */
 .visit-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
-.num{margin-top:24px;font:400 13.125rem/.8 var(--sign)}
-.street{margin-top:14px;font:400 3.5rem/1 var(--sign);text-transform:uppercase}
+.num{margin-top:24px;font:700 13.125rem/.8 var(--body);letter-spacing:-.04em}
+.street{margin-top:14px;font:700 3.5rem/1 var(--body);letter-spacing:-.02em;text-transform:uppercase}
 .city{margin-top:10px;font-size:1.1875rem;color:var(--ink-2)}
 .visit .ctas{margin-top:28px}
 .hours{width:100%;border-collapse:collapse;font-size:1.0625rem}
@@ -221,7 +221,7 @@ html{scroll-padding-top:92px}
   padding:30px 26px 24px;border-radius:18px;background:var(--claro);color:var(--ink);box-shadow:0 24px 60px rgba(28,28,28,.35)}
 .modal-x{position:absolute;right:12px;top:12px;width:44px;height:44px;border-radius:50%;font-size:1.5rem;line-height:1}
 .modal-x:hover{background:var(--arena)}
-.modal-title{padding-right:40px;font:400 2.25rem/1.05 var(--disp);color:var(--precio)}
+.modal-title{padding-right:40px;font:700 2.25rem/1.05 var(--body);letter-spacing:-.02em;color:var(--precio)}
 .modal-sub{margin:8px 0 18px;font-size:.9375rem;color:var(--ink-2)}
 .fld{display:block;margin-bottom:14px}
 .fld > span{display:block;margin-bottom:6px;font:700 .75rem/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--verde-txt)}

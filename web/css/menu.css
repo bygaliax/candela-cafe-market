@@ -1,5 +1,5 @@
 /* MENU.CSS — «Carta de papel» (2026-09). Spec: docs/superpowers/specs/2026-09-24-candela-menu-design.md
-   Crema, carteles en Anton y precios a mano en rojo. Complementa base.css. */
+   Crema, carteles y precios en rojo, todo en DM Sans (una sola tipografía desde el 1-oct). Complementa base.css. */
 html{scroll-padding-top:var(--menu-top,128px)}
 .page-menu{--precio:#C42A1F;--verde-txt:#3F7021;--raya:#d8c9b4;background:var(--claro);color:var(--ink)}
 .page-menu .footer{margin-top:0}
@@ -7,7 +7,7 @@ html{scroll-padding-top:var(--menu-top,128px)}
 /* cabecera */
 .menu-head{padding:112px 0 22px}
 .menu-kick{font:700 .74rem/1.2 var(--body);letter-spacing:.22em;text-transform:uppercase;color:var(--verde-txt)}
-.menu-head h1{font:400 clamp(3rem,10vw,4.8rem)/.95 var(--disp);margin:10px 0 8px;color:var(--ink)}
+.menu-head h1{font:700 clamp(3rem,10vw,4.8rem)/.95 var(--body);letter-spacing:-.03em;margin:10px 0 8px;color:var(--ink)}
 .menu-head .ssub{color:var(--ink-2);max-width:48ch}
 .delivery{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;margin-top:16px}
 .delivery > span{font-weight:700;font-size:.9375rem}
@@ -17,7 +17,7 @@ html{scroll-padding-top:var(--menu-top,128px)}
 .chips{position:sticky;top:var(--nav-h,70px);z-index:90;display:flex;gap:8px;overflow-x:auto;padding:12px 20px;
   background:var(--claro);border-bottom:2px solid var(--ink);scrollbar-width:none}
 .chips::-webkit-scrollbar{display:none}
-.chip{flex:0 0 auto;font:400 .82rem/1 var(--sign);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;
+.chip{flex:0 0 auto;font:700 .8125rem/1 var(--body);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;
   color:var(--ink);border:2px solid var(--ink);padding:9px 12px 8px;transition:background .2s,color .2s,border-color .2s}
 .chip:hover{background:var(--arena)}
 .chip.active{background:var(--rojo-txt);border-color:var(--rojo-txt);color:#fff}
@@ -32,11 +32,11 @@ html{scroll-padding-top:var(--menu-top,128px)}
   letter-spacing:.22em;text-transform:uppercase;color:var(--verde-txt)}
 .part-label::after{content:"";flex:1;height:2px;background:var(--ink);opacity:.14}
 .cat{padding-top:22px}
-.cat-sign{font:400 clamp(1.55rem,5vw,2.1rem)/1 var(--sign);letter-spacing:.04em;text-transform:uppercase;color:var(--ink);margin-bottom:14px}
+.cat-sign{font:700 clamp(1.55rem,5vw,2.1rem)/1 var(--body);letter-spacing:-.01em;text-transform:uppercase;color:var(--ink);margin-bottom:14px}
 .cat-cover{margin:0 0 14px}
 .cat-cover img{width:100%;height:auto;aspect-ratio:12/5;object-fit:cover;border-radius:14px;background:var(--arena)}
 @media(min-width:900px){.cat-cover img{aspect-ratio:16/5}}
-.cat-note{font:400 1.2rem/1.3 var(--disp);color:var(--precio);margin:0 0 14px}
+.cat-note{font:700 1.2rem/1.3 var(--body);color:var(--precio);margin:0 0 14px}
 
 /* tarjetas: platos con foto */
 .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:14px}
@@ -46,7 +46,7 @@ html{scroll-padding-top:var(--menu-top,128px)}
 .card--wide{grid-column:span 2}
 .card img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:10px;background:var(--arena)}
 .card--wide img{aspect-ratio:16/9}
-.card .it-name{font:400 1rem/1.1 var(--sign);letter-spacing:.03em;text-transform:uppercase;margin:10px 4px 0;overflow-wrap:anywhere}
+.card .it-name{font:700 1rem/1.15 var(--body);letter-spacing:0;text-transform:uppercase;margin:10px 4px 0;overflow-wrap:anywhere}
 .card .badge{align-self:flex-start;margin:6px 4px 0}
 .card .it-desc{margin:5px 4px 0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .it-buy{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:auto 4px 0;padding-top:10px}
@@ -63,7 +63,7 @@ html{scroll-padding-top:var(--menu-top,128px)}
 
 /* piezas comunes */
 .it-desc{font-size:.86rem;line-height:1.4;color:var(--ink-2)}
-.it-price{font:400 1.2rem/1 var(--disp);color:var(--precio);white-space:nowrap}
+.it-price{font:700 1.2rem/1 var(--body);color:var(--precio);white-space:nowrap}
 .it-ask{font-size:.86rem;font-style:italic;color:var(--ink-2);white-space:nowrap}
 .it-add{flex:none;width:40px;height:40px;border-radius:50%;background:var(--rojo-txt);color:#fff;font-size:1.4rem;line-height:1;
   display:grid;place-items:center;transition:transform .2s var(--ease),background .2s}
@@ -85,12 +85,12 @@ html{scroll-padding-top:var(--menu-top,128px)}
 .cart-sheet.open{transform:none;visibility:visible;transition:transform .35s var(--ease),visibility 0s 0s}
 @media(min-width:861px){.cart-sheet{inset:0 0 0 auto;width:420px;border-radius:0;transform:translateX(100%);max-height:none}}
 .cart-sheet header{display:flex;justify-content:space-between;align-items:center;padding:18px 24px;border-bottom:2px solid var(--ink)}
-.cart-sheet header b{font:400 1.4rem/1 var(--sign);letter-spacing:.04em;text-transform:uppercase}
+.cart-sheet header b{font:700 1.4rem/1 var(--body);letter-spacing:-.01em;text-transform:uppercase}
 .cart-sheet header button{width:40px;height:40px;font-size:1.2rem}
 .sheet-body{overflow-y:auto;padding:8px 24px;flex:1}
 .sheet-line{display:grid;grid-template-columns:1fr auto;gap:4px 14px;padding:14px 0;border-bottom:1.5px dashed var(--raya)}
 .sheet-line .mi-name{font-weight:700}
-.sheet-line .mi-price{grid-column:2;justify-self:end;font:400 1.15rem/1 var(--disp);color:var(--precio)}
+.sheet-line .mi-price{grid-column:2;justify-self:end;font:700 1.15rem/1 var(--body);color:var(--precio)}
 .qty{display:inline-flex;gap:10px;align-items:center}
 .qty button{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--ink);color:var(--ink)}
 .sheet-footer{padding:18px 24px 24px;border-top:2px solid var(--ink);display:grid;gap:12px}
@@ -107,5 +107,5 @@ html{scroll-padding-top:var(--menu-top,128px)}
   background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' fill='none' stroke='%231c1c1c' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='8' cy='8' r='6'/%3E%3Cpath d='m12.5 12.5 4 4'/%3E%3C/svg%3E") no-repeat 16px 50%}
 .menu-search input::placeholder{color:#6b625a;opacity:1}
 .menu-empty{text-align:center;padding:36px 20px 120px}
-.menu-empty p{font:400 1.6rem/1.2 var(--disp);margin-bottom:16px}
+.menu-empty p{font:700 1.6rem/1.2 var(--body);margin-bottom:16px}
 .is-searching .cat-cover,.is-searching .cat-note{display:none}

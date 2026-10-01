@@ -137,16 +137,30 @@ test('Toda clave de i18n se usa en alguna página o módulo', () => {
   assert.deepEqual(Object.keys(DICT).filter(k => !used.has(k)), []);
 });
 
-test('Las fuentes se sirven desde el propio sitio (sin Google Fonts) y existen', () => {
+test('Una sola tipografía, DM Sans, servida desde el propio sitio y precargada (B-01, Robert 1-oct)', () => {
   const css = read('web/css/base.css');
-  for (const [name, html] of [['index', INDEX], ['menu', MENUP]]) {
+  const PRIV = read('web/privacy.html');
+  for (const [name, html] of [['index', INDEX], ['menu', MENUP], ['privacy', PRIV]]) {
     assert.doesNotMatch(html, /fonts\.(googleapis|gstatic)\.com/, `${name}: no pide Google Fonts`);
-    assert.match(html, /<link rel="preload" as="font" type="font\/woff2" href="assets\/fonts\/architects-daughter-latin\.woff2" crossorigin>/, `${name}: precarga la fuente del título`);
+    assert.match(html, /<link rel="preload" as="font" type="font\/woff2" href="assets\/fonts\/dm-sans-latin\.woff2" crossorigin>/, `${name}: precarga DM Sans`);
+    assert.deepEqual([...html.matchAll(/as="font"[^>]*href="([^"]+)"/g)].map(m => m[1]), ['assets/fonts/dm-sans-latin.woff2'], `${name}: no precarga otras fuentes`);
   }
-  const files = [...css.matchAll(/url\("\.\.\/assets\/fonts\/([\w-]+\.woff2)"\)/g)].map(m => m[1]);
-  assert.deepEqual(files.sort(), ['anton-latin.woff2', 'architects-daughter-latin.woff2', 'dm-sans-latin.woff2']);
-  for (const f of files) assert.ok(existsSync(new URL(`../web/assets/fonts/${f}`, import.meta.url)), `falta ${f}`);
-  assert.equal(css.match(/font-display:swap/g).length, 3);
+  const faces = [...css.matchAll(/@font-face\{font-family:'([^']+)'[^}]*url\("\.\.\/assets\/fonts\/([\w-]+\.woff2)"\)/g)].map(m => [m[1], m[2]]);
+  assert.deepEqual(faces, [['DM Sans', 'dm-sans-latin.woff2']]);
+  assert.deepEqual(readdirSync(new URL('../web/assets/fonts/', import.meta.url)), ['dm-sans-latin.woff2'], 'no quedan fuentes sueltas');
+  assert.match(css, /--body:'DM Sans',system-ui,sans-serif/);
+});
+
+test('Ninguna hoja usa otra letra: toda declaración de fuente va a var(--body)', () => {
+  // el @font-face declara la familia, no la usa: fuera del recuento
+  const sheets = readdirSync(new URL('../web/css/', import.meta.url)).map(f => [f, read(`web/css/${f}`).replace(/@font-face\{[^}]*\}/g, '')]);
+  for (const [f, css] of sheets) {
+    for (const m of css.matchAll(/(?<![-\w])font(-family)?:([^;}]+)/g)) {
+      const value = m[2].trim();
+      if (m[1]) assert.ok(['var(--body)', 'inherit'].includes(value), `${f}: font-family:${value}`);
+      else assert.ok(/ var\(--body\)$/.test(value) || value === 'inherit', `${f}: font:${value}`);
+    }
+  }
 });
 
 test('El título del mapa pasa por i18n', () => {
