@@ -102,6 +102,7 @@ export const DICT = {
   'footer.share':        { en: 'Share this page', es: 'Compartir esta página' },
   'footer.copied':       { en: 'Link copied', es: 'Enlace copiado' },
   'footer.privacy':      { en: 'Privacy', es: 'Privacidad' },
+  'delivery.label':      { en: 'Or get it delivered:', es: 'O pídelo a domicilio:' },
   'home.favs.kick':      { en: 'From the New York deli', es: 'Del deli de Nueva York' },
   'home.favs.title':     { en: 'The favorites', es: 'Los favoritos' },
   'home.favs.cta':       { en: 'See the menu →', es: 'Ver la carta →' },

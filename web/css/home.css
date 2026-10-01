@@ -95,7 +95,7 @@ html{scroll-padding-top:92px}
 .board-h{font-weight:700}
 .board-list{display:grid;gap:6px;margin-top:8px}
 .board-list li::before{content:"· ";color:var(--precio)}
-.split .btn{margin-top:26px}
+.split .ctas{margin-top:26px}
 
 /* ── café y market ── */
 .duo{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:stretch;margin-top:30px}

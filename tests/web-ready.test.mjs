@@ -121,7 +121,7 @@ test('El pie de la portada y de la carta enlaza la privacidad', () => {
   for (const name of ['index', 'menu']) assert.match(PAGES[name], /<a href="privacy\.html"[^>]*data-i18n="footer\.privacy"/, name);
 });
 
-test('Cabeceras de seguridad iguales en los dos netlify.toml; la CSP deja pasar cada script inline por su hash', () => {
+test('Cabeceras de seguridad iguales en los dos netlify.toml; los scripts sin unsafe-*, cada inline por su hash', () => {
   const block = t => (t.match(/\[\[headers\]\]\s+for = "\/\*"\s+\[headers\.values\]([\s\S]*?)(?=\[\[|$)/) || [])[1];
   const root = block(read('netlify.toml')), web = block(read('web/netlify.toml'));
   assert.ok(root, 'faltan las cabeceras para /*');
@@ -129,8 +129,36 @@ test('Cabeceras de seguridad iguales en los dos netlify.toml; la CSP deja pasar 
   for (const h of ['Content-Security-Policy', 'X-Frame-Options', 'X-Content-Type-Options', 'Referrer-Policy', 'Permissions-Policy'])
     assert.match(root, new RegExp(`${h} = "`), h);
   const csp = root.match(/Content-Security-Policy = "([^"]+)"/)[1];
-  assert.doesNotMatch(csp, /unsafe-inline|unsafe-eval/);
+  // los estilos inline sí (la carta encuadra cada foto con style="object-position"); los scripts, nunca
+  assert.doesNotMatch(csp.match(/script-src [^;]+/)[0], /unsafe-inline|unsafe-eval/);
   for (const [name, html] of Object.entries(PAGES))
     for (const m of html.matchAll(/<script>([\s\S]*?)<\/script>/g))
       assert.ok(csp.includes(`'sha256-${createHash('sha256').update(m[1]).digest('base64')}'`), `${name}: la CSP bloquea <script>${m[1].slice(0, 40)}`);
+});
+
+// Pedidos a domicilio (2026-10-01): botones con el color de cada marca en la carta y en la portada.
+const UBER = 'https://www.ubereats.com/store/candela-y-cafe-market/oa35cIfwWWuJm-ND4o9G1g';
+const DOOR = 'https://www.doordash.com/store/candela-y-caf%C3%A9-market-miami-26069377/';
+
+test('Botones de Uber Eats y DoorDash en la carta y en la portada, con los mismos enlaces que el pie', () => {
+  for (const name of ['index', 'menu']) {
+    const html = PAGES[name];
+    assert.match(html, new RegExp(`<a class="btn btn-ubereats" href="${UBER}" target="_blank" rel="noopener">`), `${name}: botón de Uber Eats`);
+    assert.match(html, new RegExp(`<a class="btn btn-doordash" href="${DOOR}" target="_blank" rel="noopener">`), `${name}: botón de DoorDash`);
+    for (const [host, link] of [['ubereats.com', UBER], ['doordash.com', DOOR]])
+      assert.deepEqual([...new Set([...html.matchAll(new RegExp(`href="(https://www\\.${host.replace('.', '\\.')}[^"]*)"`, 'g'))].map(m => m[1]))], [link], `${name}: un solo enlace a ${host}`);
+  }
+});
+
+test('Los colores de Uber Eats y DoorDash pasan el contraste AA (4,5:1) con su texto', () => {
+  const css = read('web/css/base.css');
+  const lum = hex => { const c = hex.match(/\w\w/g).map(x => parseInt(x, 16) / 255).map(v => (v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4)); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };
+  const ratio = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p); return (x + 0.05) / (y + 0.05); };
+  const color = (sel, prop) => (css.match(new RegExp(`${sel.replace(/\./g, '\\.')}\\{[^}]*?${prop}:#([0-9A-Fa-f]{6})`)) || [])[1];
+  const pairs = [['.btn-ubereats', 'background', '.btn-ubereats', 'color'], ['.btn-ubereats', 'background', '.btn-ubereats b', 'color'], ['.btn-doordash', 'background', '.btn-doordash', 'color']];
+  for (const [s1, p1, s2, p2] of pairs) {
+    const a = color(s1, p1), b = color(s2, p2);
+    assert.ok(a && b, `faltan ${s1} ${p1} / ${s2} ${p2}`);
+    assert.ok(ratio(a, b) >= 4.5, `${s2} sobre ${s1}: ${ratio(a, b).toFixed(2)}:1`);
+  }
 });

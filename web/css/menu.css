@@ -9,6 +9,9 @@ html{scroll-padding-top:var(--menu-top,128px)}
 .menu-kick{font:700 .74rem/1.2 var(--body);letter-spacing:.22em;text-transform:uppercase;color:var(--verde-txt)}
 .menu-head h1{font:400 clamp(3rem,10vw,4.8rem)/.95 var(--disp);margin:10px 0 8px;color:var(--ink)}
 .menu-head .ssub{color:var(--ink-2);max-width:48ch}
+.delivery{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;margin-top:16px}
+.delivery > span{font-weight:700;font-size:.9375rem}
+.delivery .btn{min-height:44px}
 
 /* chips fijos bajo la nav */
 .chips{position:sticky;top:var(--nav-h,70px);z-index:90;display:flex;gap:8px;overflow-x:auto;padding:12px 20px;
