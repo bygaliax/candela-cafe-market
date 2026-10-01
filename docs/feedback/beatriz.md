@@ -10,30 +10,32 @@ Registro destilado de los cambios que Beatriz pide por WhatsApp. Cómo funciona:
 
 | ID | Fecha | De | Dónde | Qué pide | Estado | Cierre |
 |----|-------|----|-------|----------|--------|--------|
-| B-01 | 10-01 | Beatriz | Portada · barra, hero y títulos de sección | "**Tiene varias tipografías**" (Robert). Sus flechas marcan cuatro textos en tres familias: «Candela & Café» de la barra y «Authentic Flavors!» (Architects Daughter, a mano), «MENU» (DM Sans) y «THE FAVORITES» (Anton). No dice cuáles quedarse | ❓ abierto | — |
+| B-01 | 10-01 | Beatriz | Portada · barra, hero y títulos de sección | "**Tiene varias tipografías**" (Robert). Sus flechas marcan cuatro textos en tres familias: «Candela & Café» de la barra y «Authentic Flavors!» (Architects Daughter, a mano), «MENU» (DM Sans) y «THE FAVORITES» (Anton). No dice cuáles quedarse | ✅ hecho | `c10d539` |
 
-**B-01, lo que hay hoy en la web:** tres familias. **Architects Daughter** en el nombre de la
+**B-01, lo que había en la web:** tres familias. **Architects Daughter** en el nombre de la
 barra, el título del hero, los precios y las notas a mano (y la frase del pie); **Anton** en los
 títulos de sección, los nombres de los platos y la FAQ; **DM Sans** en el texto, el menú y los
-botones. Un detalle que puede ser parte de lo que ve: «Authentic Flavors!» sale en **negrita
-falsa** (Architects Daughter solo tiene peso 400 y el navegador la engorda), mientras que el
-nombre de la barra va en su grosor normal; la misma letra se ve distinta en la misma pantalla.
+botones. «Authentic Flavors!» salía además en **negrita falsa** (Architects Daughter solo tiene
+peso 400 y el navegador la engordaba).
+
+**B-01, cómo quedó (1-oct, en producción):** **todo en DM Sans**, en portada, carta y privacidad.
+Lo que iba a mano y los carteles pasan a DM Sans en negrita (700); la jerarquía la marcan el
+peso y el tamaño. Se borraron Anton y Architects Daughter (−31 KB); las pruebas exigen una sola
+`@font-face` y que toda declaración de fuente vaya a `var(--body)`. El logo redondo es imagen y
+no cambia.
 
 ## Para preguntarle
 
-- **B-01** — ¿Qué propones: quedarnos con dos tipografías (¿cuáles?) o con una sola? ¿Lo dices
-  por la barra y el hero (la letra a mano de «Candela & Café» y «Authentic Flavors!» junto al
-  «MENU» de palo seco) o por toda la página, carteles en Anton incluidos («THE FAVORITES»)?
-  ¿Hay un frame en el Figma con la tipografía que quieres?
+- Nada pendiente.
 
-## Para decidir con Robert
+## Decidido
 
-- **B-01 choca con dos decisiones tuyas:**
-  - la **«Carta de papel»** (24-sep, te gusta y se queda) y la **portada en blanco «al estilo del
-    menú»** (25-sep): carteles en **Anton** + precios **a mano** + DM Sans para el texto. Quitar
-    familias cambia la carta y la portada que aprobaste;
-  - el **hero de fuego recuperado hoy tal cual**, con el título en Architects Daughter del banner
-    de Figma.
+- **B-01 → una sola tipografía, DM Sans (Robert, 10-01).** Chocaba con la «Carta de papel»
+  (24-sep: carteles en Anton y precios a mano) y con el hero de fuego recuperado ese mismo día
+  (título a mano del banner de Figma). Robert: "**debemos ser uniformes, no se pueden utilizar
+  más de una tipografía. Mantengámonos con una solamente**". Eligió DM Sans entre dos maquetas
+  (A · DM Sans, B · Archivo con carteles estrechos) por ser la más uniforme y la que ya cargaba
+  la web.
 
 ## Crudo de este lote
 
