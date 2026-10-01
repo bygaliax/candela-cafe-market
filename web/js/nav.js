@@ -11,7 +11,7 @@ export function initNav() {
   const $ = id => document.getElementById(id);
   const burger = $('burger'), menu = $('navMenu'), close = $('navClose'), status = $('navStatus'), wa = $('navWa');
   let release = null;
-  // El estado del menú es texto normal (no región viva): el de la portada ya se anuncia.
+  // El estado del menú es texto normal (no región viva): se pinta al abrirlo.
   const paint = () => {
     const { cls, html } = statusHTML(statusAt(new Date(), HOURS), getLang());
     status.classList.remove('is-open', 'is-soon', 'is-closed');

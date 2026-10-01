@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add('js')</script>
 <title>Candela &amp; Café Market — NY Deli, Dominican Soul &amp; Live Music | Downtown Miami</title>
 <meta name="description" content="Coffee now, wine later: breakfast, Dominican food made daily, NY deli sandwiches, a neighborhood market and live music on Fridays. 507 N Miami Ave, Downtown Miami.">
 <link rel="icon" type="image/png" href="favicon.png">
@@ -13,9 +14,9 @@
 <meta property="og:image" content="https://candelaycafe.com/assets/img/og-image.jpg">
 <meta property="og:url" content="https://candelaycafe.com/">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="preload" as="image" href="assets/img/manana-fachada-960.webp"
-      imagesrcset="assets/img/manana-fachada-480.webp 480w, assets/img/manana-fachada-960.webp 960w"
-      imagesizes="(max-width:900px) 92vw, 470px" fetchpriority="high">
+<link rel="preload" as="image" href="assets/img/hero-grill.webp"
+      imagesrcset="assets/img/hero-grill-480.webp 480w, assets/img/hero-grill.webp 582w"
+      imagesizes="(max-width:700px) 90vw, 740px" fetchpriority="high">
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/architects-daughter-latin.woff2" crossorigin>
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/home.css">
@@ -72,23 +73,33 @@
 
 <main id="main">
 
-<header class="hero wrap" id="hero">
-  <div>
-    <h1 class="hero-title">Candela &amp; Café</h1>
-    <ul class="signs" role="list">
-      <li class="sign" data-i18n="home.sign.deli">NY Deli</li>
-      <li class="sign sign--red" data-i18n="home.sign.dominican">Dominican food</li>
-      <li class="sign" data-i18n="home.sign.coffee">Coffee &amp; juices</li>
-      <li class="sign" data-i18n="home.sign.market">Market</li>
-    </ul>
-    <p class="tagline">Born in NY, raised Dominican, served in Miami.</p>
-    <p class="status is-open" id="heroStatus" role="status"><i class="dot" aria-hidden="true"></i><span id="heroStatusText">Open daily from 8 am · 507 N Miami Ave</span></p>
-    <div class="ctas" id="heroCtas">
-      <a class="btn btn-p btn-lg" href="https://www.google.com/maps/dir/?api=1&amp;destination=507+N+Miami+Ave%2C+Miami%2C+FL+33136" target="_blank" rel="noopener" data-i18n="visit.directions">Get directions</a>
-      <a class="btn btn-ghost btn-lg" href="menu.html" data-i18n="home.cta.menu">See the menu</a>
+<header class="hero" id="hero">
+  <img class="hero-fire" src="assets/img/hero-fire-1440.webp"
+       srcset="assets/img/hero-fire-960.webp 960w, assets/img/hero-fire-1440.webp 1440w"
+       sizes="100vw" alt="" aria-hidden="true">
+  <img class="dec dec-chips" src="assets/img/hero-chips-b.webp" alt="" width="185" height="213" aria-hidden="true">
+  <picture><source media="(max-width:700px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><img class="dec dec-drink" src="assets/img/hero-drink.webp" alt="" width="330" height="484" aria-hidden="true"></picture>
+  <img class="dec dec-leaf-a" src="assets/img/hero-leaf-a.webp" alt="" width="70" height="102" aria-hidden="true">
+  <img class="dec dec-leaf-b" src="assets/img/hero-leaf-b.webp" alt="" width="64" height="70" aria-hidden="true">
+  <picture><source media="(max-width:700px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><img class="dec dec-ringburger" src="assets/img/hero-burger-ring.webp" alt="" width="283" height="330" aria-hidden="true"></picture>
+  <img class="dec dec-burger" src="assets/img/hero-burger.webp" alt="" width="307" height="334" aria-hidden="true">
+  <canvas class="hero-sparks" id="heroSparks" aria-hidden="true"></canvas>
+  <div class="hero-copy">
+    <h1 class="display hero-title" data-i18n="hero.title">Authentic Flavors!</h1>
+    <p class="hero-sub" data-i18n="hero.sub">Enjoy our special mixed grill today.</p>
+    <div class="hero-ctas" id="heroCtas">
+      <a class="hbtn hbtn-terra" href="menu.html"><span data-i18n="hero.cta.menu">View menu</span></a>
+      <a class="hbtn hbtn-green" href="menu.html"><span data-i18n="hero.cta.order">Order Now!</span></a>
     </div>
   </div>
-  <img class="hero-photo" src="assets/img/manana-fachada-960.webp" srcset="assets/img/manana-fachada-480.webp 480w, assets/img/manana-fachada-960.webp 960w" sizes="(max-width:900px) 92vw, 470px" width="480" height="640" fetchpriority="high" alt="Breakfast plate at the door of 507 N Miami Ave" data-i18n-alt="home.hero.alt">
+  <div class="hero-platter" aria-hidden="true">
+    <div class="platter-disc" id="platterDisc">
+      <img class="grill-t" src="assets/img/hero-grill.webp" srcset="assets/img/hero-grill-480.webp 480w, assets/img/hero-grill.webp 582w"
+           sizes="(max-width:700px) 90vw, 740px" alt="" width="582" height="313" fetchpriority="high">
+      <img class="grill-b" src="assets/img/hero-grill.webp" srcset="assets/img/hero-grill-480.webp 480w, assets/img/hero-grill.webp 582w"
+           sizes="(max-width:700px) 90vw, 740px" alt="" width="582" height="313">
+    </div>
+  </div>
 </header>
 
 <section class="sec wrap" id="favoritos" aria-labelledby="favsTitle">
@@ -220,6 +231,8 @@
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer
+  integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>
 <script type="module" src="js/landing.js"></script>
 </body>
 </html>

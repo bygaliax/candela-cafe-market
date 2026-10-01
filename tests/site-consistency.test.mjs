@@ -78,13 +78,25 @@ test('En español, el enlace de la carta dice «Carta»', () => {
   assert.equal(DICT['nav.menu'].es, 'Carta');
 });
 
-test('La portada nueva: su hoja, sin GSAP, sin hero de fuego ni market de banco de imágenes', () => {
+test('La portada: hero de fuego del banner (vuelve el 1-oct), sin ScrollTrigger ni las franjas viejas', () => {
   assert.match(INDEX, /<link rel="stylesheet" href="css\/home\.css">/);
-  for (const gone of [/gsap/i, /ScrollTrigger/, /hero-(fire|grill|burger|chips|drink|leaf)/, /mk-(despensa|aceite|cereal|frutas|verdes|cafe)/,
-    /landing\.css/, /sections\.css/, /class="dawn"/, /class="dusk"/, /id="cartas"/, /class="now"/, /Order Now/])
+  for (const gone of [/ScrollTrigger/, /mk-(despensa|aceite|cereal|frutas|verdes|cafe)/,
+    /landing\.css/, /sections\.css/, /class="dawn"/, /class="dusk"/, /id="cartas"/, /class="now"/])
     assert.doesNotMatch(INDEX, gone, String(gone));
-  assert.match(INDEX, /<link rel="preload" as="image" href="assets\/img\/manana-fachada-960\.webp"/);
-  assert.match(INDEX, /<img class="hero-photo"[^>]*fetchpriority="high"/);
+  // la imagen precargada es la que el hero pide con prioridad alta: si no, se baja dos veces y el LCP espera
+  const pre = INDEX.match(/<link rel="preload" as="image" href="([^"]+)"/)[1].replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const hero = INDEX.match(/<header[^>]*id="hero"[^>]*>([\s\S]*?)<\/header>/)[1];
+  assert.match(hero, new RegExp(`<img[^>]*src="${pre}"[^>]*fetchpriority="high"`));
+  // solo el núcleo de GSAP, con SRI y antes del módulo: hero.js lo necesita al arrancar
+  assert.match(INDEX, /<script src="https:\/\/cdn\.jsdelivr\.net\/npm\/gsap@3\.12\.5\/dist\/gsap\.min\.js" defer\s+integrity="sha384-[^"]+" crossorigin="anonymous"><\/script>/);
+  assert.ok(INDEX.indexOf('gsap.min.js') < INDEX.indexOf('src="js/landing.js"'), 'gsap.min.js va antes de landing.js');
+});
+
+test('Todo id que buscan los scripts existe en su página (uno que falta rompe el resto del módulo)', () => {
+  assert.ok(existsSync(new URL('../web/js/hero.js', import.meta.url)), 'falta js/hero.js');
+  const ids = f => [...read(`web/js/${f}`).matchAll(/(?:\$|getElementById)\('([\w-]+)'\)/g)].map(m => m[1]);
+  for (const [f, pages] of [['landing.js', [INDEX]], ['hero.js', [INDEX]], ['nav.js', [INDEX, MENUP]]])
+    for (const id of ids(f)) for (const html of pages) assert.match(html, new RegExp(`id="${id}"`), `${f}: falta #${id}`);
 });
 
 test('La portada: un solo h1 y las anclas de siempre', () => {

@@ -1,7 +1,6 @@
 // Datos del local — ÚNICA fuente de horario, Google, favoritos y mesa caliente.
-// Los usan el estado de la portada, la tabla de Visítanos y el test de coherencia del JSON-LD.
+// Los usan el estado del menú de la hamburguesa, la tabla de Visítanos y el test de coherencia del JSON-LD.
 
-export const ADDRESS = { street: '507 N Miami Ave', city: 'Downtown Miami, FL 33136' };
 export const MAPS_DIRECTIONS = 'https://www.google.com/maps/dir/?api=1&destination=507+N+Miami+Ave%2C+Miami%2C+FL+33136';
 
 // 0 = domingo … 6 = sábado. null = cerrado. Sin cierres después de medianoche.

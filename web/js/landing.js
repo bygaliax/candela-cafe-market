@@ -2,28 +2,31 @@
 import { initLangToggle, t, getLang } from './i18n.js';
 import { PHONE } from './menu-data.js';
 import { MARKET_CATEGORIES } from './market-data.js';
-import { ADDRESS, HOURS, FAVORITES, DAILY_MENU, GOOGLE } from './site-data.js';
+import { HOURS, FAVORITES, DAILY_MENU, GOOGLE } from './site-data.js';
 import { statusAt } from './status.js';
-import { renderFavorites, renderMarketList, renderBoard, renderHours, statusHTML } from './sections.js';
+import { renderFavorites, renderMarketList, renderBoard, renderHours } from './sections.js';
 import { waUrl, buildReservationUrl } from './cart-core.js';
 import { initNav } from './nav.js';
 import { trapFocus } from './focus-trap.js';
+import { initHero } from './hero.js';
 
 initLangToggle();
 initNav();
 const $ = id => document.getElementById(id);
 
-/* ── estado del local, horario y mesa caliente (hora de Miami) ──
-   Solo se escribe si cambia: #heroStatus es una región viva y reescribirla la vuelve a anunciar. */
+/* ── hero de fuego (GSAP es deferred) y barra: transparente sobre el fuego, de papel al bajar ── */
+addEventListener('DOMContentLoaded', initHero);
+const nav = $('nav');
+const onScroll = () => nav.classList.toggle('is-scrolled', scrollY > 40);
+addEventListener('scroll', onScroll, { passive: true });
+onScroll();
+
+/* ── horario y mesa caliente (hora de Miami): solo se escribe si cambia ── */
 const last = new Map();
 const setHTML = (el, html) => { if (last.get(el) !== html) { el.innerHTML = html; last.set(el, html); } };
 function updateNow() {
   const lang = getLang();
   const st = statusAt(new Date(), HOURS);
-  const { cls, html } = statusHTML(st, lang, ADDRESS.street);
-  const box = $('heroStatus');
-  if (!box.classList.contains(cls)) { box.classList.remove('is-open', 'is-soon', 'is-closed'); box.classList.add(cls); }
-  setHTML($('heroStatusText'), html);
   setHTML($('hoursBody'), renderHours(HOURS, st.day, lang));
   setHTML($('board'), renderBoard(DAILY_MENU, st.day, lang));
 }

@@ -1,8 +1,8 @@
 /* HOME.CSS — portada en blanco, al estilo del menú (2026-09-25).
-   Spec: docs/superpowers/specs/2026-09-25-candela-portada-blanca-design.md. Complementa base.css. */
+   Spec: docs/superpowers/specs/2026-09-25-candela-portada-blanca-design.md. Complementa base.css.
+   El hero es el de fuego del banner (2026-06-10), recuperado el 2026-10-01: va debajo de la barra transparente. */
 html{scroll-padding-top:92px}
 .page-home{--precio:#C42A1F;--verde-txt:#3F7021;--raya:#d8c9b4;--sombra:0 1px 0 rgba(28,28,28,.07),0 12px 30px -18px rgba(28,28,28,.4)}
-.page-home main{padding-top:80px}
 
 /* ── piezas comunes ── */
 .sec{padding-top:92px}
@@ -10,8 +10,6 @@ html{scroll-padding-top:92px}
 .kick::after{content:"";flex:1;height:1px;background:rgba(28,28,28,.18)}
 .sec-title{margin-top:14px;font:400 clamp(2.75rem,5.4vw,4.25rem)/1 var(--sign);text-transform:uppercase;text-wrap:balance}
 .sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px}
-.sign{display:inline-block;padding:9px 12px 8px;background:var(--ink);color:#fff;font:400 1rem/1 var(--sign);letter-spacing:.12em;text-transform:uppercase}
-.sign--red{background:var(--rojo-txt)}
 .note{font:400 2rem/1.15 var(--disp);color:var(--precio)}
 .lead{font-size:1.375rem;line-height:1.5}
 .photo{display:block;width:100%;height:auto;object-fit:cover;border-radius:18px;background:var(--arena)}
@@ -20,14 +18,66 @@ html{scroll-padding-top:92px}
 .btn-sm{min-height:44px;padding:0 20px;font-size:.75rem}
 .show-m{display:none}
 
-/* ── portada ── */
-.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:64px;align-items:center;padding-top:48px}
-.hero-title{font:400 clamp(3.625rem,8vw,6.5rem)/1 var(--disp);text-wrap:balance}
-.signs{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
-.tagline{max-width:22ch;margin-top:24px;font:400 1.8125rem/1.25 var(--disp);color:var(--precio)}
-.hero .status{margin-top:28px}
-.hero .ctas{margin-top:26px}
-.hero-photo{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:50% 0;border-radius:22px;background:var(--arena)}
+/* ── barra sobre el fuego: transparente y en claro; al bajar (.is-scrolled, landing.js) vuelve la de papel ── */
+.page-home .nav{transition:background-color .3s,box-shadow .3s,color .3s}
+.js .page-home .nav:not(.is-scrolled){background:transparent;box-shadow:none;color:var(--crema)}
+.js .page-home .nav:not(.is-scrolled) .lang-toggle{color:rgba(245,240,232,.72)}
+.js .page-home .nav:not(.is-scrolled) .lang-toggle .is-on{color:#fff}
+.js .page-home .nav:not(.is-scrolled) .nav-burger span{background:var(--crema)}
+.js .page-home .nav:not(.is-scrolled) :focus-visible,.hero :focus-visible{outline-color:var(--crema)}
+
+/* ── HERO (banner aprobado 2026-06-10: fuego + parrillada) ── */
+.hero{position:relative;overflow:hidden;min-height:100vh;min-height:100svh;background:#0a0302}
+.hero-fire{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none}
+.dec{position:absolute;z-index:1;height:auto;pointer-events:none;transform:rotate(var(--rot,0deg))}
+.dec-chips{left:max(-20px,-1.2vw);top:3.5vh;width:clamp(100px,12.8vw,250px)}
+.dec-drink{left:-3vw;top:30%;width:clamp(160px,17vw,330px)}
+.dec-leaf-a{right:8.5%;top:4%;width:clamp(50px,4.9vw,95px);--rot:10deg}
+.dec-leaf-b{right:20%;top:74%;width:clamp(40px,4.5vw,88px);--rot:-22deg}
+.dec-ringburger{right:-7vw;top:18%;width:clamp(180px,19.6vw,375px)}
+.dec-burger{right:max(-55px,-3vw);top:52%;width:clamp(180px,17.5vw,340px)}
+.hero-sparks{position:absolute;inset:0;z-index:3;pointer-events:none}
+.hero-copy{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;text-align:center;padding:max(19vh,140px) 24px 0}
+.hero-title{font-family:var(--disp);font-size:clamp(2.7rem,5.3vw,6.3rem);line-height:1.02;color:#F4DCC4;text-shadow:0 4px 30px rgba(0,0,0,.55)}
+.hero-sub{margin-top:8px;font-size:clamp(1rem,1.8vw,2rem);font-weight:500;color:#FAF3DC;text-shadow:0 2px 18px rgba(0,0,0,.6)}
+.hero-ctas{display:flex;gap:clamp(18px,1.8vw,32px);flex-wrap:wrap;justify-content:center;margin-top:clamp(28px,3.8vh,44px)}
+.hbtn{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;min-width:9.5em;padding:.7em 1.9em;border-radius:999px;
+  font-weight:600;font-size:clamp(.85rem,.95vw,1.05rem);color:#fff;box-shadow:0 8px 22px rgba(0,0,0,.38);
+  transition:transform .2s var(--ease),box-shadow .25s}
+.hbtn span{position:relative;z-index:1}
+.hbtn::before{content:"";position:absolute;inset:0;z-index:0;border-radius:inherit;
+  background:linear-gradient(180deg,#FFB546 0%,#FF7A33 45%,#ED3B2F 100%);
+  transform:translateY(101%);transition:transform .35s var(--ease)}
+.hbtn:active{transform:scale(.97)}
+.hbtn-terra{background:#C24A22}                 /* blanco = 4,9:1 (antes 4,1:1) */
+.hbtn-green{background:#6CB41C;color:#10210a}   /* texto oscuro = 6,4:1 (antes 2,6:1) */
+@media(hover:hover) and (pointer:fine){.hbtn-green:hover{color:#fff}}
+/* el texto del hero arranca oculto SOLO con JS; GSAP lo muestra. Red de seguridad a los 2,5 s
+   (sin animaciones, hero.js lo muestra; si el JS no llega, se ve igual) */
+.js .hero-copy > *{opacity:0;animation:heroShow 0s 2.5s forwards}
+@keyframes heroShow{to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.js .hero-copy > *{opacity:1}}
+@media(hover:hover) and (pointer:fine){
+  .hbtn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(255,120,40,.5)}
+  .hbtn:hover::before{transform:translateY(0)}
+}
+.hero-platter{position:absolute;left:50%;top:49%;transform:translateX(-50%);z-index:1;
+  width:clamp(340px,43.5vw,790px);aspect-ratio:1;border-radius:50%;border:clamp(6px,.55vw,10px) solid #C84C24;padding:clamp(12px,1.1vw,20px);
+  background:radial-gradient(circle at 50% 30%, #2a130a, #140806 70%);
+  box-shadow:0 0 70px rgba(0,0,0,.30),0 0 120px rgba(200,76,36,.20)}
+.platter-disc{position:relative;width:100%;height:100%;border-radius:50%;overflow:hidden}
+.platter-disc img{position:absolute;left:0;top:0;width:100%;height:auto}
+.platter-disc .grill-b{top:auto;bottom:0;transform:rotate(180deg)}
+@media(max-width:700px){
+  .dec-drink,.dec-ringburger{display:none}
+  .dec-chips{top:66px;left:-14px;width:90px}
+  .dec-leaf-a{right:5%;top:11%;width:46px}
+  .dec-leaf-b{top:58%;right:6%}
+  .dec-burger{width:190px;right:-80px;top:56%}
+  .hero-copy{padding-top:max(16vh,120px)}
+  .hero-ctas{gap:14px}
+  .hero-platter{width:min(140vw,560px);top:auto;bottom:calc(min(140vw,560px)/-2.4)}
+}
 
 /* ── los favoritos ── */
 .favs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-top:30px}
@@ -94,9 +144,7 @@ html{scroll-padding-top:92px}
 
 /* ── tableta ── */
 @media(max-width:900px){
-  .hero,.split,.duo,.visit-grid{grid-template-columns:1fr}
-  .hero{gap:0}
-  .hero-photo{aspect-ratio:4/3;margin-top:26px;border-radius:18px}
+  .split,.duo,.visit-grid{grid-template-columns:1fr}
   .split,.duo{gap:18px}
   .visit-grid{gap:28px}
   .fri{grid-template-columns:1fr;gap:18px;padding:10px 10px 26px}
@@ -110,15 +158,8 @@ html{scroll-padding-top:92px}
 /* ── móvil ── */
 @media(max-width:600px){
   html{scroll-padding-top:76px}
-  .page-home main{padding-top:64px}
   .sec{padding-top:56px}
-  .hero{padding-top:30px}
-  .signs{gap:6px;margin-top:16px}
-  .sign{padding:7px 9px 6px;font-size:.8125rem}
-  .tagline{margin-top:16px;font-size:1.375rem}
   .status{font-size:.9375rem}
-  .hero .status{margin-top:18px}
-  .hero .ctas{margin-top:18px}
   .btn-lg{min-height:50px;padding:0 22px;font-size:.8125rem}
   .kick{font-size:.6875rem;letter-spacing:.2em}
   .hide-m{display:none}
