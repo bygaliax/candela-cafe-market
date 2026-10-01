@@ -4,16 +4,33 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>document.documentElement.classList.add('js')</script>
-<title>Candela &amp; Café Market — NY Deli, Dominican Soul &amp; Live Music | Downtown Miami</title>
-<meta name="description" content="Coffee now, wine later: breakfast, Dominican food made daily, NY deli sandwiches, a neighborhood market and live music on Fridays. 507 N Miami Ave, Downtown Miami.">
-<link rel="icon" type="image/png" href="favicon.png">
+<title>Candela &amp; Café Market | NY Deli &amp; Dominican Food in Miami</title>
+<meta name="description" content="Breakfast, Dominican food made daily, NY deli sandwiches, a neighborhood market and live music on Fridays. 507 N Miami Ave, Downtown Miami.">
+<meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://candelaycafe.com/">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#0a0302">
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="Candela & Café Market">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="es_LA">
 <meta property="og:title" content="Candela & Café Market — Coffee now, wine later | Downtown Miami">
 <meta property="og:description" content="Breakfast, Dominican food made daily, NY deli, a neighborhood market and live music on Fridays. 507 N Miami Ave.">
-<meta property="og:image" content="https://candelaycafe.com/assets/img/og-image.jpg">
 <meta property="og:url" content="https://candelaycafe.com/">
+<meta property="og:image" content="https://candelaycafe.com/assets/img/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Prosciutto sandwich on the bar at Candela & Café, with the red banquette behind">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Candela & Café Market — Coffee now, wine later | Downtown Miami">
+<meta name="twitter:description" content="Breakfast, Dominican food made daily, NY deli, a neighborhood market and live music on Fridays. 507 N Miami Ave.">
+<meta name="twitter:image" content="https://candelaycafe.com/assets/img/og-image.jpg">
+<meta name="twitter:image:alt" content="Prosciutto sandwich on the bar at Candela & Café, with the red banquette behind">
 <link rel="preload" as="image" href="assets/img/hero-grill.webp"
       imagesrcset="assets/img/hero-grill-480.webp 480w, assets/img/hero-grill.webp 582w"
       imagesizes="(max-width:700px) 90vw, 740px" fetchpriority="high">
@@ -22,8 +39,11 @@
 <link rel="stylesheet" href="css/home.css">
 <script type="application/ld+json">
 { "@context": "https://schema.org", "@type": "Restaurant",
+  "@id": "https://candelaycafe.com/#restaurant",
   "name": "Candela & Café Market",
+  "alternateName": "Candela y Café Market",
   "url": "https://candelaycafe.com/",
+  "logo": "https://candelaycafe.com/android-chrome-512x512.png",
   "servesCuisine": ["Deli", "Dominican", "Coffee"],
   "priceRange": "$$",
   "telephone": "+17862547577",
@@ -36,6 +56,23 @@
   "hasMenu": "https://candelaycafe.com/menu",
   "image": "https://candelaycafe.com/assets/img/og-image.jpg",
   "sameAs": ["https://www.instagram.com/candelaycafe/"] }
+</script>
+<script type="application/ld+json">
+{ "@context": "https://schema.org", "@graph": [
+  { "@type": "WebSite", "@id": "https://candelaycafe.com/#website", "url": "https://candelaycafe.com/",
+    "name": "Candela & Café Market", "alternateName": "Candela y Café Market", "inLanguage": ["en", "es"],
+    "publisher": { "@id": "https://candelaycafe.com/#restaurant" } },
+  { "@type": "FAQPage", "@id": "https://candelaycafe.com/#faq", "mainEntity": [
+    { "@type": "Question", "name": "Where are you?",
+      "acceptedAnswer": { "@type": "Answer", "text": "At 507 N Miami Ave, Downtown Miami, FL 33136." } },
+    { "@type": "Question", "name": "What are your hours?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Sunday to Tuesday, 8 am to 10 pm. Wednesday to Saturday, 8 am to 11:30 pm." } },
+    { "@type": "Question", "name": "Do you deliver?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes, through Uber Eats and DoorDash. You can also order from our menu on WhatsApp." } },
+    { "@type": "Question", "name": "Is there live music?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Every Friday from 8 pm, with wine and coffee until close. Reserve your table on WhatsApp." } },
+    { "@type": "Question", "name": "What kind of food do you serve?",
+      "acceptedAnswer": { "@type": "Answer", "text": "NY deli sandwiches, Dominican food made every day, breakfast, coffee and fresh juices, plus a small market with basics and natural products." } } ] } ] }
 </script>
 </head>
 <body class="page-home">
@@ -86,7 +123,7 @@
   <canvas class="hero-sparks" id="heroSparks" aria-hidden="true"></canvas>
   <div class="hero-copy">
     <h1 class="display hero-title" data-i18n="hero.title">Authentic Flavors!</h1>
-    <p class="hero-sub" data-i18n="hero.sub">Enjoy our special mixed grill today.</p>
+    <p class="hero-sub" data-i18n="hero.sub">NY deli &amp; Dominican food in Downtown Miami.</p>
     <div class="hero-ctas" id="heroCtas">
       <a class="hbtn hbtn-terra" href="menu.html"><span data-i18n="hero.cta.menu">View menu</span></a>
       <a class="hbtn hbtn-green" href="menu.html"><span data-i18n="hero.cta.order">Order Now!</span></a>
@@ -165,6 +202,18 @@
   <p class="google"><span class="star" aria-hidden="true">★</span> <b><span id="gRating">4.6</span> <span data-i18n="home.place.google">on Google</span></b> · <span id="gReviews">142</span> <span data-i18n="home.place.reviews">reviews</span> · <a id="gRead" href="https://www.google.com/maps?cid=6497021305409967970" target="_blank" rel="noopener" data-i18n="home.place.read">Read the reviews</a> · <a id="gWrite" href="https://www.google.com/maps?cid=6497021305409967970" target="_blank" rel="noopener" data-i18n="reviews.write">Write a review</a></p>
 </section>
 
+<section class="sec wrap" id="faq" aria-labelledby="faqTitle">
+  <p class="kick" data-i18n="home.faq.kick">Before you come</p>
+  <h2 class="sec-title" id="faqTitle" data-i18n="home.faq.title">FAQ</h2>
+  <dl class="faq">
+    <div><dt data-i18n="home.faq.q1">Where are you?</dt><dd data-i18n="home.faq.a1">At 507 N Miami Ave, Downtown Miami, FL 33136.</dd></div>
+    <div><dt data-i18n="home.faq.q2">What are your hours?</dt><dd data-i18n="home.faq.a2">Sunday to Tuesday, 8 am to 10 pm. Wednesday to Saturday, 8 am to 11:30 pm.</dd></div>
+    <div><dt data-i18n="home.faq.q3">Do you deliver?</dt><dd data-i18n="home.faq.a3">Yes, through Uber Eats and DoorDash. You can also order from our menu on WhatsApp.</dd></div>
+    <div><dt data-i18n="home.faq.q4">Is there live music?</dt><dd data-i18n="home.faq.a4">Every Friday from 8 pm, with wine and coffee until close. Reserve your table on WhatsApp.</dd></div>
+    <div><dt data-i18n="home.faq.q5">What kind of food do you serve?</dt><dd data-i18n="home.faq.a5">NY deli sandwiches, Dominican food made every day, breakfast, coffee and fresh juices, plus a small market with basics and natural products.</dd></div>
+  </dl>
+</section>
+
 <section class="sec wrap visit" id="visit" aria-labelledby="visitTitle">
   <div class="visit-grid">
     <div>
@@ -190,6 +239,8 @@
     <div>
       <a class="brand" href="#hero"><img src="assets/img/logo-96.webp" alt="" width="46" height="46"><b>Candela &amp; Café</b></a>
       <p class="footer-tag">Born in NY, raised Dominican,<br>served in Miami.</p>
+      <button class="btn btn-ghost share" id="shareBtn" type="button" data-i18n="footer.share">Share this page</button>
+      <span class="share-note" id="shareNote" role="status"></span>
     </div>
     <nav aria-label="Footer navigation" data-i18n-aria="footer.nav">
       <h2 class="footer-h" data-i18n="footer.explore">Explore</h2>
@@ -204,7 +255,7 @@
       <a href="tel:+17862547577">+1 (786) 254-7577</a>
     </div>
   </div>
-  <div class="foot-bottom"><span>&copy; 2026 Candela &amp; Café Market</span><span>507 N Miami Ave, Miami, FL 33136</span></div>
+  <div class="foot-bottom"><span>&copy; 2026 Candela &amp; Café Market</span><a href="privacy.html" data-i18n="footer.privacy">Privacy</a><span>507 N Miami Ave, Miami, FL 33136</span></div>
 </div></footer>
 
 <nav class="mbar" id="mbar" aria-label="Quick actions" data-i18n-aria="mbar.label">

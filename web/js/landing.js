@@ -9,9 +9,11 @@ import { waUrl, buildReservationUrl } from './cart-core.js';
 import { initNav } from './nav.js';
 import { trapFocus } from './focus-trap.js';
 import { initHero } from './hero.js';
+import { initShare } from './share.js';
 
 initLangToggle();
 initNav();
+initShare();
 const $ = id => document.getElementById(id);
 
 /* ── hero de fuego (GSAP es deferred) y barra: transparente sobre el fuego, de papel al bajar ── */

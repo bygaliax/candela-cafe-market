@@ -1,0 +1,17 @@
+/* LEGAL.CSS — página de privacidad (2026-10-01), en papel como la carta. Complementa base.css. */
+.legal-top{display:flex;align-items:center;gap:16px;height:80px;border-bottom:1px solid rgba(28,28,28,.12)}
+.legal-home{min-height:44px;padding:0 20px;font-size:.75rem}
+.legal{max-width:760px;padding-top:48px}
+.legal h1,.legal .legal-es{font:400 clamp(2.5rem,6vw,3.75rem)/1.05 var(--disp)}
+.legal .updated{margin-top:8px;font-size:.9375rem;color:var(--ink-2)}
+.legal article > h2:not(.legal-es),.legal h3{margin-top:34px;font:400 1.5rem/1.15 var(--sign);text-transform:uppercase}
+.legal p{margin-top:10px;font-size:1.0625rem;line-height:1.6}
+.legal p a{text-decoration:underline;text-underline-offset:3px}
+.legal p a:hover{color:var(--rojo-txt)}
+.legal article + article{margin-top:64px;padding-top:44px;border-top:1px solid rgba(28,28,28,.14)}
+@media(max-width:600px){
+  .legal-top{height:64px}
+  .legal{padding-top:32px}
+  .legal article > h2:not(.legal-es),.legal h3{margin-top:28px;font-size:1.25rem}
+  .legal p{font-size:1rem}
+}

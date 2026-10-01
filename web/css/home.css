@@ -129,6 +129,12 @@ html{scroll-padding-top:92px}
 .google a{text-decoration:underline;text-underline-offset:4px}
 .google a:hover{color:var(--rojo-txt)}
 
+/* ── preguntas frecuentes ── */
+.faq{max-width:860px;margin-top:22px}
+.faq div{padding:18px 0;border-bottom:1.5px dashed var(--raya)}
+.faq dt{font:400 1.375rem/1.15 var(--sign);text-transform:uppercase}
+.faq dd{margin-top:8px;font-size:1.0625rem;line-height:1.5;color:var(--ink-2)}
+
 /* ── visítanos ── */
 .visit-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
 .num{margin-top:24px;font:400 13.125rem/.8 var(--sign)}
@@ -184,6 +190,10 @@ html{scroll-padding-top:92px}
   .fri-body{font-size:1rem}
   .place{gap:10px;margin-top:20px}
   .google{font-size:.9375rem}
+  .faq{margin-top:14px}
+  .faq div{padding:15px 0}
+  .faq dt{font-size:1.125rem}
+  .faq dd{font-size:.9375rem}
   .num{font-size:9.375rem}
   .street{font-size:2.5rem}
   .city{font-size:1rem}

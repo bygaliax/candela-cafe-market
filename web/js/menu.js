@@ -5,9 +5,11 @@ import { initLangToggle, getLang } from './i18n.js';
 import { cart, refresh, initCartUI, syncFromStorage } from './cart.js';
 import { initNav } from './nav.js';
 import { renderMenu, renderChips, filterMenu, searchStatus, askUrl, normalize } from './menu-render.js';
+import { initShare } from './share.js';
 
 initLangToggle();
 initNav();
+initShare();
 
 const $ = id => document.getElementById(id);
 const chips = $('chips'), main = $('menuMain');

@@ -100,9 +100,9 @@ test('La portada: hero de fuego del banner (vuelve el 1-oct), sin ScrollTrigger 
 });
 
 test('Todo id que buscan los scripts existe en su página (uno que falta rompe el resto del módulo)', () => {
-  assert.ok(existsSync(new URL('../web/js/hero.js', import.meta.url)), 'falta js/hero.js');
+  for (const f of ['hero.js', 'share.js']) assert.ok(existsSync(new URL(`../web/js/${f}`, import.meta.url)), `falta js/${f}`);
   const ids = f => [...read(`web/js/${f}`).matchAll(/(?:\$|getElementById)\('([\w-]+)'\)/g)].map(m => m[1]);
-  for (const [f, pages] of [['landing.js', [INDEX]], ['hero.js', [INDEX]], ['nav.js', [INDEX, MENUP]]])
+  for (const [f, pages] of [['landing.js', [INDEX]], ['hero.js', [INDEX]], ['nav.js', [INDEX, MENUP]], ['share.js', [INDEX, MENUP]]])
     for (const id of ids(f)) for (const html of pages) assert.match(html, new RegExp(`id="${id}"`), `${f}: falta #${id}`);
 });
 
