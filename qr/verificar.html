@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Verificando QR…</title>
+<style>
+  body{font:15px/1.45 system-ui,sans-serif;margin:24px;color:#111;background:#fff}
+  #summary{font-size:18px;font-weight:700;margin:12px 0 20px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px}
+  figure{margin:0;border:1px solid #ddd;border-radius:8px;padding:12px}
+  figure img{width:100%;height:auto;display:block}
+  figcaption{font-weight:700;margin:8px 0 4px;word-break:break-all}
+  ul{margin:0;padding-left:18px;font-size:13px}
+  .ok{color:#0a7a2f}.bad{color:#c00}
+</style>
+</head>
+<body>
+<h1>QR de la carta — lectura con jsQR en Chrome</h1>
+<p>Servir la raíz del repo (<code>python -m http.server 8793 --bind 127.0.0.1</code>) y abrir <code>/qr/verificar.html</code>.</p>
+<div id="summary">Leyendo…</div>
+<div class="grid" id="grid"></div>
+<script src="../tools/node_modules/jsqr/dist/jsQR.js"></script>
+<script>
+const NAMES = ['qr-candela-menu-bn', 'qr-candela-menu-hueco-cuadrado', 'qr-candela-menu-hueco-circular'];
+const SIZES = [160, 300, 600, 1200];
+(async () => {
+  const expected = (await (await fetch('generar.py')).text()).match(/^URL = "([^"]+)"/m)[1];
+  let ok = 0, total = 0;
+  for (const f of NAMES.flatMap(n => [`${n}.svg`, `${n}.png`])) {
+    const img = new Image();
+    img.src = f;
+    await img.decode();
+    const rows = SIZES.map(s => {
+      const c = document.createElement('canvas');
+      c.width = c.height = s;
+      const ctx = c.getContext('2d', { willReadFrequently: true });
+      ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, s, s); ctx.drawImage(img, 0, 0, s, s);
+      const r = jsQR(ctx.getImageData(0, 0, s, s).data, s, s);
+      const good = !!r && r.data === expected;
+      total++; ok += good;
+      return `<li class="${good ? 'ok' : 'bad'}">${s}px → ${r ? r.data : 'sin lectura'}</li>`;
+    });
+    const fig = document.createElement('figure');
+    fig.innerHTML = `<img src="${f}" alt=""><figcaption>${f}</figcaption><ul>${rows.join('')}</ul>`;
+    document.getElementById('grid').append(fig);
+  }
+  const all = ok === total;
+  const sum = document.getElementById('summary');
+  sum.className = all ? 'ok' : 'bad';
+  sum.innerHTML = `${ok} de ${total} lecturas = <code>${expected}</code> ${all ? '✔' : '✘'} · <a href="${expected}">abrir</a>`;
+  document.title = `${all ? 'QR OK' : 'QR FALLO'} ${ok}/${total}`;
+})();
+</script>
+</body>
+</html>
