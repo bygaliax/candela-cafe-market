@@ -84,6 +84,8 @@ export function renderCard(item, lang, qty = 0) {
       + `${item.focus ? ` style="object-position:${esc(item.focus)}"` : ''}>`
       + `${item.badge ? `<span class="card-badge-label">${esc(item.badge)}</span>` : ''}</div>`
     : '';
+  // sin foto, la etiqueta (p. ej. «Boar's Head») va encima del nombre, como en la carta de la web
+  const tag = !item.img && item.badge ? `<span class="card-badge-inline">${esc(item.badge)}</span>` : '';
   const desc = item.desc ? `<p class="card-desc">${esc(item.desc[lang])}</p>` : '';
   const priced = item.price > 0;
   const price = priced
@@ -96,7 +98,7 @@ export function renderCard(item, lang, qty = 0) {
         + `<span class="step-qty">${qty}</span>`
         + `<button class="step-btn step-add" type="button" data-action="inc" data-id="${id}" aria-label="${tr('more', lang)}: ${name}">+</button></div>`;
   return `<article class="menu-card${item.img ? '' : ' no-img'}" data-id="${id}">${photo}<div class="card-body">`
-    + `<div><h3 class="card-name">${name}</h3>${desc}</div><div class="card-footer">${price}${ctrl}</div></div></article>`;
+    + `<div>${tag}<h3 class="card-name">${name}</h3>${desc}</div><div class="card-footer">${price}${ctrl}</div></div></article>`;
 }
 
 /** Las secciones de la carta, en el orden de CATEGORIES. qtyOf(id) dice cuántos hay de ese plato en el pedido. */

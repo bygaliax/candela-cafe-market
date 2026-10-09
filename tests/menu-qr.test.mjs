@@ -237,3 +237,28 @@ test('Cabeceras de la carta del QR: no se indexa y la CSP no deja scripts en lí
   assert.equal(csp.split(';').map(s => s.trim()).find(s => s.startsWith('script-src')), "script-src 'self'");
   assert.match(csp, /frame-ancestors 'none'/);
 });
+
+// Revisión final (9-oct): etiquetas sin foto, foco en la hoja del pedido y doble toque en el iPhone.
+const rulesFor = (css, selector) => css.replace(/\/\*[\s\S]*?\*\//g, '').split('}').flatMap(block => {
+  const i = block.indexOf('{');
+  return i > -1 && block.slice(0, i).trim().split(/\s*,\s*/).includes(selector) ? [block.slice(i + 1)] : [];
+});
+
+test('La etiqueta del plato sale aunque no tenga foto', () => {
+  const conEtiqueta = ALL.filter(a => a.item.badge);
+  assert.ok(conEtiqueta.some(a => !a.item.img), 'hay platos con etiqueta y sin foto');
+  for (const { item: i } of conEtiqueta) assert.equal(count(renderCard(i, 'es'), `>${esc(i.badge)}</span>`), 1, i.id);
+});
+
+test('La hoja del pedido es visible en cuanto se abre, para que el foco entre en el diálogo', () => {
+  const css = read('menu-qr/css/menu-qr.css');
+  assert.match(rulesFor(css, '.cart-sheet')[0], /visibility 0s \.34s/);          // al cerrar, se oculta al final
+  assert.match(rulesFor(css, '.cart-sheet.open')[0], /visibility 0s(?!\s*\.)/);   // al abrir, al instante
+});
+
+test('Los botones que se tocan seguido no hacen zoom con doble toque en el iPhone', () => {
+  const css = read('menu-qr/css/menu-qr.css');
+  for (const sel of ['.add-btn', '.step-btn', '.ci-btn', '.cat-tab', '.ot-btn']) {
+    assert.ok(rulesFor(css, sel).some(b => b.includes('touch-action:manipulation')), sel);
+  }
+});

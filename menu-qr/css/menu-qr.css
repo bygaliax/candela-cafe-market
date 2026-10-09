@@ -97,6 +97,7 @@ a{color:inherit}
 .card-img{position:relative;flex-shrink:0;width:88px;height:88px;border-radius:10px;overflow:hidden;background:var(--soft)}
 .card-img img{width:100%;height:100%;object-fit:cover}
 .card-badge-label{position:absolute;top:5px;left:5px;background:rgba(26,13,7,.88);color:var(--etiqueta);font-size:8px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:3px 6px;border-radius:4px}
+.card-badge-inline{display:inline-block;margin-bottom:5px;background:rgba(26,13,7,.88);color:var(--etiqueta);font-size:8px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:3px 6px;border-radius:4px}
 .card-body{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:space-between;gap:8px}
 .card-name{font-size:15.5px;font-weight:700;line-height:1.25;margin-bottom:3px;overflow-wrap:anywhere}
 .card-desc{font-size:12px;line-height:1.44;color:var(--ink-2);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
@@ -130,8 +131,9 @@ a{color:inherit}
 /* ---- HOJA DEL PEDIDO ---- */
 .overlay{position:fixed;inset:0;z-index:70;background:rgba(0,0,0,.45);opacity:0;pointer-events:none;transition:opacity .3s}
 .overlay.show{opacity:1;pointer-events:auto}
-.cart-sheet{position:fixed;bottom:0;left:0;right:0;z-index:80;background:var(--bg);border-radius:20px 20px 0 0;box-shadow:0 -8px 30px rgba(0,0,0,.12);max-height:88dvh;display:flex;flex-direction:column;transform:translateY(100%);visibility:hidden;transition:transform .34s cubic-bezier(.32,.72,0,1),visibility .34s;padding-bottom:max(20px,env(safe-area-inset-bottom,20px))}
-.cart-sheet.open{transform:translateY(0);visibility:visible}
+.cart-sheet{position:fixed;bottom:0;left:0;right:0;z-index:80;background:var(--bg);border-radius:20px 20px 0 0;box-shadow:0 -8px 30px rgba(0,0,0,.12);max-height:88dvh;display:flex;flex-direction:column;transform:translateY(100%);visibility:hidden;transition:transform .34s cubic-bezier(.32,.72,0,1),visibility 0s .34s;padding-bottom:max(20px,env(safe-area-inset-bottom,20px))}
+/* al abrir, visible al instante: si no, el focus() de openCart() cae sobre un elemento aún oculto y no entra en el diálogo */
+.cart-sheet.open{transform:translateY(0);visibility:visible;transition:transform .34s cubic-bezier(.32,.72,0,1),visibility 0s}
 .sheet-handle{width:36px;height:4px;border-radius:2px;background:var(--line);margin:12px auto 0;flex-shrink:0}
 .sheet-hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 20px 13px;border-bottom:1px solid var(--line);flex-shrink:0}
 .sheet-title{font-size:21px;font-weight:800;line-height:1}
@@ -176,6 +178,9 @@ a{color:inherit}
 .total-amt{font-size:28px;font-weight:800}
 .wa-btn{display:flex;align-items:center;justify-content:center;gap:11px;width:100%;padding:15px;border-radius:14px;background:var(--wa);color:var(--wa-txt);font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-decoration:none}
 .wa-btn:hover{background:var(--wa-d)}
+
+/* en el iPhone, dos toques rápidos en «+» añaden dos en vez de hacer zoom */
+.add-btn,.step-btn,.ci-btn,.cat-tab,.ot-btn{touch-action:manipulation}
 
 /* ---- MÓVILES PEQUEÑOS, ESCRITORIO Y MOVIMIENTO REDUCIDO ---- */
 @media (max-width:340px){.word-name{font-size:13px}} /* a 320 px el nombre se cortaba en «Candela & Ca…» */
