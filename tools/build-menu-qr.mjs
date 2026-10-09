@@ -9,7 +9,14 @@ const out = new URL('dist-menu-qr/', root);
 const from = p => new URL(p, root);
 const to = p => new URL(p, out);
 
-rmSync(out, { recursive: true, force: true });
+// En Windows, un archivo recién creado o publicado puede estar abierto un momento (antivirus, netlify CLI) y el
+// borrado falla con EPERM. El rmSync de Node 24 no lo reintenta (maxRetries no sirve), así que se reintenta aquí.
+for (let i = 0; ; i++) {
+  try { rmSync(out, { recursive: true, force: true }); break; } catch (e) {
+    if (i >= 20 || !['EPERM', 'EBUSY', 'ENOTEMPTY'].includes(e.code)) throw e;
+    Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 250);   // espera 250 ms (hasta ~5 s en total)
+  }
+}
 mkdirSync(out, { recursive: true });
 cpSync(from('menu-qr/'), out, { recursive: true });
 cpSync(from('web/js/'), to('web/js/'), { recursive: true });
