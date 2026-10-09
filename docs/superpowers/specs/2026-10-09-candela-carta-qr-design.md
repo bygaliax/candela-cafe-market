@@ -110,11 +110,12 @@ descripciones y los textos de la página, en el idioma elegido.
 | fondo | `#FFFFFF` | página, pestañas y hoja del pedido |
 | texto | `#2C1810` | títulos, nombres y precios grandes |
 | texto 2 | `#6B5A50` | descripciones, etiquetas y pie |
-| naranja | `#C9571A` | pestaña activa, «+», botón flotante, «Para comer aquí» |
+| naranja | `#C9571A` | el «&» de la portada, el foco y los bordes activos |
+| naranja de relleno | `#B5501A` | pestaña activa, «+», botón flotante y «Para comer aquí»: con texto blanco da 5,1:1 (AA); el `#C9571A` da 4,3:1 |
 | naranja texto | `#A8441A` | precios, «Mañana / Mediodía…» y «MARKET» |
 | dorado | `#D4A83A` | franja de avisos (texto `#2C1810`) y aro del logo |
 | verde | `#3A4A3C` | «Para llevar» activo |
-| WhatsApp | `#25D366` | botón de enviar el pedido |
+| WhatsApp | `#25D366` | botón de enviar el pedido, con texto `#0B2A16` (en blanco daría 2:1) |
 
 Toda la página va en **DM Sans** (`web/assets/fonts/dm-sans-latin.woff2`, variable de 100 a 1000). La jerarquía la
 marcan el peso (900 para el h1, 800 para los títulos, 700 para los nombres) y el tamaño.
