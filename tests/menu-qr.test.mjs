@@ -1,9 +1,11 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync, existsSync } from 'node:fs';
 import { MENU, CATEGORIES, PARTS, PHONE } from '../web/js/menu-data.js';
 import { esc } from '../web/js/sections.js';
 import { EMOJI, MARQUEE, money, itemsLabel, pickLang, renderMarquee, renderTabs, renderCard, renderSections,
   findInMenu, renderCartLines, searchHits, orderText, orderUrl } from '../menu-qr/js/qr-render.js';
+import { TXT } from '../menu-qr/js/qr-render.js';
 
 // Carta del QR (menu.candelaycafe.com, spec 2026-10-09): los platos son los de la web; nada propio ni inventado.
 const ALL = CATEGORIES.flatMap(c => MENU[c.id].map(item => ({ item, cat: c.id })));
@@ -150,4 +152,55 @@ test('Líneas del pedido: la foto del plato o, si no tiene, el emoji de su categ
   assert.ok(html.includes(`../web/assets/img/${withImg.img}-480.webp`));
   assert.ok(html.includes('$22.98'));
   assert.ok(renderCartLines([{ id: 'ya-no-existe', name: 'X', price: 1, qty: 1 }], 'es', lookup).includes('🍽️'));
+});
+
+const url = p => new URL(`../${p}`, import.meta.url);
+const read = p => readFileSync(url(p), 'utf8');
+const SRC = ['menu-qr/index.html', 'menu-qr/css/menu-qr.css', 'menu-qr/js/menu-qr.js', 'menu-qr/js/qr-render.js', 'menu-qr/netlify.toml'];
+
+test('La página tiene todo lo que usa el JS, y sus textos existen en ES y EN', () => {
+  const html = read('menu-qr/index.html');
+  for (const id of ['appHeader', 'searchBtn', 'searchBack', 'searchInput', 'marqueeStrip', 'marqueeTrack', 'catTabs',
+    'menuSections', 'emptyState', 'cartFab', 'fabCount', 'fabTotal', 'overlay', 'cartSheet', 'cartClose', 'cartCountLabel',
+    'cartLines', 'cartEmpty', 'orderForm', 'guestName', 'nameError', 'tableField', 'tableNum', 'orderNote', 'sheetFtr',
+    'cartTotalAmt', 'waBtn']) {
+    assert.ok(html.includes(`id="${id}"`), `falta #${id}`);
+  }
+  assert.ok(html.includes('data-lang="en"') && html.includes('data-lang="es"'));
+  assert.ok(html.includes('data-type="aqui"') && html.includes('data-type="llevar"'));
+  for (const m of html.matchAll(/data-t(?:-ph|-aria)?="([^"]+)"/g)) {
+    assert.ok(TXT[m[1]] && TXT[m[1]].es && TXT[m[1]].en, `falta el texto ${m[1]}`);
+  }
+});
+
+test('La página: no se indexa, sin scripts en línea ni CDNs, y con los datos reales del local', () => {
+  const html = read('menu-qr/index.html');
+  assert.match(html, /<meta name="robots" content="noindex">/);
+  assert.equal([...html.matchAll(/<script(?![^>]*\bsrc=)[^>]*>/g)].length, 0, 'sin <script> en línea');
+  assert.match(html, /<script type="module" src="js\/menu-qr\.js"><\/script>/);
+  assert.doesNotMatch(html, /fonts\.(googleapis|gstatic)\.com|cdnjs|unpkg|jsdelivr/);
+  assert.deepEqual([...html.matchAll(/as="font"[^>]*href="([^"]+)"/g)].map(m => m[1]), ['../web/assets/fonts/dm-sans-latin.woff2']);
+  assert.ok(html.includes('507 N Miami Ave') && html.includes('tel:+17862547577') && html.includes('https://candelaycafe.com/'));
+});
+
+test('Solo DM Sans: una @font-face y toda declaración de fuente va a var(--body)', () => {
+  const css = read('menu-qr/css/menu-qr.css');
+  const faces = [...css.matchAll(/@font-face\{font-family:'([^']+)'[^}]*url\("([^"]+)"\)/g)].map(m => [m[1], m[2]]);
+  assert.deepEqual(faces, [['DM Sans', '../../web/assets/fonts/dm-sans-latin.woff2']]);
+  assert.match(css, /--body:'DM Sans',system-ui,sans-serif/);
+  for (const m of css.replace(/@font-face\{[^}]*\}/g, '').matchAll(/(?<![-\w])font(-family)?:([^;}]+)/g)) {
+    const value = m[2].trim();
+    if (m[1]) assert.ok(['var(--body)', 'inherit'].includes(value), `font-family:${value}`);
+    else assert.ok(/ var\(--body\)$/.test(value) || value === 'inherit', `font:${value}`);
+  }
+});
+
+test('Nada inventado en la carta del QR', () => {
+  for (const f of SRC.filter(f => existsSync(url(f)))) {
+    const s = read(f);
+    for (const bad of ['555', 'Coral Way', 'unsplash', 'Sancocho de los domingos', 'Trío Buenos Aires', 'Semana Santa',
+      'Mangú', 'Mamajuana', 'cookie']) {
+      assert.ok(!s.includes(bad), `${f} contiene «${bad}»`);
+    }
+  }
 });
