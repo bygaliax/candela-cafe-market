@@ -1,6 +1,7 @@
 # Carta del QR (menu.candelaycafe.com): sitio de Netlify «candela-cafe-menu» (ID 1260f03f-9e5d-4992-9259-6021bbd3814e).
-# Se publica desde dist-menu-qr/ (node tools/build-menu-qr.mjs), entrando en esa carpeta:
-#   netlify deploy --dir . --no-build --site 1260f03f-9e5d-4992-9259-6021bbd3814e          (prueba)
+# Se publica desde dist-menu-qr/ (node tools/build-menu-qr.mjs), entrando en esa carpeta en una subshell, para que
+# este netlify.toml sea el que vale y la sesión no se quede dentro de la carpeta:
+#   (cd dist-menu-qr && netlify deploy --dir . --no-build --site 1260f03f-9e5d-4992-9259-6021bbd3814e)   (prueba)
 #   ... lo mismo con --prod, solo con el OK de Robert.
 # No sale en Google: para Google está candelaycafe.com/menu.
 [[headers]]
