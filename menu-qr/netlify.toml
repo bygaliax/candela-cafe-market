@@ -1,0 +1,19 @@
+# Carta del QR (menu.candelaycafe.com): sitio de Netlify «candela-cafe-menu» (ID 1260f03f-9e5d-4992-9259-6021bbd3814e).
+# Se publica desde dist-menu-qr/ (node tools/build-menu-qr.mjs), entrando en esa carpeta:
+#   netlify deploy --dir . --no-build --site 1260f03f-9e5d-4992-9259-6021bbd3814e          (prueba)
+#   ... lo mismo con --prod, solo con el OK de Robert.
+# No sale en Google: para Google está candelaycafe.com/menu.
+[[headers]]
+  for = "/web/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=()"
+    X-Robots-Tag = "noindex"

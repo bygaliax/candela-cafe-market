@@ -1,6 +1,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 import { MENU, CATEGORIES, PARTS, PHONE } from '../web/js/menu-data.js';
 import { esc } from '../web/js/sections.js';
 import { EMOJI, MARQUEE, money, itemsLabel, pickLang, renderMarquee, renderTabs, renderCard, renderSections,
@@ -203,4 +205,35 @@ test('Nada inventado en la carta del QR', () => {
       assert.ok(!s.includes(bad), `${f} contiene «${bad}»`);
     }
   }
+});
+
+test('El paquete de publicación lleva todo lo que la página pide', () => {
+  execFileSync(process.execPath, [fileURLToPath(url('tools/build-menu-qr.mjs'))], { stdio: 'pipe' });
+  const dist = p => url(`dist-menu-qr/${p}`);
+  for (const f of ['index.html', 'favicon.ico', 'netlify.toml', 'css/menu-qr.css', 'js/menu-qr.js', 'js/qr-render.js',
+    'web/js/menu-data.js', 'web/js/cart-core.js', 'web/js/menu-render.js', 'web/js/sections.js', 'web/js/focus-trap.js',
+    'web/assets/fonts/dm-sans-latin.woff2', 'web/assets/img/logo-96.webp', 'web/favicon-32x32.png', 'web/apple-touch-icon.png']) {
+    assert.ok(existsSync(dist(f)), `falta ${f}`);
+  }
+  // cada foto que pinta la carta (filas, portadas de categoría y líneas del pedido) está en el paquete
+  const priced = ALL.filter(a => a.item.price > 0).map(a => ({ id: a.item.id, name: a.item.name, price: a.item.price, qty: 1 }));
+  const html = renderSections(CATEGORIES, MENU, PARTS, 'es') + renderCartLines(priced, 'es', id => findInMenu(CATEGORIES, MENU, id));
+  const fotos = new Set([...html.matchAll(/\.\.\/web\/assets\/img\/([\w-]+\.webp)/g)].map(m => m[1]));
+  assert.ok(fotos.size >= 17);
+  for (const f of fotos) assert.ok(existsSync(dist(`web/assets/img/${f}`)), `falta la foto ${f}`);
+  // los imports de la página resuelven dentro del paquete publicado en la raíz
+  for (const f of ['js/menu-qr.js', 'js/qr-render.js']) {
+    for (const m of read(`dist-menu-qr/${f}`).matchAll(/from '([^']+)'/g)) {
+      const target = new URL(m[1], `https://menu.test/${f}`).pathname.slice(1);
+      assert.ok(existsSync(dist(target)), `${f} importa ${m[1]}, que no está en el paquete`);
+    }
+  }
+});
+
+test('Cabeceras de la carta del QR: no se indexa y la CSP no deja scripts en línea', () => {
+  const toml = read('menu-qr/netlify.toml');
+  assert.match(toml, /X-Robots-Tag = "noindex"/);
+  const csp = toml.match(/Content-Security-Policy = "([^"]+)"/)[1];
+  assert.equal(csp.split(';').map(s => s.trim()).find(s => s.startsWith('script-src')), "script-src 'self'");
+  assert.match(csp, /frame-ancestors 'none'/);
 });
