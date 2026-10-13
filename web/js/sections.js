@@ -3,6 +3,7 @@
 import { DICT } from './i18n.js';
 import { MENU, DAILY_SPECIAL } from './menu-data.js';
 import { fmtTime } from './status.js';
+import { MENU_URL } from './site-data.js';
 
 export const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 const tx = (key, lang) => (DICT[key] && DICT[key][lang]) || key;
@@ -27,7 +28,7 @@ export function renderFavorites(favs, lang) {
     if (!hit) return '';
     const { item } = hit;
     const src = `assets/img/${esc(f.img)}`;
-    return `<a class="fav" href="menu.html#${esc(item.id)}">`
+    return `<a class="fav" href="${esc(MENU_URL)}">`
       + `<img src="${src}-480.webp" srcset="${src}-480.webp 480w, ${src}-960.webp 960w" sizes="(max-width:900px) 45vw, 270px" alt="" loading="lazy" width="480" height="${Number(f.h)}">`
       + `<h3 class="fav-n">${esc(item.name)}</h3>`
       + `<p class="fav-d">${esc(item.desc ? item.desc[lang] : '')}</p>`

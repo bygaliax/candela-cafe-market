@@ -16,13 +16,13 @@ test('findItem encuentra el plato y su categoría', () => {
   assert.equal(findItem('no-existe'), null);
 });
 
-test('renderFavorites: 4 tarjetas como las de la carta, con enlace a su plato', () => {
+test('renderFavorites: 4 tarjetas como las de la carta, con enlace a la carta del QR', () => {
   const html = renderFavorites(FAVORITES, 'es');
   assert.equal(count(html, '<a class="fav"'), 4);
   assert.equal(count(html, '<h3 class="fav-n">'), 4);
   assert.match(html, /<h3 class="fav-n">The Ruben Sandwich<\/h3>/);
   assert.match(html, /<p class="fav-p">\$15\.49<\/p>/);
-  assert.match(html, /href="menu\.html#ny-the-ruben-sandwich"/);
+  assert.equal(count(html, 'href="https://menu.candelaycafe.com/"'), 4);
   assert.match(html, /deli-ruben-480\.webp 480w, assets\/img\/deli-ruben-960\.webp 960w/);
   assert.match(html, /Pastrami, queso suizo/);
   assert.equal(count(html, 'alt=""'), 4);

@@ -74,6 +74,18 @@ test('Barra y pie nuevos en la portada y en la carta', () => {
   }
 });
 
+test('«Menu» en la portada y en la privacidad lleva a la carta del QR, menu.candelaycafe.com (Robert, 13-oct)', () => {
+  const PRIV = read('web/privacy.html');
+  for (const [name, html] of [['index', INDEX], ['privacy', PRIV]])
+    assert.doesNotMatch(html, /href="menu\.html/, `${name}: aún lleva a la carta de la web`);
+  const QR = 'href="https://menu\\.candelaycafe\\.com/"';
+  for (const key of ['nav.menu', 'hero.cta.menu', 'hero.cta.order', 'home.favs.cta', 'home.favs.cta.m', 'home.coffee.cta']) {
+    const k = key.replace(/\./g, '\\.');
+    assert.match(INDEX, new RegExp(`${QR}[^>]*data-i18n="${k}"|${QR}><span data-i18n="${k}"`), key);
+  }
+  assert.match(PRIV, /<a href="https:\/\/menu\.candelaycafe\.com\/">Menu<\/a>/, 'privacy: pie');
+});
+
 test('En español, el enlace de la carta dice «Carta»', () => {
   assert.equal(DICT['nav.menu'].es, 'Carta');
 });

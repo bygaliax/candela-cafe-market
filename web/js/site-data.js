@@ -3,6 +3,9 @@
 
 export const MAPS_DIRECTIONS = 'https://www.google.com/maps/dir/?api=1&destination=507+N+Miami+Ave%2C+Miami%2C+FL+33136';
 
+// La carta a la que lleva la web: la del QR (Robert, 13-oct). No admite enlaces a un plato: abre arriba.
+export const MENU_URL = 'https://menu.candelaycafe.com/';
+
 // 0 = domingo … 6 = sábado. null = cerrado. Sin cierres después de medianoche.
 export const HOURS = [
   { open: '08:00', close: '22:00' },
