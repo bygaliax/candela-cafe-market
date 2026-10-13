@@ -93,6 +93,10 @@ html{scroll-padding-top:92px}
 .split .photo{aspect-ratio:16/10}
 .split-sq{grid-template-columns:1fr 1fr} /* el collage «Sabor Dominicano» es cuadrado: entero, sin recortar */
 .split-sq .photo{aspect-ratio:1}
+.split-carta{grid-template-columns:1fr minmax(0,460px)} /* el collage de la carta es vertical (4:5): entero, sin recortar */
+.split.split-carta{margin-top:0} /* el título va dentro, junto al collage */
+.split-carta .photo{aspect-ratio:4/5;max-width:520px}
+.split-carta .lead{margin-top:18px}
 #board{margin-top:18px}
 .board-h{font-weight:700}
 .board-list{display:grid;gap:6px;margin-top:8px}

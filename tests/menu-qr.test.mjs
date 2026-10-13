@@ -175,9 +175,15 @@ test('La página tiene todo lo que usa el JS, y sus textos existen en ES y EN', 
   }
 });
 
-test('La página: no se indexa, sin scripts en línea ni CDNs, y con los datos reales del local', () => {
+test('La página: sale en Google con su URL canónica (Robert, 13-oct), sin scripts en línea ni CDNs, y con los datos reales del local', () => {
   const html = read('menu-qr/index.html');
-  assert.match(html, /<meta name="robots" content="noindex">/);
+  assert.match(html, /<meta name="robots" content="index, follow, max-image-preview:large">/);
+  assert.doesNotMatch(html, /noindex/);
+  assert.match(html, /<link rel="canonical" href="https:\/\/menu\.candelaycafe\.com\/">/);
+  // al compartirla (o compartir candelaycafe.com/menu, que redirige aquí) sale con foto, como salía /menu
+  assert.match(html, /<meta property="og:url" content="https:\/\/menu\.candelaycafe\.com\/">/);
+  assert.match(html, /<meta property="og:image" content="https:\/\/candelaycafe\.com\/assets\/img\/og-image\.jpg">/);
+  assert.match(html, /<meta name="twitter:card" content="summary_large_image">/);
   assert.equal([...html.matchAll(/<script(?![^>]*\bsrc=)[^>]*>/g)].length, 0, 'sin <script> en línea');
   assert.match(html, /<script type="module" src="js\/menu-qr\.js"><\/script>/);
   assert.doesNotMatch(html, /fonts\.(googleapis|gstatic)\.com|cdnjs|unpkg|jsdelivr/);
@@ -230,9 +236,9 @@ test('El paquete de publicación lleva todo lo que la página pide', () => {
   }
 });
 
-test('Cabeceras de la carta del QR: no se indexa y la CSP no deja scripts en línea', () => {
+test('Cabeceras de la carta del QR: nada que la saque de Google y la CSP no deja scripts en línea', () => {
   const toml = read('menu-qr/netlify.toml');
-  assert.match(toml, /X-Robots-Tag = "noindex"/);
+  assert.doesNotMatch(toml, /X-Robots-Tag|noindex/);
   const csp = toml.match(/Content-Security-Policy = "([^"]+)"/)[1];
   assert.equal(csp.split(';').map(s => s.trim()).find(s => s.startsWith('script-src')), "script-src 'self'");
   assert.match(csp, /frame-ancestors 'none'/);

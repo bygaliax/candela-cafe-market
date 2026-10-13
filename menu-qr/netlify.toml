@@ -3,7 +3,7 @@
 # este netlify.toml sea el que vale y la sesión no se quede dentro de la carpeta:
 #   (cd dist-menu-qr && netlify deploy --dir . --no-build --site 1260f03f-9e5d-4992-9259-6021bbd3814e)   (prueba)
 #   ... lo mismo con --prod, solo con el OK de Robert.
-# No sale en Google: para Google está candelaycafe.com/menu.
+# Es la carta que ve Google: desde el 13-oct (Robert), candelaycafe.com/menu redirige aquí (301).
 [[headers]]
   for = "/web/assets/*"
   [headers.values]
@@ -17,4 +17,3 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=()"
-    X-Robots-Tag = "noindex"

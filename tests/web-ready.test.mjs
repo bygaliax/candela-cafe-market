@@ -3,14 +3,15 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
-import { HOURS } from '../web/js/site-data.js';
+import { HOURS, FAVORITES } from '../web/js/site-data.js';
 import { DICT } from '../web/js/i18n.js';
 
 const url = p => new URL(`../${p}`, import.meta.url);
 const read = p => (existsSync(url(p)) ? readFileSync(url(p), 'utf8') : '');
 const bin = p => readFileSync(url(p));
 const decode = s => s.replace(/&amp;/g, '&').replace(/&#39;/g, "'").replace(/&quot;/g, '"');
-const PAGES = { index: read('web/index.html'), menu: read('web/menu.html'), privacy: read('web/privacy.html') };
+// Las páginas que se sirven. /menu ya no: redirige (301) a la carta del QR, que lleva sus pruebas en tests/menu-qr.
+const PAGES = { index: read('web/index.html'), privacy: read('web/privacy.html') };
 const meta = (html, attr, key) => (html.match(new RegExp(`<meta ${attr}="${key}" content="([^"]*)"`)) || [])[1];
 const canonical = html => (html.match(/<link rel="canonical" href="([^"]+)"/) || [])[1];
 
@@ -81,6 +82,13 @@ test('Iconos: favicon.ico, PNG de 16/32/180/192/512 y manifest; cada página los
   }
 });
 
+test('Las fotos de la portada y de los favoritos declaran las medidas de su versión de 480 (si no, la página salta al cargar)', () => {
+  const fotos = [...PAGES.index.matchAll(/<img[^>]*src="assets\/img\/([\w-]+)-960\.webp"[^>]*width="480" height="(\d+)"/g)].map(m => [m[1], Number(m[2])]);
+  assert.ok(fotos.length >= 7, `solo ${fotos.length} fotos`);
+  for (const f of FAVORITES) fotos.push([f.img, f.h]);
+  for (const [base, h] of fotos) assert.deepEqual(webpSize(bin(`web/assets/img/${base}-480.webp`)), [480, h], base);
+});
+
 test('El logo es cuadrado, como el círculo donde se pinta (si no, sale achatado)', () => {
   const [w, h] = webpSize(bin('web/assets/img/logo-96.webp'));
   assert.equal(w, h, `logo-96.webp mide ${w}×${h}`);
@@ -94,7 +102,11 @@ test('Rastreadores: robots con los bots de IA, el sitemap con cada página y su 
   const sm = read('web/sitemap.xml');
   for (const [name, html] of Object.entries(PAGES))
     assert.match(sm, new RegExp(`<loc>${canonical(html)}</loc>\\s*<lastmod>\\d{4}-\\d{2}-\\d{2}</lastmod>`), `${name}: falta en el sitemap con lastmod`);
-  assert.match(read('web/llms.txt'), /^# Candela & Café Market\r?\n\r?\n> /);
+  assert.doesNotMatch(sm, /candelaycafe\.com\/menu</, 'el sitemap no lista /menu: redirige a la carta del QR');
+  const llms = read('web/llms.txt');
+  assert.match(llms, /^# Candela & Café Market\r?\n\r?\n> /);
+  assert.doesNotMatch(llms, /candelaycafe\.com\/menu/, 'llms.txt cita la carta del QR, no /menu');
+  assert.match(llms, /https:\/\/menu\.candelaycafe\.com\//);
 });
 
 test('FAQ: el schema dice exactamente lo que se ve en la portada', () => {
@@ -117,8 +129,8 @@ test('Los horarios escritos a mano (FAQ en EN/ES y llms.txt) son los de HOURS', 
   assert.match(a.es, /8 am a 10 pm/); assert.match(a.es, /8 am a 11:30 pm/);
 });
 
-test('El pie de la portada y de la carta enlaza la privacidad', () => {
-  for (const name of ['index', 'menu']) assert.match(PAGES[name], /<a href="privacy\.html"[^>]*data-i18n="footer\.privacy"/, name);
+test('El pie de la portada enlaza la privacidad', () => {
+  assert.match(PAGES.index, /<a href="privacy\.html"[^>]*data-i18n="footer\.privacy"/);
 });
 
 test('Cabeceras de seguridad iguales en los dos netlify.toml; los scripts sin unsafe-*, cada inline por su hash', () => {
@@ -140,8 +152,8 @@ test('Cabeceras de seguridad iguales en los dos netlify.toml; los scripts sin un
 const UBER = 'https://www.ubereats.com/store/candela-y-cafe-market/oa35cIfwWWuJm-ND4o9G1g';
 const DOOR = 'https://www.doordash.com/store/candela-y-caf%C3%A9-market-miami-26069377/';
 
-test('Botones de Uber Eats y DoorDash en la carta y en la portada, con los mismos enlaces que el pie', () => {
-  for (const name of ['index', 'menu']) {
+test('Botones de Uber Eats y DoorDash en la portada, con los mismos enlaces que el pie', () => {
+  for (const name of ['index']) {
     const html = PAGES[name];
     assert.match(html, new RegExp(`<a class="btn btn-ubereats" href="${UBER}" target="_blank" rel="noopener">`), `${name}: botón de Uber Eats`);
     assert.match(html, new RegExp(`<a class="btn btn-doordash" href="${DOOR}" target="_blank" rel="noopener">`), `${name}: botón de DoorDash`);

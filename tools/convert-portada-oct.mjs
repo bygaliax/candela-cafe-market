@@ -12,6 +12,10 @@ const IMAGES = {
   // El patio un viernes por la noche, recortado del flyer sin el logo ni los textos (4:3).
   // El flyer solo da 895 px de foto: la de 960 se amplía un 7 %.
   'noche-patio': { file: 'viernes-en-el-patio-flyer.jpg', crop: { left: 400, top: 50, width: 895, height: 671 }, widths: [480, 960] },
+  // Candela Burger de los favoritos (WhatsApp de Robert, 13-oct): 4:3 como la tarjeta, sin la pegatina del plato.
+  'deli-candela-burger': { file: 'candela-burger.jpg', crop: { left: 43, top: 30, width: 1000, height: 750 }, widths: [480, 960] },
+  // Collage de la carta con el logo (WhatsApp de Robert, 13-oct): vertical, entero, bajo los favoritos.
+  'carta-collage': { file: 'collage-carta.jpg', widths: [480, 960] },
 };
 
 for (const [slug, { file, crop, widths }] of Object.entries(IMAGES)) {

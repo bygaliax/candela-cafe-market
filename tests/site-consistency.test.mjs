@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { DICT, langToggleLabel } from '../web/js/i18n.js';
-import { HOURS, GOOGLE, FAVORITES } from '../web/js/site-data.js';
+import { HOURS, GOOGLE, FAVORITES, MENU_URL } from '../web/js/site-data.js';
 import { findItem } from '../web/js/sections.js';
 
 const read = p => readFileSync(new URL(`../${p}`, import.meta.url), 'utf8');
@@ -22,7 +22,7 @@ test('JSON-LD: el horario coincide con HOURS', () => {
     seen.add(i);
   }
   assert.equal(seen.size, 7);
-  assert.equal(ld.hasMenu, 'https://candelaycafe.com/menu');
+  assert.equal(ld.hasMenu, MENU_URL, 'la carta del QR: /menu redirige allí (Robert, 13-oct)');
   assert.ok(ld.geo && ld.url && ld.priceRange);
 });
 
@@ -79,11 +79,21 @@ test('«Menu» en la portada y en la privacidad lleva a la carta del QR, menu.ca
   for (const [name, html] of [['index', INDEX], ['privacy', PRIV]])
     assert.doesNotMatch(html, /href="menu\.html/, `${name}: aún lleva a la carta de la web`);
   const QR = 'href="https://menu\\.candelaycafe\\.com/"';
-  for (const key of ['nav.menu', 'hero.cta.menu', 'hero.cta.order', 'home.favs.cta', 'home.favs.cta.m', 'home.coffee.cta']) {
+  for (const key of ['nav.menu', 'hero.cta.menu', 'hero.cta.order', 'home.favs.cta', 'home.carta.cta', 'home.coffee.cta']) {
     const k = key.replace(/\./g, '\\.');
     assert.match(INDEX, new RegExp(`${QR}[^>]*data-i18n="${k}"|${QR}><span data-i18n="${k}"`), key);
   }
   assert.match(PRIV, /<a href="https:\/\/menu\.candelaycafe\.com\/">Menu<\/a>/, 'privacy: pie');
+});
+
+test('Bajo los favoritos, el collage de la carta entero y «See the full menu» a la carta del QR (Robert, 13-oct)', () => {
+  const at = id => INDEX.indexOf(`id="${id}"`);
+  assert.ok(at('favoritos') < at('carta') && at('carta') < at('dominicana'), 'va entre los favoritos y la comida dominicana');
+  const sec = INDEX.match(/<section[^>]*id="carta"[^>]*>([\s\S]*?)<\/section>/)[1];
+  assert.match(sec, /<img[^>]*src="assets\/img\/carta-collage-960\.webp"[^>]*width="480" height="600"[^>]*data-i18n-alt="home\.carta\.alt"/);
+  assert.match(sec, /<a class="btn btn-p" href="https:\/\/menu\.candelaycafe\.com\/" data-i18n="home\.carta\.cta">See the full menu<\/a>/);
+  assert.match(read('web/css/home.css'), /\.split-carta \.photo\{aspect-ratio:4\/5[;}]/, 'entero, sin recortar');
+  assert.doesNotMatch(INDEX, /home\.favs\.cta\.m/, 'los favoritos ya no repiten el botón en el móvil');
 });
 
 test('En español, el enlace de la carta dice «Carta»', () => {

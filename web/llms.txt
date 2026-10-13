@@ -7,7 +7,7 @@
 **Candela & Café Market** (on Google as "Candela y Café Market") is a café, deli and market in Downtown Miami: "Born in NY, raised Dominican, served in Miami."
 
 - **Website:** https://candelaycafe.com
-- **Menu:** https://candelaycafe.com/menu
+- **Menu:** https://menu.candelaycafe.com/
 - **Address:** 507 N Miami Ave, Miami, FL 33136 (Downtown Miami)
 - **Parking:** Valet parking available
 - **Phone and WhatsApp:** +1 (786) 254-7577
@@ -51,5 +51,5 @@ Live music on the patio from 8 pm, with wine and coffee until close. Tables are 
 
 ## Key resources
 
-- [Menu](https://candelaycafe.com/menu)
+- [Menu](https://menu.candelaycafe.com/)
 - [Privacy](https://candelaycafe.com/privacy)

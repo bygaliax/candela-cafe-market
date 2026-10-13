@@ -39,3 +39,17 @@
   to = "https://candelaycafe.com/:splat"
   status = 301
   force = true
+
+# La carta es la del QR (Robert, 13-oct): /menu y /menu.html redirigen allí. Forzado porque menu.html sigue en web/
+# sin servirse: sin force, Netlify sirve el archivo en vez de redirigir.
+[[redirects]]
+  from = "/menu"
+  to = "https://menu.candelaycafe.com/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/menu.html"
+  to = "https://menu.candelaycafe.com/"
+  status = 301
+  force = true
