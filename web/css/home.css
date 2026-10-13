@@ -91,6 +91,8 @@ html{scroll-padding-top:92px}
 /* ── comida dominicana ── */
 .split{display:grid;grid-template-columns:1.3fr 1fr;gap:48px;align-items:center;margin-top:30px}
 .split .photo{aspect-ratio:16/10}
+.split-sq{grid-template-columns:1fr 1fr} /* el collage «Sabor Dominicano» es cuadrado: entero, sin recortar */
+.split-sq .photo{aspect-ratio:1}
 #board{margin-top:18px}
 .board-h{font-weight:700}
 .board-list{display:grid;gap:6px;margin-top:8px}
@@ -101,6 +103,7 @@ html{scroll-padding-top:92px}
 .duo{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:stretch;margin-top:30px}
 .big{display:flex;flex-direction:column;background:#fff;border-radius:18px;padding:10px 10px 28px;box-shadow:var(--sombra)}
 .big img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;border-radius:12px;background:var(--arena)}
+.big .neon{object-position:50% 16%} /* que se lea el neón */
 .big-title{margin:22px 16px 0;font:700 2.5rem/1 var(--body);letter-spacing:-.02em;text-transform:uppercase}
 .big-body{margin:10px 16px 0;font-size:1.0625rem;line-height:1.5;color:var(--ink-2)}
 .big .btn{align-self:flex-start;margin:22px 16px 0}
@@ -116,7 +119,7 @@ html{scroll-padding-top:92px}
 
 /* ── los viernes ── */
 .fri{display:grid;grid-template-columns:1.2fr 1fr;gap:52px;align-items:center;background:#fff;border-radius:24px;padding:18px 52px 18px 18px;box-shadow:var(--sombra)}
-.fri .photo{aspect-ratio:4/3;object-position:50% 18%} /* que se lea el neón entero */
+.fri .photo{aspect-ratio:4/3}
 .fri .sec-title{font-size:clamp(2.5rem,4.6vw,3.75rem)}
 .fri-body{margin-top:16px;font-size:1.1875rem;line-height:1.5;color:var(--ink-2)}
 .fri .btn{margin-top:26px}
@@ -140,6 +143,8 @@ html{scroll-padding-top:92px}
 .num{margin-top:24px;font:700 13.125rem/.8 var(--body);letter-spacing:-.04em}
 .street{margin-top:14px;font:700 3.5rem/1 var(--body);letter-spacing:-.02em;text-transform:uppercase}
 .city{margin-top:10px;font-size:1.1875rem;color:var(--ink-2)}
+.valet{display:flex;align-items:center;gap:10px;margin-top:16px;font-size:1.0625rem;font-weight:700}
+.valet-p{display:grid;place-items:center;width:28px;height:28px;border-radius:7px;background:var(--ink);color:#fff;font-size:.9375rem;line-height:1}
 .visit .ctas{margin-top:28px}
 .hours{width:100%;border-collapse:collapse;font-size:1.0625rem}
 .hours th,.hours td{padding:13px 12px;border-bottom:1px solid rgba(28,28,28,.12);text-align:left;font-weight:400}
@@ -197,6 +202,7 @@ html{scroll-padding-top:92px}
   .num{font-size:9.375rem}
   .street{font-size:2.5rem}
   .city{font-size:1rem}
+  .valet{margin-top:12px;font-size:.9375rem}
   .visit .ctas{margin-top:20px}
   .hours{font-size:.9375rem}
   .hours th,.hours td{padding:11px 8px}
