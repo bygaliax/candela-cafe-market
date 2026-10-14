@@ -96,6 +96,13 @@ test('Bajo los favoritos, el collage de la carta entero y «See the full menu» 
   assert.doesNotMatch(INDEX, /home\.favs\.cta\.m/, 'los favoritos ya no repiten el botón en el móvil');
 });
 
+test('La tarjeta del market lleva arriba el collage del market, entero y cuadrado (Danilo, 13-oct)', () => {
+  const card = INDEX.match(/<article class="big shop">([\s\S]*?)<\/article>/)[1];
+  assert.match(card, /^\s*<img class="shop-photo" src="assets\/img\/market-collage-960\.webp"[^>]*width="480" height="480"[^>]*data-i18n-alt="home\.market\.alt"/, 'arriba, como el neón en la del café');
+  assert.match(read('web/css/home.css'), /\.big \.shop-photo\{aspect-ratio:1[;}]/, 'entero, sin recortar');
+  assert.match(card, /<ul class="shop-list" id="shopList"/, 'la lista del market sigue');
+});
+
 test('En español, el enlace de la carta dice «Carta»', () => {
   assert.equal(DICT['nav.menu'].es, 'Carta');
 });

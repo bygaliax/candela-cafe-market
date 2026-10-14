@@ -128,6 +128,7 @@ export const DICT = {
   'home.market.note':    { en: 'Got it? Ask us before you come.', es: '¿Lo tienes? Pregúntanos antes de venir.' },
   'home.market.cta':     { en: 'Ask on WhatsApp', es: 'Preguntar por WhatsApp' },
   'home.market.askmsg':  { en: 'Hi Candela & Café! Do you have … at the market?', es: '¡Hola Candela & Café! ¿Tienen … en el market?' },
+  'home.market.alt':     { en: 'The Candela & Café Gourmet Market logo surrounded by the market: wine, the Boar’s Head deli counter, snacks, cookies and chocolates, and a fridge with sparkling wine, cheeses and fresh products', es: 'El logo de Candela & Café Gourmet Market rodeado del market: vinos, la barra del deli con Boar’s Head, snacks, galletas y chocolates, y una nevera con espumosos, quesos y productos frescos' },
   'home.fri.kick':       { en: 'On the patio', es: 'En el patio' },
   'home.fri.title':      { en: 'Friday Nights Live Music', es: 'Viernes de música en vivo' },
   'home.fri.body':       { en: 'Wine, coffee until close and live music from 8 pm.', es: 'Vino, café hasta el cierre y música en vivo desde las 8 pm.' },

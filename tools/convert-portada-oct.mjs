@@ -16,6 +16,8 @@ const IMAGES = {
   'deli-candela-burger': { file: 'candela-burger.jpg', crop: { left: 43, top: 30, width: 1000, height: 750 }, widths: [480, 960] },
   // Collage de la carta con el logo (WhatsApp de Robert, 13-oct): vertical, entero, bajo los favoritos.
   'carta-collage': { file: 'collage-carta.jpg', widths: [480, 960] },
+  // Collage del market (Danilo, grupo de WhatsApp, 13-oct): cuadrado, entero, arriba de la tarjeta del market.
+  'market-collage': { file: 'market-collage.png', widths: [480, 960] },
 };
 
 for (const [slug, { file, crop, widths }] of Object.entries(IMAGES)) {
