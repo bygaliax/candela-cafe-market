@@ -39,7 +39,7 @@ test('renderBoard: sin platos, el aviso del especial escrito a mano y ninguna li
 
 test('renderBoard: con platos de hoy, título y lista escapada', () => {
   assert.equal(renderBoard({ 3: [{ en: 'Stew', es: 'Guiso <casero>' }] }, 3, 'es'),
-    '<p class="board-h">Hoy en la mesa caliente:</p><ul class="board-list"><li>Guiso &lt;casero&gt;</li></ul>');
+    '<p class="board-h">Hoy en el Daily Buffet:</p><ul class="board-list"><li>Guiso &lt;casero&gt;</li></ul>');
 });
 
 test('renderHours: 7 días desde el lunes y solo «hoy» marcado', () => {

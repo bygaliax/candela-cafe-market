@@ -79,20 +79,27 @@ test('«Menu» en la portada y en la privacidad lleva a la carta del QR, menu.ca
   for (const [name, html] of [['index', INDEX], ['privacy', PRIV]])
     assert.doesNotMatch(html, /href="menu\.html/, `${name}: aún lleva a la carta de la web`);
   const QR = 'href="https://menu\\.candelaycafe\\.com/"';
-  for (const key of ['nav.menu', 'hero.cta.menu', 'hero.cta.order', 'home.favs.cta', 'home.carta.cta', 'home.coffee.cta']) {
+  for (const key of ['nav.menu', 'hero.cta.menu', 'hero.cta.order', 'home.favs.cta', 'home.coffee.cta']) {
     const k = key.replace(/\./g, '\\.');
     assert.match(INDEX, new RegExp(`${QR}[^>]*data-i18n="${k}"|${QR}><span data-i18n="${k}"`), key);
   }
   assert.match(PRIV, /<a href="https:\/\/menu\.candelaycafe\.com\/">Menu<\/a>/, 'privacy: pie');
 });
 
-test('Bajo los favoritos, el collage de la carta entero y «See the full menu» a la carta del QR (Robert, 13-oct)', () => {
+test('Bajo los favoritos, el Daily Buffet con la foto de la mesa caliente y después Dominican Spot (Robert, 19-oct)', () => {
   const at = id => INDEX.indexOf(`id="${id}"`);
-  assert.ok(at('favoritos') < at('carta') && at('carta') < at('dominicana'), 'va entre los favoritos y la comida dominicana');
-  const sec = INDEX.match(/<section[^>]*id="carta"[^>]*>([\s\S]*?)<\/section>/)[1];
-  assert.match(sec, /<img[^>]*src="assets\/img\/carta-collage-960\.webp"[^>]*width="480" height="600"[^>]*data-i18n-alt="home\.carta\.alt"/);
-  assert.match(sec, /<a class="btn btn-p" href="https:\/\/menu\.candelaycafe\.com\/" data-i18n="home\.carta\.cta">See the full menu<\/a>/);
-  assert.match(read('web/css/home.css'), /\.split-carta \.photo\{aspect-ratio:4\/5[;}]/, 'entero, sin recortar');
+  assert.ok(at('favoritos') < at('buffet') && at('buffet') < at('dominicana'), 'entre los favoritos y Dominican Spot');
+  assert.doesNotMatch(INDEX, /id="carta"/, 'el collage de la carta pasó al hero: el bloque «La carta» ya no está');
+  const buffet = INDEX.match(/<section[^>]*id="buffet"[^>]*>([\s\S]*?)<\/section>/)[1];
+  assert.match(buffet, /<h2 class="sec-title" id="buffetTitle">Daily Buffet<\/h2>/, 'el nombre no se traduce');
+  assert.match(buffet, /<img class="photo" src="assets\/img\/mediodia-mesa-caliente-960\.webp"[^>]*data-i18n-alt="home\.buffet\.alt"/, 'la mesa caliente ES el buffet');
+  for (const k of ['home.buffet.p1', 'home.buffet.p2', 'home.buffet.p3']) assert.ok(buffet.includes(`data-i18n="${k}"`), k);
+  assert.match(buffet, /<div id="board">/, 'lo que hay hoy (DAILY_MENU) va en el buffet');
+  assert.match(buffet, /id="buffetWa"[^>]*data-i18n="home\.buffet\.wa"/);
+  const dom = INDEX.match(/<section[^>]*id="dominicana"[^>]*>([\s\S]*?)<\/section>/)[1];
+  assert.match(dom, /src="assets\/img\/mediodia-dominican-spot-960\.webp"[^>]*width="480" height="480"/, 'el collage con el rótulo «Dominican Spot»');
+  assert.deepEqual([DICT['home.dom.title'].en, DICT['home.dom.title'].es], ['Dominican Spot', 'Rincón Dominicano'], 'como en la carta');
+  assert.doesNotMatch(INDEX + SOURCES, /Sabor Dominicano|sabor-dominicano/, 'ya no dice «Sabor Dominicano»');
   assert.doesNotMatch(INDEX, /home\.favs\.cta\.m/, 'los favoritos ya no repiten el botón en el móvil');
 });
 
@@ -107,31 +114,33 @@ test('En español, el enlace de la carta dice «Carta»', () => {
   assert.equal(DICT['nav.menu'].es, 'Carta');
 });
 
-test('La portada: hero de fuego del banner (vuelve el 1-oct), sin ScrollTrigger ni las franjas viejas', () => {
+test('La portada: hero con el collage a pantalla completa (opción D, Robert 19-oct), sin fuego, sin GSAP ni las franjas viejas', () => {
   assert.match(INDEX, /<link rel="stylesheet" href="css\/home\.css">/);
   for (const gone of [/ScrollTrigger/, /mk-(despensa|aceite|cereal|frutas|verdes|cafe)/,
-    /landing\.css/, /sections\.css/, /class="dawn"/, /class="dusk"/, /id="cartas"/, /class="now"/])
+    /landing\.css/, /sections\.css/, /class="dawn"/, /class="dusk"/, /id="cartas"/, /class="now"/,
+    /gsap/i, /hero\.js/, /hero-fire|hero-grill|class="dec |heroSparks|hbtn/])
     assert.doesNotMatch(INDEX, gone, String(gone));
-  // la imagen precargada es la que el hero pide con prioridad alta: si no, se baja dos veces y el LCP espera
-  const pre = INDEX.match(/<link rel="preload" as="image" href="([^"]+)"/)[1].replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const hero = INDEX.match(/<header[^>]*id="hero"[^>]*>([\s\S]*?)<\/header>/)[1];
-  assert.match(hero, new RegExp(`<img[^>]*src="${pre}"[^>]*fetchpriority="high"`));
-  // solo el núcleo de GSAP, servido desde el propio sitio (sin conexión a un CDN) y antes del módulo: hero.js lo necesita al arrancar
-  const gsap = INDEX.match(/<script src="(assets\/vendor\/gsap-[\d.]+\.min\.js)" defer><\/script>/);
-  assert.ok(gsap, 'GSAP desde el propio sitio');
-  assert.ok(existsSync(new URL(`../web/${gsap[1]}`, import.meta.url)), `falta web/${gsap[1]}`);
-  assert.ok(INDEX.indexOf(gsap[1]) < INDEX.indexOf('src="js/landing.js"'), 'GSAP va antes de landing.js');
   assert.doesNotMatch(INDEX, /cdn\.jsdelivr\.net/);
-  // las decoraciones no le quitan ancho de banda a la imagen del plato (el LCP)
-  const decs = hero.match(/<img[^>]*class="dec [^"]*"[^>]*>/g);
-  assert.equal(decs.length, 6);
-  for (const img of decs) assert.match(img, /fetchpriority="low"/, img);
+  const hero = INDEX.match(/<header[^>]*id="hero"[^>]*>([\s\S]*?)<\/header>/)[1];
+  // apaisado: la foto horizontal (1536×1024); vertical: el collage del cliente. Cada precarga con la misma media y srcset que su imagen,
+  // para que no se baje dos veces ni espere el LCP
+  const LAND = '(min-aspect-ratio: 1001/1000)', PORT = '(max-aspect-ratio: 1/1)';
+  const source = hero.match(/<source media="([^"]+)" srcset="([^"]+)"/);
+  const img = hero.match(/<img src="([^"]+)" srcset="([^"]+)"[^>]*fetchpriority="high"[^>]*data-i18n-alt="hero\.alt"/);
+  assert.ok(source && img, 'picture con la horizontal y el collage');
+  assert.deepEqual([source[1], source[2]], [LAND, 'assets/img/hero-mesa-960.webp 960w, assets/img/hero-mesa-1536.webp 1536w']);
+  const pre = [...INDEX.matchAll(/<link rel="preload" as="image" href="([^"]+)" media="([^"]+)"\s+imagesrcset="([^"]+)"/g)].map(m => m.slice(1));
+  assert.deepEqual(pre, [['assets/img/hero-mesa-1536.webp', LAND, source[2]], [img[1], PORT, img[2]]]);
+  assert.match(hero, /<h1 class="hero-title"><span data-i18n="hero\.t1">Authentic<\/span> <span class="hero-red" data-i18n="hero\.t2">Flavors!<\/span><\/h1>/);
+  assert.match(hero, /id="heroStatus"/, 'abierto / cerrado con la hora de Miami');
+  assert.match(read('web/css/home.css'), /@keyframes heroReveal\{from\{transform:scale\(2\.6\)\}\}/, 'arranca en el logo y se abre');
+  assert.match(read('web/css/home.css'), /@media\(prefers-reduced-motion:no-preference\)\{\s*\.hero-photo img\{animation:heroReveal/, 'sin animación si se pide menos movimiento');
 });
 
 test('Todo id que buscan los scripts existe en su página (uno que falta rompe el resto del módulo)', () => {
-  for (const f of ['hero.js', 'share.js']) assert.ok(existsSync(new URL(`../web/js/${f}`, import.meta.url)), `falta js/${f}`);
+  for (const f of ['share.js']) assert.ok(existsSync(new URL(`../web/js/${f}`, import.meta.url)), `falta js/${f}`);
   const ids = f => [...read(`web/js/${f}`).matchAll(/(?:\$|getElementById)\('([\w-]+)'\)/g)].map(m => m[1]);
-  for (const [f, pages] of [['landing.js', [INDEX]], ['hero.js', [INDEX]], ['nav.js', [INDEX, MENUP]], ['share.js', [INDEX, MENUP]]])
+  for (const [f, pages] of [['landing.js', [INDEX]], ['nav.js', [INDEX, MENUP]], ['share.js', [INDEX, MENUP]]])
     for (const id of ids(f)) for (const html of pages) assert.match(html, new RegExp(`id="${id}"`), `${f}: falta #${id}`);
 });
 

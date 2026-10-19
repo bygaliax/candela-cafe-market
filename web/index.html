@@ -13,7 +13,7 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<meta name="theme-color" content="#0a0302">
+<meta name="theme-color" content="#FBF7F0">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Candela & Café Market">
 <meta property="og:locale" content="en_US">
@@ -31,9 +31,10 @@
 <meta name="twitter:description" content="Breakfast, Dominican food made daily, NY deli, a neighborhood market and live music on Fridays. 507 N Miami Ave.">
 <meta name="twitter:image" content="https://candelaycafe.com/assets/img/og-image.jpg">
 <meta name="twitter:image:alt" content="Prosciutto sandwich on the bar at Candela & Café, with the red banquette behind">
-<link rel="preload" as="image" href="assets/img/hero-grill.webp"
-      imagesrcset="assets/img/hero-grill-480.webp 480w, assets/img/hero-grill.webp 582w"
-      imagesizes="(max-width:700px) 90vw, 740px" fetchpriority="high">
+<link rel="preload" as="image" href="assets/img/hero-mesa-1536.webp" media="(min-aspect-ratio: 1001/1000)"
+      imagesrcset="assets/img/hero-mesa-960.webp 960w, assets/img/hero-mesa-1536.webp 1536w" imagesizes="100vw" fetchpriority="high">
+<link rel="preload" as="image" href="assets/img/hero-collage-960.webp" media="(max-aspect-ratio: 1/1)"
+      imagesrcset="assets/img/hero-collage-480.webp 480w, assets/img/hero-collage-960.webp 960w, assets/img/hero-collage-1122.webp 1122w" imagesizes="100vw" fetchpriority="high">
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/dm-sans-latin.woff2" crossorigin>
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/home.css">
@@ -72,7 +73,7 @@
     { "@type": "Question", "name": "Is there live music?",
       "acceptedAnswer": { "@type": "Answer", "text": "Every Friday from 8 pm, with wine and coffee until close. Reserve your table on WhatsApp." } },
     { "@type": "Question", "name": "What kind of food do you serve?",
-      "acceptedAnswer": { "@type": "Answer", "text": "NY deli sandwiches, Dominican food made every day, breakfast, coffee and fresh juices, plus a small market with basics and natural products." } } ] } ] }
+      "acceptedAnswer": { "@type": "Answer", "text": "NY deli sandwiches, a Daily Buffet cooked every day, Dominican classics, breakfast, coffee and fresh juices, plus a small market with basics and natural products." } } ] } ] }
 </script>
 </head>
 <body class="page-home">
@@ -111,30 +112,19 @@
 <main id="main">
 
 <header class="hero" id="hero">
-  <img class="hero-fire" src="assets/img/hero-fire-1440.webp"
-       srcset="assets/img/hero-fire-960.webp 960w, assets/img/hero-fire-1440.webp 1440w"
-       sizes="100vw" alt="" aria-hidden="true">
-  <img class="dec dec-chips" src="assets/img/hero-chips-b.webp" alt="" width="185" height="213" aria-hidden="true" fetchpriority="low">
-  <picture><source media="(max-width:700px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><img class="dec dec-drink" src="assets/img/hero-drink.webp" alt="" width="330" height="484" aria-hidden="true" fetchpriority="low"></picture>
-  <img class="dec dec-leaf-a" src="assets/img/hero-leaf-a.webp" alt="" width="70" height="102" aria-hidden="true" fetchpriority="low">
-  <img class="dec dec-leaf-b" src="assets/img/hero-leaf-b.webp" alt="" width="64" height="70" aria-hidden="true" fetchpriority="low">
-  <picture><source media="(max-width:700px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><img class="dec dec-ringburger" src="assets/img/hero-burger-ring.webp" alt="" width="283" height="330" aria-hidden="true" fetchpriority="low"></picture>
-  <img class="dec dec-burger" src="assets/img/hero-burger.webp" alt="" width="307" height="334" aria-hidden="true" fetchpriority="low">
-  <canvas class="hero-sparks" id="heroSparks" aria-hidden="true"></canvas>
-  <div class="hero-copy">
-    <h1 class="display hero-title" data-i18n="hero.title">Authentic Flavors!</h1>
+  <div class="hero-photo">
+    <picture>
+      <source media="(min-aspect-ratio: 1001/1000)" srcset="assets/img/hero-mesa-960.webp 960w, assets/img/hero-mesa-1536.webp 1536w" sizes="100vw" width="1536" height="1024">
+      <img src="assets/img/hero-collage-960.webp" srcset="assets/img/hero-collage-480.webp 480w, assets/img/hero-collage-960.webp 960w, assets/img/hero-collage-1122.webp 1122w" sizes="100vw" width="1122" height="1402" fetchpriority="high" alt="The Candela &amp; Café logo surrounded by ceviche, a burger with fries, quesadillas, a Reuben, chicken soup, a sub, orange juice, coffee, pancakes with fruit, empanadas and croquetas" data-i18n-alt="hero.alt">
+    </picture>
+  </div>
+  <div class="hero-card">
+    <p class="status hero-status is-open" id="heroStatus"><i class="dot" aria-hidden="true"></i><span><span id="heroNow">Open daily from 8 am</span><span class="hero-addr"> · 507 N Miami Ave</span></span></p>
+    <h1 class="hero-title"><span data-i18n="hero.t1">Authentic</span> <span class="hero-red" data-i18n="hero.t2">Flavors!</span></h1>
     <p class="hero-sub" data-i18n="hero.sub">NY deli &amp; Dominican food in Downtown Miami.</p>
     <div class="hero-ctas" id="heroCtas">
-      <a class="hbtn hbtn-terra" href="https://menu.candelaycafe.com/"><span data-i18n="hero.cta.menu">View menu</span></a>
-      <a class="hbtn hbtn-green" href="https://menu.candelaycafe.com/"><span data-i18n="hero.cta.order">Order Now!</span></a>
-    </div>
-  </div>
-  <div class="hero-platter" aria-hidden="true">
-    <div class="platter-disc" id="platterDisc">
-      <img class="grill-t" src="assets/img/hero-grill.webp" srcset="assets/img/hero-grill-480.webp 480w, assets/img/hero-grill.webp 582w"
-           sizes="(max-width:700px) 90vw, 740px" alt="" width="582" height="313" fetchpriority="high">
-      <img class="grill-b" src="assets/img/hero-grill.webp" srcset="assets/img/hero-grill-480.webp 480w, assets/img/hero-grill.webp 582w"
-           sizes="(max-width:700px) 90vw, 740px" alt="" width="582" height="313">
+      <a class="btn btn-p btn-lg" href="https://menu.candelaycafe.com/" data-i18n="hero.cta.menu">View menu</a>
+      <a class="btn btn-ghost btn-lg" href="https://menu.candelaycafe.com/" data-i18n="hero.cta.order">Order Now!</a>
     </div>
   </div>
 </header>
@@ -145,26 +135,34 @@
   <div class="favs" id="favs"></div>
 </section>
 
-<section class="sec wrap" id="carta" aria-labelledby="cartaTitle">
-  <div class="split split-carta">
+<section class="sec wrap" id="buffet" aria-labelledby="buffetTitle">
+  <p class="kick" data-i18n="home.buffet.kick">Cooked every day</p>
+  <h2 class="sec-title" id="buffetTitle">Daily Buffet</h2>
+  <div class="split">
+    <img class="photo" src="assets/img/mediodia-mesa-caliente-960.webp" srcset="assets/img/mediodia-mesa-caliente-480.webp 480w, assets/img/mediodia-mesa-caliente-960.webp 960w, assets/img/mediodia-mesa-caliente-1440.webp 1440w" sizes="(max-width:900px) 92vw, 620px" width="480" height="270" loading="lazy" alt="The Daily Buffet hot table with sweet plantains, yuca, salads, stews and okra" data-i18n-alt="home.buffet.alt">
     <div>
-      <p class="kick" data-i18n="home.carta.kick">Breakfast to dinner</p>
-      <h2 class="sec-title" id="cartaTitle" data-i18n="home.carta.title">The menu</h2>
-      <p class="lead" data-i18n="home.carta.body">Breakfast, NY deli sandwiches, burgers, Dominican food, soups, bakery, coffee and fresh juices.</p>
-      <div class="ctas"><a class="btn btn-p" href="https://menu.candelaycafe.com/" data-i18n="home.carta.cta">See the full menu</a></div>
+      <p class="lead" data-i18n="home.buffet.body">Fresh food with authentic flavor, cooked in our kitchen every day.</p>
+      <ul class="buffet-points" role="list">
+        <li data-i18n="home.buffet.p1">Cooked every day</li>
+        <li data-i18n="home.buffet.p2">Fresh food</li>
+        <li data-i18n="home.buffet.p3">Authentic flavor</li>
+      </ul>
+      <div id="board"><p class="note">Ask about our daily food specials!</p></div>
+      <div class="ctas">
+        <a class="btn btn-p" id="buffetWa" href="https://wa.me/17862547577" target="_blank" rel="noopener" data-i18n="home.buffet.wa">Ask what’s on today</a>
+        <a class="btn btn-ghost" href="https://www.google.com/maps/dir/?api=1&amp;destination=507+N+Miami+Ave%2C+Miami%2C+FL+33136" target="_blank" rel="noopener" data-i18n="visit.directions">Get directions</a>
+      </div>
     </div>
-    <img class="photo" src="assets/img/carta-collage-960.webp" srcset="assets/img/carta-collage-480.webp 480w, assets/img/carta-collage-960.webp 960w" sizes="(max-width:600px) 92vw, (max-width:900px) 520px, 460px" width="480" height="600" loading="lazy" alt="The Candela &amp; Café logo surrounded by ceviche, a burger with fries, quesadillas, a Reuben, chicken soup, a sub, orange juice, coffee, pancakes with fruit, empanadas and croquetas" data-i18n-alt="home.carta.alt">
   </div>
 </section>
 
 <section class="sec wrap" id="dominicana" aria-labelledby="domTitle">
-  <p class="kick" data-i18n="home.dom.kick">Made every day</p>
-  <h2 class="sec-title" id="domTitle" data-i18n="home.dom.title">Dominican food</h2>
+  <p class="kick" data-i18n="home.dom.kick">From our menu</p>
+  <h2 class="sec-title" id="domTitle" data-i18n="home.dom.title">Dominican Spot</h2>
   <div class="split split-sq">
-    <img class="photo" src="assets/img/mediodia-sabor-dominicano-960.webp" srcset="assets/img/mediodia-sabor-dominicano-480.webp 480w, assets/img/mediodia-sabor-dominicano-960.webp 960w, assets/img/mediodia-sabor-dominicano-1440.webp 1440w" sizes="(max-width:900px) 92vw, 530px" width="480" height="480" loading="lazy" alt="«Sabor Dominicano»: sancocho, fritura mixta, a chimi and mangú with eggs, salami and fried cheese" data-i18n-alt="home.dom.alt">
+    <img class="photo" src="assets/img/mediodia-dominican-spot-960.webp" srcset="assets/img/mediodia-dominican-spot-480.webp 480w, assets/img/mediodia-dominican-spot-960.webp 960w, assets/img/mediodia-dominican-spot-1440.webp 1440w" sizes="(max-width:900px) 92vw, 530px" width="480" height="480" loading="lazy" alt="«Dominican Spot»: sancocho, fritura mixta, a chimi and mangú with eggs, salami and fried cheese" data-i18n-alt="home.dom.alt">
     <div>
-      <p class="lead" data-i18n="home.dom.body">The hot table: Dominican food made today, just like home.</p>
-      <div id="board"><p class="note">Ask about our daily food specials!</p></div>
+      <p class="lead" data-i18n="home.dom.body">Chimi, fritura mixta and more Dominican classics from our menu.</p>
       <div class="ctas">
         <a class="btn btn-ghost" id="domWa" href="https://wa.me/17862547577" target="_blank" rel="noopener" data-i18n="home.dom.wa">Order on WhatsApp</a>
         <div class="delivery-pair">
@@ -183,7 +181,7 @@
     <article class="big">
       <img class="neon" src="assets/img/noche-neon-960.webp" srcset="assets/img/noche-neon-480.webp 480w, assets/img/noche-neon-960.webp 960w" sizes="(max-width:900px) 92vw, 540px" width="480" height="701" loading="lazy" alt="The «Coffee now, Wine later» neon over the red banquette" data-i18n-alt="home.coffee.alt">
       <h3 class="big-title" data-i18n="home.coffee.title">Bistro – Café</h3>
-      <p class="big-body" data-i18n="home.coffee.body">From 8 am: coffee, fresh juices, breakfast and bakery.</p>
+      <p class="big-body" data-i18n="home.coffee.body">From 8 am: coffee bar with matcha and specialty lattes, fresh juices, breakfast and bakery.</p>
       <a class="btn btn-ghost btn-sm" href="https://menu.candelaycafe.com/" data-i18n="home.coffee.cta">See breakfast</a>
     </article>
     <article class="big shop">
@@ -230,7 +228,7 @@
     <div><dt data-i18n="home.faq.q2">What are your hours?</dt><dd data-i18n="home.faq.a2">Sunday to Tuesday, 8 am to 10 pm. Wednesday to Saturday, 8 am to 11:30 pm.</dd></div>
     <div><dt data-i18n="home.faq.q3">Do you deliver?</dt><dd data-i18n="home.faq.a3">Yes, through Uber Eats and DoorDash. You can also order from our menu on WhatsApp.</dd></div>
     <div><dt data-i18n="home.faq.q4">Is there live music?</dt><dd data-i18n="home.faq.a4">Every Friday from 8 pm, with wine and coffee until close. Reserve your table on WhatsApp.</dd></div>
-    <div><dt data-i18n="home.faq.q5">What kind of food do you serve?</dt><dd data-i18n="home.faq.a5">NY deli sandwiches, Dominican food made every day, breakfast, coffee and fresh juices, plus a small market with basics and natural products.</dd></div>
+    <div><dt data-i18n="home.faq.q5">What kind of food do you serve?</dt><dd data-i18n="home.faq.a5">NY deli sandwiches, a Daily Buffet cooked every day, Dominican classics, breakfast, coffee and fresh juices, plus a small market with basics and natural products.</dd></div>
   </dl>
 </section>
 
@@ -303,7 +301,6 @@
   </div>
 </div>
 
-<script src="assets/vendor/gsap-3.12.5.min.js" defer></script>
 <script type="module" src="js/landing.js"></script>
 </body>
 </html>

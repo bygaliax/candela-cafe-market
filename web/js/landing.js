@@ -4,11 +4,10 @@ import { PHONE } from './menu-data.js';
 import { MARKET_CATEGORIES } from './market-data.js';
 import { HOURS, FAVORITES, DAILY_MENU, GOOGLE } from './site-data.js';
 import { statusAt } from './status.js';
-import { renderFavorites, renderMarketList, renderBoard, renderHours } from './sections.js';
+import { renderFavorites, renderMarketList, renderBoard, renderHours, statusHTML } from './sections.js';
 import { waUrl, buildReservationUrl } from './cart-core.js';
 import { initNav } from './nav.js';
 import { trapFocus } from './focus-trap.js';
-import { initHero } from './hero.js';
 import { initShare } from './share.js';
 
 initLangToggle();
@@ -16,19 +15,21 @@ initNav();
 initShare();
 const $ = id => document.getElementById(id);
 
-/* ── hero de fuego (GSAP es deferred) y barra: transparente sobre el fuego, de papel al bajar ── */
-addEventListener('DOMContentLoaded', initHero);
+/* ── barra: transparente sobre el collage del hero (las animaciones del hero son CSS), de papel al bajar ── */
 const nav = $('nav');
 const onScroll = () => nav.classList.toggle('is-scrolled', scrollY > 40);
 addEventListener('scroll', onScroll, { passive: true });
 onScroll();
 
-/* ── horario y mesa caliente (hora de Miami): solo se escribe si cambia ── */
+/* ── estado del hero, horario y Daily Buffet (hora de Miami): solo se escribe si cambia ── */
 const last = new Map();
 const setHTML = (el, html) => { if (last.get(el) !== html) { el.innerHTML = html; last.set(el, html); } };
 function updateNow() {
   const lang = getLang();
   const st = statusAt(new Date(), HOURS);
+  const { cls, html } = statusHTML(st, lang);
+  $('heroStatus').className = `status hero-status ${cls}`;
+  setHTML($('heroNow'), html);
   setHTML($('hoursBody'), renderHours(HOURS, st.day, lang));
   setHTML($('board'), renderBoard(DAILY_MENU, st.day, lang));
 }
@@ -38,6 +39,7 @@ function renderAll() {
   const lang = getLang();
   $('favs').innerHTML = renderFavorites(FAVORITES, lang);
   $('shopList').innerHTML = renderMarketList(MARKET_CATEGORIES, lang);
+  $('buffetWa').href = waUrl(PHONE, t('home.buffet.askmsg'));
   $('domWa').href = waUrl(PHONE, t('wa.greeting'));
   $('marketAsk').href = waUrl(PHONE, t('home.market.askmsg'));
   $('visitWa').href = waUrl(PHONE, t('wa.hello'));
