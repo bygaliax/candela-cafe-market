@@ -10,6 +10,11 @@ export const DAILY_SPECIAL = {
   en: 'Ask about our daily food specials!',
   es: '¡Pregunta por nuestros especiales del día!',
 };
+// Daily Buffet (Robert, 19-oct): la mesa caliente que se cocina cada día. Cambia cada día: sin platos, se pregunta.
+export const DAILY_BUFFET = {
+  en: "Cooked fresh every day, with authentic flavor. Ask what's on today.",
+  es: 'Comida fresca, cocinada cada día y con sabor auténtico. Pregunta qué hay hoy.',
+};
 // Los tamaños del Coffee Bar; en el pedido van en inglés, como en la carta impresa: «Cappuccino (Large)».
 export const SIZES = {
   md: { en: 'Medium', es: 'Mediano' },
@@ -41,12 +46,14 @@ export const CATEGORIES = [
   { id: 'juices',         part: 'coffee',  label: { en: 'Juices',                  es: 'Jugos' } },
   { id: 'smoothies',      part: 'coffee',  label: { en: 'Smoothies',               es: 'Batidos' } },
   { id: 'shakes',         part: 'coffee',  label: { en: 'Protein Shakes',          es: 'Batidos de Proteína' } },
+  { id: 'daily-buffet',   part: 'midday',  label: { en: 'Daily Buffet',            es: 'Daily Buffet' },
+    cover: { img: 'mediodia-mesa-caliente', w: [480, 960, 1440] }, note: DAILY_BUFFET },
   { id: 'ny-signature',   part: 'midday',  label: { en: 'NY Signature Sandwiches', es: 'Sándwiches NY' } },
   { id: 'signature',      part: 'midday',  label: { en: 'Signature Sandwiches',    es: 'Sándwiches de la Casa' } },
   { id: 'panini',         part: 'midday',  label: { en: 'Panini',                  es: 'Panini' } },
   { id: 'burgers',        part: 'midday',  label: { en: 'Burgers',                 es: 'Hamburguesas' } },
   { id: 'dominican-spot', part: 'midday',  label: { en: 'Dominican Spot',          es: 'Rincón Dominicano' },
-    cover: { img: 'mediodia-mesa-caliente', w: [480, 960, 1440] }, note: DAILY_SPECIAL },
+    cover: { img: 'mediodia-dominican-spot', w: [480, 960, 1440] } },
   { id: 'salads-wraps',   part: 'midday',  label: { en: 'Salads & Wraps',          es: 'Ensaladas y Wraps' } },
   { id: 'soups',          part: 'midday',  label: { en: 'Soups',                   es: 'Sopas' },
     cover: { img: 'menu-sopa', w: [480, 960, 1440], focus: '50% 55%' } },
@@ -315,6 +322,8 @@ export const MENU = {
       img: null,
     },
   ],
+
+  'daily-buffet': [],   // lo que haya hoy en la mesa caliente: se pregunta en tienda
 
   'dominican-spot': [
     {

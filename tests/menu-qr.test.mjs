@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { MENU, CATEGORIES, PARTS, PHONE } from '../web/js/menu-data.js';
 import { esc } from '../web/js/sections.js';
 import { createCart } from '../web/js/cart-core.js';
-import { EMOJI, MARQUEE, money, itemsLabel, pickLang, renderMarquee, renderTabs, renderCard, renderSections,
+import { MARQUEE, money, itemsLabel, pickLang, renderMarquee, renderTabs, renderCard, renderSections,
   findInMenu, renderCartLines, searchHits, orderText, orderUrl, variants } from '../menu-qr/js/qr-render.js';
 import { TXT } from '../menu-qr/js/qr-render.js';
 
@@ -20,12 +20,12 @@ const LINES = [
   { id: 'ny-the-ruben-sandwich', name: 'The Ruben Sandwich', price: 15.49, qty: 1 },
 ];
 
-test('La carta del QR pinta los platos de la web: 17 categorías y 87 platos, en su orden', () => {
-  assert.equal(CATEGORIES.length, 17);
+test('La carta del QR pinta los platos de la web: 18 categorías y 87 platos, en su orden', () => {
+  assert.equal(CATEGORIES.length, 18);
   assert.equal(ALL.length, 87);
   for (const lang of ['es', 'en']) {
     const html = renderSections(CATEGORIES, MENU, PARTS, lang);
-    assert.equal(count(html, 'class="menu-section"'), 17);
+    assert.equal(count(html, 'class="menu-section"'), 18);
     assert.equal(count(html, '<article class="menu-card'), 87);   // una tarjeta por bebida, no por tamaño
     assert.deepEqual([...html.matchAll(/id="sec-([^"]+)"/g)].map(m => m[1]), CATEGORIES.map(c => c.id));
     assert.deepEqual([...html.matchAll(/<article class="menu-card[^"]*" data-id="([^"]+)"/g)].map(m => m[1]),
@@ -33,13 +33,38 @@ test('La carta del QR pinta los platos de la web: 17 categorías y 87 platos, en
   }
 });
 
-test('Cada categoría tiene su emoji y su pestaña, en el orden de la carta', () => {
-  for (const c of CATEGORIES) assert.ok(EMOJI[c.id], `falta el emoji de ${c.id}`);
+test('Cada categoría tiene su pestaña, solo con su nombre, en el orden de la carta', () => {
   const tabs = renderTabs(CATEGORIES, 'es');
   assert.deepEqual([...tabs.matchAll(/data-cat="([^"]+)"/g)].map(m => m[1]), CATEGORIES.map(c => c.id));
   assert.equal(count(tabs, 'cat-tab active'), 1);
-  assert.match(tabs, /Desayunos/);
-  assert.match(renderTabs(CATEGORIES, 'en'), /Breakfast/);
+  assert.ok(tabs.includes('data-cat="breakfast">Desayunos</button>'));
+  assert.ok(renderTabs(CATEGORIES, 'en').includes('data-cat="daily-buffet">Daily Buffet</button>'));
+});
+
+// Robert (19-oct): «en el menú no quiero que salgan emojis». Las banderas se escriben con letras regionales y
+// el U+FE0F convierte un símbolo en emoji: también cuentan. ✦ (franja), ✕ (cerrar) y ━ (WhatsApp) no son emojis.
+const EMOJI_RE = /\p{Extended_Pictographic}|\p{Regional_Indicator}|️/u;
+
+test('Sin emojis en la carta: pestañas, secciones, franja, pedido, texto de WhatsApp ni la página', () => {
+  const lookup = id => findInMenu(CATEGORIES, MENU, id);
+  const lines = [...ALL.map(a => ({ id: a.item.id, name: a.item.name, price: a.item.price, qty: 1 })),
+    { id: 'ya-no-existe', name: 'X', price: 1, qty: 1 }];
+  for (const lang of ['es', 'en']) {
+    const shown = {
+      tabs: renderTabs(CATEGORIES, lang),
+      sections: renderSections(CATEGORIES, MENU, PARTS, lang, () => 1),
+      marquee: renderMarquee(lang),
+      cart: renderCartLines(lines, lang, lookup),
+      textos: Object.values(TXT).map(t => t[lang]).join(' '),
+      aqui: orderText({ lines: LINES, total: 38.47, type: 'aqui', name: 'Ana', table: '4', note: 'Sin cebolla' }, lang),
+      llevar: orderText({ lines: LINES, total: 38.47, type: 'llevar', name: 'Ana', note: 'x' }, lang),
+    };
+    for (const [k, v] of Object.entries(shown)) assert.doesNotMatch(v, EMOJI_RE, `${k} (${lang})`);
+  }
+  for (const f of ['menu-qr/index.html', 'menu-qr/js/qr-render.js', 'menu-qr/js/menu-qr.js', 'menu-qr/css/menu-qr.css']) {
+    assert.doesNotMatch(readFileSync(new URL(`../${f}`, import.meta.url), 'utf8'), EMOJI_RE, f);
+  }
+  assert.doesNotMatch(renderSections(CATEGORIES, MENU, PARTS, 'es'), /sec-icon/);
 });
 
 test('Foto solo si el plato la tiene (31: 13 platos y las 18 bebidas del Coffee Bar), con su etiqueta escapada', () => {
@@ -87,12 +112,24 @@ test('Descripciones y momentos del día en el idioma elegido', () => {
   assert.match(renderSections(CATEGORIES, MENU, PARTS, 'en'), /class="sec-label">Morning</);
 });
 
-test('Las 4 categorías con portada llevan su foto, y Rincón Dominicano la nota de especiales', () => {
+test('Las 5 categorías con portada llevan su foto; el Daily Buffet, la mesa caliente y su nota, sin platos', () => {
   const html = renderSections(CATEGORIES, MENU, PARTS, 'es');
   const covers = CATEGORIES.filter(c => c.cover);
-  assert.equal(covers.length, 4);
+  assert.equal(covers.length, 5);
   for (const c of covers) assert.ok(html.includes(`../web/assets/img/${c.cover.img}-${c.cover.w[0]}.webp`), c.id);
-  assert.ok(html.includes('¡Pregunta por nuestros especiales del día!'));
+  const sec = id => html.slice(html.indexOf(`id="sec-${id}"`), html.indexOf('</section>', html.indexOf(`id="sec-${id}"`)));
+  const buffet = sec('daily-buffet');
+  assert.ok(buffet.includes('mediodia-mesa-caliente-480.webp'));
+  assert.ok(buffet.includes('<p class="sec-note">Comida fresca, cocinada cada día y con sabor auténtico. Pregunta qué hay hoy.</p>'));
+  assert.equal(count(buffet, '<article'), 0);
+  assert.ok(renderSections(CATEGORIES, MENU, PARTS, 'en').includes("Cooked fresh every day, with authentic flavor. Ask what&#39;s on today."));
+  // Rincón Dominicano ya no lleva la foto de la mesa caliente («esa es la comida del daily», Robert) ni el aviso del día
+  const dom = sec('dominican-spot');
+  assert.ok(dom.includes('mediodia-dominican-spot-480.webp') && !dom.includes('mediodia-mesa-caliente'));
+  assert.ok(!dom.includes('sec-note'));
+  // el buffet abre el mediodía
+  const midday = CATEGORIES.filter(c => c.part === 'midday').map(c => c.id);
+  assert.equal(midday[0], 'daily-buffet');
 });
 
 test('Idioma: el guardado; si no, el del móvil; si no es español, inglés', () => {
@@ -115,6 +152,18 @@ test('Franja: los 5 avisos reales, una tanda para leer y otra oculta para el buc
   }
 });
 
+test('Buscador: sin búsqueda se ven todas las secciones, también el Daily Buffet, que no tiene platos', () => {
+  for (const q of ['', ' ', 'a']) {
+    const all = searchHits(CATEGORIES, MENU, q);
+    assert.equal(all.items.size, 87, JSON.stringify(q));
+    assert.deepEqual([...all.cats], CATEGORIES.map(c => c.id), JSON.stringify(q));
+  }
+  // con búsqueda, la sección sin platos sale si coinciden su nombre o su nota
+  assert.deepEqual([...searchHits(CATEGORIES, MENU, 'buffet').cats], ['daily-buffet']);
+  assert.ok(searchHits(CATEGORIES, MENU, 'comida fresca').cats.has('daily-buffet'));
+  assert.ok(!searchHits(CATEGORIES, MENU, 'ruben').cats.has('daily-buffet'));
+});
+
 test('Buscador: sin tildes, en las dos lenguas y con todas las palabras', () => {
   assert.equal(searchHits(CATEGORIES, MENU, '').items.size, 87);
   assert.ok(searchHits(CATEGORIES, MENU, 'aguacate').cats.has('avocado-toast'));
@@ -128,16 +177,18 @@ test('Buscador: sin tildes, en las dos lenguas y con todas las palabras', () => 
 
 test('Pedido para comer aquí, en español, con mesa y nota', () => {
   assert.equal(orderText({ lines: LINES, total: 38.47, type: 'aqui', name: '  Ana ', table: ' 4 ', note: 'Sin cebolla' }, 'es'),
-    `¡Hola! 🍽️ Pedido *Para comer aquí* · *Ana* · Mesa *4*:\n\n*Candela & Café Market*\n${RULE}\n`
-    + `• Downtown Platter x2 — $22.98\n• The Ruben Sandwich x1 — $15.49\n${RULE}\n*Total: $38.47*\n\n📝 _Sin cebolla_`);
+    `¡Hola! Pedido *Para comer aquí* · *Ana* · Mesa *4*:\n\n*Candela & Café Market*\n${RULE}\n`
+    + `• Downtown Platter x2 — $22.98\n• The Ruben Sandwich x1 — $15.49\n${RULE}\n*Total: $38.47*\n\nNota: _Sin cebolla_`);
 });
 
 test('Para llevar, en inglés: sin mesa aunque se haya escrito y sin nota si está vacía', () => {
   assert.equal(orderText({ lines: LINES, total: 38.47, type: 'llevar', name: 'Ana', table: '7', note: '  ' }, 'en'),
-    `Hi! 🥡 Order *Takeout* · *Ana*:\n\n*Candela & Café Market*\n${RULE}\n`
+    `Hi! Order *Takeout* · *Ana*:\n\n*Candela & Café Market*\n${RULE}\n`
     + `• Downtown Platter x2 — $22.98\n• The Ruben Sandwich x1 — $15.49\n${RULE}\n*Total: $38.47*`);
   assert.match(orderText({ lines: LINES, total: 38.47, type: 'aqui', name: 'Ana', table: '', note: '' }, 'en'),
-    /^Hi! 🍽️ Order \*Dine in\* · \*Ana\*:\n/);
+    /^Hi! Order \*Dine in\* · \*Ana\*:\n/);
+  assert.match(orderText({ lines: LINES, total: 38.47, type: 'llevar', name: 'Ana', note: 'No onions' }, 'en'),
+    /\n\nNote: _No onions_$/);
 });
 
 test('Sin nombre o sin platos no hay pedido; con pedido, va al WhatsApp del local', () => {
@@ -149,14 +200,15 @@ test('Sin nombre o sin platos no hay pedido; con pedido, va al WhatsApp del loca
   assert.match(u.searchParams.get('text'), /\*Total: \$38\.47\*$/);
 });
 
-test('Líneas del pedido: la foto del plato o, si no tiene, el emoji de su categoría', () => {
+test('Líneas del pedido: la foto del plato o, si no tiene, el logo del local', () => {
   const lookup = id => findInMenu(CATEGORIES, MENU, id);
   const withImg = ALL.find(a => a.item.img && a.item.price > 0).item;
+  const logo = '<img class="ci-logo" src="../web/assets/img/logo-96.webp" alt=""';
   const html = renderCartLines([LINES[0], { id: withImg.id, name: withImg.name, price: withImg.price, qty: 1 }], 'es', lookup);
-  assert.ok(html.includes(`<span class="ci-emoji" aria-hidden="true">${EMOJI.breakfast}</span>`));
+  assert.equal(count(html, logo), 1);   // el Downtown Platter no tiene foto
   assert.ok(html.includes(`../web/assets/img/${withImg.img}-480.webp`));
   assert.ok(html.includes('$22.98'));
-  assert.ok(renderCartLines([{ id: 'ya-no-existe', name: 'X', price: 1, qty: 1 }], 'es', lookup).includes('🍽️'));
+  assert.ok(renderCartLines([{ id: 'ya-no-existe', name: 'X', price: 1, qty: 1 }], 'es', lookup).includes(logo));
 });
 
 // Coffee Bar (PDF del cliente, 19-oct): las bebidas con MEDIUM / LARGE son una tarjeta con una línea por tamaño.

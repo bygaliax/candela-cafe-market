@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync } from 'node:fs';
-import { CATEGORIES, MENU, PARTS, DAILY_SPECIAL, SIZES, COFFEE_NOTE } from '../web/js/menu-data.js';
+import { CATEGORIES, MENU, PARTS, DAILY_BUFFET, SIZES, COFFEE_NOTE } from '../web/js/menu-data.js';
 
 const file = (slug, w) => new URL(`../web/assets/img/${slug}-${w}.webp`, import.meta.url);
 const allItems = () => CATEGORIES.flatMap(c => MENU[c.id]);
@@ -15,7 +15,7 @@ test('Momentos: mañana, café y jugos, mediodía; cada categoría en uno y sin 
   assert.deepEqual(CATEGORIES.map(c => c.id), [
     'breakfast', 'avocado-toast', 'bakery',
     'coffee', 'matcha', 'lattes', 'juices', 'smoothies', 'shakes',
-    'ny-signature', 'signature', 'panini', 'burgers', 'dominican-spot', 'salads-wraps', 'soups', 'appetizers',
+    'daily-buffet', 'ny-signature', 'signature', 'panini', 'burgers', 'dominican-spot', 'salads-wraps', 'soups', 'appetizers',
   ]);
 });
 
@@ -73,15 +73,21 @@ test('Cada foto de la carta es la de ESE plato (parejas aprobadas por Robert el 
   assert.deepEqual(withImg, PHOTO_OF);
 });
 
-test('Cabeceras: Panadería, Barra de Café, Rincón Dominicano (con el aviso del especial) y Sopas', () => {
+test('Cabeceras: Panadería, Barra de Café, Daily Buffet (la mesa caliente), Rincón Dominicano y Sopas', () => {
   const covers = Object.fromEntries(CATEGORIES.filter(c => c.cover).map(c => [c.id, c.cover.img]));
   assert.deepEqual(covers, {
     bakery: 'manana-pastelitos',
     coffee: 'noche-neon',
-    'dominican-spot': 'mediodia-mesa-caliente',
+    // Robert (19-oct): la foto de la mesa caliente es la comida del Daily Buffet, no la de Dominican Spot
+    'daily-buffet': 'mediodia-mesa-caliente',
+    // el collage «Sabor Dominicano» con el rótulo «Dominican Spot»: chimi, fritura mixta, sancocho y mangú
+    'dominican-spot': 'mediodia-dominican-spot',
     soups: 'menu-sopa',
   });
-  assert.equal(CATEGORIES.find(c => c.id === 'dominican-spot').note, DAILY_SPECIAL);
+  const cat = id => CATEGORIES.find(c => c.id === id);
+  assert.equal(cat('daily-buffet').note, DAILY_BUFFET);
+  assert.deepEqual(MENU['daily-buffet'], []);   // cambia cada día: se pregunta en tienda
+  assert.equal(cat('dominican-spot').note, undefined);
 });
 
 test('Coffee Bar, Matcha y Hot Lattes: los del PDF del cliente (19-oct), en su orden y con sus dos tamaños', () => {

@@ -1,27 +1,22 @@
 // Carta del QR (menu.candelaycafe.com, spec 2026-10-09): funciones PURAS que devuelven HTML en texto o el pedido.
 // Probadas en tests/menu-qr.test.mjs. Los platos son los de la web (web/js/menu-data.js); todo dato pasa por esc().
 import { esc } from '../../web/js/sections.js';
-import { matches } from '../../web/js/menu-render.js';
+import { matches, normalize } from '../../web/js/menu-render.js';
 import { waUrl } from '../../web/js/cart-core.js';
 import { PHONE, SIZES } from '../../web/js/menu-data.js';
 
 /** Fotos de la web. Relativo a la página: vale en el repo (/menu-qr/) y publicado (/), ver tools/build-menu-qr.mjs. */
 export const IMG = '../web/assets/img/';
 
-export const EMOJI = {
-  breakfast: '☀️', 'avocado-toast': '🥑', bakery: '🥐', coffee: '☕', matcha: '🍵', lattes: '🥛', juices: '🍊', smoothies: '🍓',
-  shakes: '💪', appetizers: '🍟', 'salads-wraps': '🥗', 'dominican-spot': '🇩🇴', soups: '🍲',
-  signature: '🥪', 'ny-signature': '🗽', panini: '🥖', burgers: '🍔',
-};
-const emoji = cat => EMOJI[cat] || '🍽️';
+// Sin emojis en la carta (Robert, 19-oct): ni en pestañas, secciones, avisos, pedido ni WhatsApp.
 
 /** Franja de avisos: solo datos que ya están en la web. */
 export const MARQUEE = [
-  { es: '🎵 Música en vivo · todos los viernes desde las 8 pm', en: '🎵 Live music · every Friday from 8 pm' },
-  { es: '⭐ Pregunta por los especiales del día', en: '⭐ Ask about our daily specials' },
-  { es: '🛵 También en Uber Eats y DoorDash', en: '🛵 Also on Uber Eats and DoorDash' },
-  { es: '☕ Abiertos todos los días desde las 8 am', en: '☕ Open every day from 8 am' },
-  { es: '📍 507 N Miami Ave · Downtown Miami', en: '📍 507 N Miami Ave · Downtown Miami' },
+  { es: 'Música en vivo · todos los viernes desde las 8 pm', en: 'Live music · every Friday from 8 pm' },
+  { es: 'Pregunta por los especiales del día', en: 'Ask about our daily specials' },
+  { es: 'También en Uber Eats y DoorDash', en: 'Also on Uber Eats and DoorDash' },
+  { es: 'Abiertos todos los días desde las 8 am', en: 'Open every day from 8 am' },
+  { es: '507 N Miami Ave · Downtown Miami', en: '507 N Miami Ave · Downtown Miami' },
 ];
 
 /** Textos de la página. En index.html van en data-t (texto), data-t-ph (placeholder) y data-t-aria (aria-label). */
@@ -73,7 +68,7 @@ export function renderMarquee(lang) {
 
 export function renderTabs(categories, lang) {
   return categories.map((c, i) => `<button class="cat-tab${i === 0 ? ' active' : ''}" type="button" data-cat="${esc(c.id)}">`
-    + `<span aria-hidden="true">${emoji(c.id)}</span> ${esc(c.label[lang])}</button>`).join('');
+    + `${esc(c.label[lang])}</button>`).join('');
 }
 
 /** Los tamaños de una bebida como platos del pedido: id «cf-cappuccino:lg», nombre «Cappuccino (Large)». */
@@ -129,8 +124,7 @@ export function renderSections(categories, menu, parts, lang, qtyOf = () => 0) {
     const note = c.note ? `<p class="sec-note">${esc(c.note[lang])}</p>` : '';
     const cards = (menu[c.id] || []).map(i => renderCard(i, lang, qtyOf)).join('');
     return `<section class="menu-section" id="sec-${id}" data-section="${id}" aria-labelledby="h-${id}">`
-      + `<div class="sec-head"><div class="sec-icon" aria-hidden="true">${emoji(c.id)}</div>`
-      + `<div><p class="sec-label">${esc(part[c.part] || '')}</p><h2 class="sec-name" id="h-${id}">${esc(c.label[lang])}</h2></div></div>`
+      + `<div class="sec-head"><p class="sec-label">${esc(part[c.part] || '')}</p><h2 class="sec-name" id="h-${id}">${esc(c.label[lang])}</h2></div>`
       + `<div class="sec-divider"></div>${cover}${note}${cards}</section>`;
   }).join('');
 }
@@ -149,13 +143,13 @@ export function findInMenu(categories, menu, id) {
   return null;
 }
 
-/** Líneas de la hoja del pedido: la foto del plato o, si no tiene, el emoji de su categoría. */
+/** Líneas de la hoja del pedido: la foto del plato o, si no tiene, el logo del local en pequeño. */
 export function renderCartLines(lines, lang, lookup) {
   return lines.map(l => {
     const found = lookup(l.id), id = esc(l.id), name = esc(l.name);
     const pic = found && found.item.img
       ? `<img src="${IMG}${esc(found.item.img)}-480.webp" alt="" loading="lazy" decoding="async">`
-      : `<span class="ci-emoji" aria-hidden="true">${emoji(found && found.cat)}</span>`;
+      : `<img class="ci-logo" src="${IMG}logo-96.webp" alt="" width="30" height="30" loading="lazy" decoding="async">`;
     return `<div class="ci"><div class="ci-img">${pic}</div>`
       + `<div class="ci-info"><p class="ci-name">${name}</p><p class="ci-price">${money(l.price * l.qty)}</p></div>`
       + `<div class="ci-ctrl"><button class="ci-btn" type="button" data-ci="dec" data-id="${id}" aria-label="${tr('less', lang)}: ${name}">−</button>`
@@ -164,11 +158,16 @@ export function renderCartLines(lines, lang, lookup) {
   }).join('');
 }
 
-/** Qué platos y secciones se ven con una búsqueda (la de la web: sin tildes, en las dos lenguas y con todas las palabras). */
+/** Qué platos y secciones se ven con una búsqueda (la de la web: sin tildes, en las dos lenguas y con todas las palabras).
+ *  Sin búsqueda se ven todas las secciones, también las que no tienen platos (Daily Buffet); con búsqueda, una sección
+ *  sin platos sale si coinciden su nombre o su nota («buffet», «comida fresca»). */
 export function searchHits(categories, menu, query) {
   const items = new Set(), cats = new Set();
+  const all = normalize(query).length < 2;   // como matches(): con menos de 2 letras no se filtra
   for (const c of categories) {
-    for (const i of menu[c.id] || []) {
+    const list = menu[c.id] || [];
+    if (all || (!list.length && matches({ name: '', desc: c.note || null }, c, query))) cats.add(c.id);
+    for (const i of list) {
       if (matches(i, c, query)) { items.add(i.id); cats.add(c.id); }
     }
   }
@@ -183,11 +182,12 @@ export function orderText({ lines, total, type, name, table, note }, lang) {
   if (!who || !lines.length) return null;
   const es = lang === 'es';
   const head = type === 'llevar'
-    ? `${es ? '¡Hola! 🥡 Pedido *Para llevar*' : 'Hi! 🥡 Order *Takeout*'} · *${who}*`
-    : `${es ? '¡Hola! 🍽️ Pedido *Para comer aquí*' : 'Hi! 🍽️ Order *Dine in*'} · *${who}*`
+    ? `${es ? '¡Hola! Pedido *Para llevar*' : 'Hi! Order *Takeout*'} · *${who}*`
+    : `${es ? '¡Hola! Pedido *Para comer aquí*' : 'Hi! Order *Dine in*'} · *${who}*`
       + (mesa ? ` · ${es ? 'Mesa' : 'Table'} *${mesa}*` : '');
   const body = lines.map(l => `• ${l.name} x${l.qty} — ${money(l.price * l.qty)}`).join('\n');
-  return `${head}:\n\n*Candela & Café Market*\n${RULE}\n${body}\n${RULE}\n*Total: ${money(total)}*${nota ? `\n\n📝 _${nota}_` : ''}`;
+  return `${head}:\n\n*Candela & Café Market*\n${RULE}\n${body}\n${RULE}\n*Total: ${money(total)}*`
+    + (nota ? `\n\n${es ? 'Nota' : 'Note'}: _${nota}_` : '');
 }
 
 /** Enlace de WhatsApp al número del local (PHONE de la web), o null si aún no hay pedido. */

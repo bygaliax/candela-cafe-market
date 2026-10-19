@@ -27,7 +27,7 @@ test('renderMenu: cada plato sale una sola vez, con su ancla', () => {
 
 test('renderMenu: h2 por momento y h3 por categoría, en el orden de la carta', () => {
   assert.equal(count(ES, '<h2 class="part-label"'), 3);
-  assert.equal(count(ES, '<h3 class="cat-sign"'), 17);
+  assert.equal(count(ES, '<h3 class="cat-sign"'), 18);
   assert.ok(ES.indexOf('>Mañana<') < ES.indexOf('>Café y jugos<'));
   assert.ok(ES.indexOf('>Café y jugos<') < ES.indexOf('>Mediodía<'));
   assert.ok(ES.indexOf('id="breakfast"') < ES.indexOf('id="coffee"'));
@@ -71,11 +71,15 @@ test('renderMenu: solo las fotos de Desayunos se cargan sin lazy', () => {
   assert.equal(count(ES, '<img') - count(ES, 'loading="lazy"'), 1);
 });
 
-test('renderMenu: cabeceras decorativas con sus anchos y el aviso del especial en Rincón Dominicano', () => {
-  assert.equal(count(ES, '<figure class="cat-cover">'), 4);
+test('renderMenu: cabeceras decorativas con sus anchos; la mesa caliente y su nota en el Daily Buffet', () => {
+  assert.equal(count(ES, '<figure class="cat-cover">'), 5);
+  const buffet = sectionOf(ES, 'daily-buffet');
+  assert.match(buffet, /mediodia-mesa-caliente-1440\.webp 1440w/);
+  assert.match(buffet, /<p class="cat-note">Comida fresca, cocinada cada día y con sabor auténtico\. Pregunta qué hay hoy\.<\/p>/);
+  assert.doesNotMatch(buffet, /<ul/);   // sin platos
   const dom = sectionOf(ES, 'dominican-spot');
-  assert.match(dom, /mediodia-mesa-caliente-1440\.webp 1440w/);
-  assert.match(dom, /<p class="cat-note">¡Pregunta por nuestros especiales del día!<\/p>/);
+  assert.match(dom, /mediodia-dominican-spot-1440\.webp 1440w/);
+  assert.doesNotMatch(dom, /cat-note|mesa-caliente/);
   assert.doesNotMatch(sectionOf(ES, 'coffee'), /1440w/);
 });
 
