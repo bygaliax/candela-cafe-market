@@ -5,8 +5,9 @@ import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { MENU, CATEGORIES, PARTS, PHONE } from '../web/js/menu-data.js';
 import { esc } from '../web/js/sections.js';
+import { createCart } from '../web/js/cart-core.js';
 import { EMOJI, MARQUEE, money, itemsLabel, pickLang, renderMarquee, renderTabs, renderCard, renderSections,
-  findInMenu, renderCartLines, searchHits, orderText, orderUrl } from '../menu-qr/js/qr-render.js';
+  findInMenu, renderCartLines, searchHits, orderText, orderUrl, variants } from '../menu-qr/js/qr-render.js';
 import { TXT } from '../menu-qr/js/qr-render.js';
 
 // Carta del QR (menu.candelaycafe.com, spec 2026-10-09): los platos son los de la web; nada propio ni inventado.
@@ -19,13 +20,13 @@ const LINES = [
   { id: 'ny-the-ruben-sandwich', name: 'The Ruben Sandwich', price: 15.49, qty: 1 },
 ];
 
-test('La carta del QR pinta los platos de la web: 15 categorías y 79 platos, en su orden', () => {
-  assert.equal(CATEGORIES.length, 15);
-  assert.equal(ALL.length, 79);
+test('La carta del QR pinta los platos de la web: 17 categorías y 87 platos, en su orden', () => {
+  assert.equal(CATEGORIES.length, 17);
+  assert.equal(ALL.length, 87);
   for (const lang of ['es', 'en']) {
     const html = renderSections(CATEGORIES, MENU, PARTS, lang);
-    assert.equal(count(html, 'class="menu-section"'), 15);
-    assert.equal(count(html, '<article class="menu-card'), 79);
+    assert.equal(count(html, 'class="menu-section"'), 17);
+    assert.equal(count(html, '<article class="menu-card'), 87);   // una tarjeta por bebida, no por tamaño
     assert.deepEqual([...html.matchAll(/id="sec-([^"]+)"/g)].map(m => m[1]), CATEGORIES.map(c => c.id));
     assert.deepEqual([...html.matchAll(/<article class="menu-card[^"]*" data-id="([^"]+)"/g)].map(m => m[1]),
       ALL.map(a => a.item.id));
@@ -41,9 +42,9 @@ test('Cada categoría tiene su emoji y su pestaña, en el orden de la carta', ()
   assert.match(renderTabs(CATEGORIES, 'en'), /Breakfast/);
 });
 
-test('Foto solo si el plato la tiene (13), con su etiqueta escapada', () => {
+test('Foto solo si el plato la tiene (31: 13 platos y las 18 bebidas del Coffee Bar), con su etiqueta escapada', () => {
   const withImg = ALL.filter(a => a.item.img);
-  assert.equal(withImg.length, 13);
+  assert.equal(withImg.length, 31);
   for (const { item: i } of ALL) {
     const html = renderCard(i, 'es');
     if (i.img) assert.ok(html.includes(`../web/assets/img/${i.img}-480.webp`), i.id);
@@ -56,7 +57,7 @@ test('Foto solo si el plato la tiene (13), con su etiqueta escapada', () => {
 
 test('Sin precio: «Pregunta en tienda» y sin botón; con precio, con céntimos', () => {
   const free = ALL.filter(a => !(a.item.price > 0));
-  assert.equal(free.length, 13);
+  assert.deepEqual(free.map(a => a.cat), ['bakery', 'bakery', 'bakery']);   // el café ya tiene precio (PDF, 19-oct)
   for (const { item: i } of free) {
     const es = renderCard(i, 'es'), en = renderCard(i, 'en');
     assert.ok(es.includes('Pregunta en tienda') && en.includes('Ask in store'), i.id);
@@ -70,7 +71,7 @@ test('Sin precio: «Pregunta en tienda» y sin botón; con precio, con céntimos
 
 test('Con el plato en el pedido, el «+» pasa a contador', () => {
   const dp = item('bk-downtown-platter');
-  const html = renderCard(dp, 'es', 2);
+  const html = renderCard(dp, 'es', id => (id === dp.id ? 2 : 0));
   assert.ok(html.includes('data-action="dec"') && html.includes('data-action="inc"'));
   assert.ok(html.includes('<span class="step-qty">2</span>') && !html.includes('data-action="add"'));
   const all = renderSections(CATEGORIES, MENU, PARTS, 'es', id => (id === dp.id ? 3 : 0));
@@ -115,9 +116,11 @@ test('Franja: los 5 avisos reales, una tanda para leer y otra oculta para el buc
 });
 
 test('Buscador: sin tildes, en las dos lenguas y con todas las palabras', () => {
-  assert.equal(searchHits(CATEGORIES, MENU, '').items.size, 79);
+  assert.equal(searchHits(CATEGORIES, MENU, '').items.size, 87);
   assert.ok(searchHits(CATEGORIES, MENU, 'aguacate').cats.has('avocado-toast'));
   assert.ok(searchHits(CATEGORIES, MENU, 'CAFE').cats.has('coffee'));
+  assert.deepEqual([...searchHits(CATEGORIES, MENU, 'matcha').cats], ['matcha']);
+  assert.equal([...searchHits(CATEGORIES, MENU, 'latte').items].filter(id => id.startsWith('lt-')).length, 3);
   const none = searchHits(CATEGORIES, MENU, 'zzqxw');
   assert.equal(none.items.size, 0);
   assert.equal(none.cats.size, 0);
@@ -154,6 +157,72 @@ test('Líneas del pedido: la foto del plato o, si no tiene, el emoji de su categ
   assert.ok(html.includes(`../web/assets/img/${withImg.img}-480.webp`));
   assert.ok(html.includes('$22.98'));
   assert.ok(renderCartLines([{ id: 'ya-no-existe', name: 'X', price: 1, qty: 1 }], 'es', lookup).includes('🍽️'));
+});
+
+// Coffee Bar (PDF del cliente, 19-oct): las bebidas con MEDIUM / LARGE son una tarjeta con una línea por tamaño.
+const capu = () => item('cf-cappuccino');
+
+test('Tamaños: una línea por tamaño, con su precio y su «+», en el idioma elegido', () => {
+  const es = renderCard(capu(), 'es'), en = renderCard(capu(), 'en');
+  assert.equal(count(es, '<div class="size">'), 2);
+  assert.ok(es.includes('<span class="size-name">Mediano</span><span class="card-price">$3.99</span>'));
+  assert.ok(es.includes('<span class="size-name">Grande</span><span class="card-price">$4.99</span>'));
+  assert.ok(en.includes('<span class="size-name">Medium</span>') && en.includes('<span class="size-name">Large</span>'));
+  assert.deepEqual([...es.matchAll(/data-action="add" data-id="([^"]+)"/g)].map(m => m[1]), ['cf-cappuccino:md', 'cf-cappuccino:lg']);
+  assert.ok(es.includes('aria-label="Añadir: Cappuccino (Mediano)"') && en.includes('aria-label="Add: Cappuccino (Large)"'));
+  // sin tamaños, como siempre: un precio y un «+»
+  const espresso = renderCard(item('cf-espresso'), 'es');
+  assert.ok(!espresso.includes('class="size"') && espresso.includes('<span class="card-price">$3.25</span>'));
+  assert.equal(count(espresso, 'data-action="add"'), 1);
+});
+
+test('Tamaños: el contador sale solo en el tamaño que está en el pedido', () => {
+  const html = renderCard(capu(), 'es', id => (id === 'cf-cappuccino:lg' ? 2 : 0));
+  assert.ok(html.includes('data-action="add" data-id="cf-cappuccino:md"'));
+  assert.ok(html.includes('data-action="dec" data-id="cf-cappuccino:lg"') && html.includes('<span class="step-qty">2</span>'));
+  assert.ok(!html.includes('data-action="add" data-id="cf-cappuccino:lg"'));
+  const all = renderSections(CATEGORIES, MENU, PARTS, 'es', id => (id === 'cf-cappuccino:md' ? 1 : 0));
+  assert.equal(count(all, 'class="step-qty"'), 1);
+});
+
+test('Tamaños: cada uno es un plato del pedido, con id «:md» / «:lg» y el nombre en inglés, como la carta impresa', () => {
+  assert.deepEqual(variants(capu()), [
+    { id: 'cf-cappuccino:md', size: 'md', name: 'Cappuccino (Medium)', price: 3.99, img: 'cafe-cappuccino' },
+    { id: 'cf-cappuccino:lg', size: 'lg', name: 'Cappuccino (Large)', price: 4.99, img: 'cafe-cappuccino' },
+  ]);
+  const lg = findInMenu(CATEGORIES, MENU, 'cf-cappuccino:lg');
+  assert.equal(lg.cat, 'coffee');
+  assert.equal(lg.parent.id, 'cf-cappuccino');
+  assert.deepEqual([lg.item.name, lg.item.price], ['Cappuccino (Large)', 4.99]);
+  assert.equal(findInMenu(CATEGORIES, MENU, 'lt-pistachio-latte:md').item.price, 5.99);
+  assert.equal(findInMenu(CATEGORIES, MENU, 'cf-cappuccino:xl'), null);   // tamaño que no existe
+  assert.equal(findInMenu(CATEGORIES, MENU, 'cf-espresso:md'), null);     // el espresso no tiene tamaños
+  assert.equal(findInMenu(CATEGORIES, MENU, 'cf-cappuccino').item.id, 'cf-cappuccino');
+  // 18 bebidas: 13 con dos tamaños y 5 de un solo precio
+  const drinks = ALL.filter(a => ['coffee', 'matcha', 'lattes'].includes(a.cat));
+  assert.equal(drinks.length, 18);
+  assert.equal(drinks.filter(a => a.item.sizes).length, 13);
+});
+
+test('Tamaños en el pedido: el carrito los guarda aparte, revalida nombre y precio, y van así por WhatsApp', () => {
+  const lookup = id => findInMenu(CATEGORIES, MENU, id);
+  const cart = createCart();
+  cart.add(lookup('cf-cappuccino:md').item);
+  cart.add(lookup('cf-cappuccino:md').item);
+  cart.add(lookup('cf-cappuccino:lg').item);
+  assert.deepEqual(cart.lines().map(l => [l.id, l.qty]), [['cf-cappuccino:md', 2], ['cf-cappuccino:lg', 1]]);
+  assert.equal(cart.total(), 12.97);
+  // lo guardado con otro precio o un tamaño que ya no existe se corrige o se quita al abrir la carta
+  const old = createCart(JSON.stringify([
+    { id: 'cf-cappuccino:lg', name: 'Cappuccino', price: 0.5, qty: 1 },
+    { id: 'cf-espresso:md', name: 'Espresso (Medium)', price: 3.25, qty: 1 },
+  ]));
+  old.revalidate(id => lookup(id)?.item);
+  assert.deepEqual(old.lines(), [{ id: 'cf-cappuccino:lg', name: 'Cappuccino (Large)', price: 4.99, qty: 1 }]);
+  assert.match(orderText({ lines: cart.lines(), total: cart.total(), type: 'llevar', name: 'Ana' }, 'es'),
+    /• Cappuccino \(Medium\) x2 — \$7\.98\n• Cappuccino \(Large\) x1 — \$4\.99\n/);
+  // en la hoja del pedido, cada tamaño con la foto de su bebida
+  assert.equal(count(renderCartLines(cart.lines(), 'es', lookup), '../web/assets/img/cafe-cappuccino-480.webp'), 2);
 });
 
 const url = p => new URL(`../${p}`, import.meta.url);

@@ -73,16 +73,18 @@ function bindTabs() {
 
 /* ---------- carta: añadir y quitar ---------- */
 function refreshCard(id, focusAction) {
-  const old = document.querySelector(`.menu-card[data-id="${CSS.escape(id)}"]`);
   const found = lookup(id);
-  if (!old || !found) return;
+  const item = found && (found.parent || found.item);   // un tamaño se pinta en la tarjeta de su bebida
+  const old = item && document.querySelector(`.menu-card[data-id="${CSS.escape(item.id)}"]`);
+  if (!old) return;
   const had = old.contains(document.activeElement);
   const tmp = document.createElement('div');
-  tmp.innerHTML = renderCard(found.item, lang, qtyOf(id));
+  tmp.innerHTML = renderCard(item, lang, qtyOf);
   const neu = tmp.firstElementChild;
   neu.classList.toggle('hidden', old.classList.contains('hidden'));
   old.replaceWith(neu);
-  if (had) (neu.querySelector(`[data-action="${focusAction}"]`) || neu.querySelector('[data-action]'))?.focus({ preventScroll: true });
+  const mine = `[data-id="${CSS.escape(id)}"]`;
+  if (had) (neu.querySelector(`[data-action="${focusAction}"]${mine}`) || neu.querySelector(`[data-action]${mine}`))?.focus({ preventScroll: true });
 }
 function change(id, action) {
   const found = lookup(id);

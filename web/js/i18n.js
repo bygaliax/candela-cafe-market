@@ -120,7 +120,7 @@ export const DICT = {
   'home.cm.kick':        { en: 'All day', es: 'Todo el día' },
   'home.cm.title':       { en: 'Bistro – Café & market', es: 'Bistro – Café y market' },
   'home.coffee.title':   { en: 'Bistro – Café', es: 'Bistro – Café' },
-  'home.coffee.body':    { en: 'From 8 am: coffee, fresh juices, breakfast and bakery.', es: 'Desde las 8 am: café, jugos naturales, desayunos y panadería.' },
+  'home.coffee.body':    { en: 'From 8 am: coffee bar with matcha and specialty lattes, fresh juices, breakfast and bakery.', es: 'Desde las 8 am: barra de café con matcha y lattes especiales, jugos naturales, desayunos y panadería.' },
   'home.coffee.cta':     { en: 'See breakfast', es: 'Ver desayunos' },
   'home.coffee.alt':     { en: 'The «Coffee now, Wine later» neon over the red banquette', es: 'El neón «Coffee now, Wine later» sobre el banco rojo' },
   'home.market.kick':    { en: 'Basics & natural products', es: 'Básicos y productos naturales' },

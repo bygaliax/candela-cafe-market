@@ -27,10 +27,10 @@ test('matches: con menos de 2 letras no filtra', () => {
 
 test('filterMenu: sin búsqueda está todo y las anchas son las de la carta', () => {
   const f = filterMenu(CATEGORIES, MENU, '');
-  assert.equal(f.count, 79);
-  assert.equal(f.cats.size, 15);
+  assert.equal(f.count, 87);
+  assert.equal(f.cats.size, 17);
   assert.equal(f.parts.size, 3);
-  assert.deepEqual([...f.wide].sort(), ['bg-candela-burger', 'bk-pancakes-french-toast-wafles', 'ny-the-ruben-sandwich', 'pn-grilled-chicken-panini', 'sw-chicken-steak-quesadilla']);
+  assert.deepEqual([...f.wide].sort(), ['bg-candela-burger', 'bk-pancakes-french-toast-wafles', 'cf-espresso', 'lt-pumpkin-spice-latte', 'ny-the-ruben-sandwich', 'pn-grilled-chicken-panini', 'sw-chicken-steak-quesadilla']);
 });
 
 test('filterMenu: «cafe» trae la Barra de Café entera', () => {

@@ -3,13 +3,13 @@
 import { esc } from '../../web/js/sections.js';
 import { matches } from '../../web/js/menu-render.js';
 import { waUrl } from '../../web/js/cart-core.js';
-import { PHONE } from '../../web/js/menu-data.js';
+import { PHONE, SIZES } from '../../web/js/menu-data.js';
 
 /** Fotos de la web. Relativo a la página: vale en el repo (/menu-qr/) y publicado (/), ver tools/build-menu-qr.mjs. */
 export const IMG = '../web/assets/img/';
 
 export const EMOJI = {
-  breakfast: '☀️', 'avocado-toast': '🥑', bakery: '🥐', coffee: '☕', juices: '🍊', smoothies: '🍓',
+  breakfast: '☀️', 'avocado-toast': '🥑', bakery: '🥐', coffee: '☕', matcha: '🍵', lattes: '🥛', juices: '🍊', smoothies: '🍓',
   shakes: '💪', appetizers: '🍟', 'salads-wraps': '🥗', 'dominican-spot': '🇩🇴', soups: '🍲',
   signature: '🥪', 'ny-signature': '🗽', panini: '🥖', burgers: '🍔',
 };
@@ -76,8 +76,22 @@ export function renderTabs(categories, lang) {
     + `<span aria-hidden="true">${emoji(c.id)}</span> ${esc(c.label[lang])}</button>`).join('');
 }
 
-/** Fila de plato: foto solo si es el plato; sin precio, «Pregunta en tienda» y sin botón; con el plato en el pedido, contador. */
-export function renderCard(item, lang, qty = 0) {
+/** Los tamaños de una bebida como platos del pedido: id «cf-cappuccino:lg», nombre «Cappuccino (Large)». */
+export const variants = item => Object.entries(item.sizes || {}).map(([size, price]) =>
+  ({ id: `${item.id}:${size}`, size, name: `${item.name} (${SIZES[size].en})`, price, img: item.img }));
+
+/** «+» o, con el plato en el pedido, contador. label va en los aria-label: el nombre, o con el tamaño en el idioma. */
+function control(id, label, qty, lang) {
+  return qty === 0
+    ? `<button class="add-btn" type="button" data-action="add" data-id="${id}" aria-label="${tr('add', lang)}: ${label}">+</button>`
+    : `<div class="stepper"><button class="step-btn" type="button" data-action="dec" data-id="${id}" aria-label="${tr('less', lang)}: ${label}">−</button>`
+      + `<span class="step-qty">${qty}</span>`
+      + `<button class="step-btn step-add" type="button" data-action="inc" data-id="${id}" aria-label="${tr('more', lang)}: ${label}">+</button></div>`;
+}
+
+/** Fila de plato: foto solo si es el plato; sin precio, «Pregunta en tienda» y sin botón; con el plato en el pedido, contador.
+ *  Con tamaños, una línea por tamaño con su precio y su botón. qtyOf(id) dice cuántos hay de ese plato en el pedido. */
+export function renderCard(item, lang, qtyOf = () => 0) {
   const id = esc(item.id), name = esc(item.name);
   const photo = item.img
     ? `<div class="card-img"><img src="${IMG}${esc(item.img)}-480.webp" alt="" width="88" height="88" loading="lazy" decoding="async"`
@@ -88,17 +102,17 @@ export function renderCard(item, lang, qty = 0) {
   const tag = !item.img && item.badge ? `<span class="card-badge-inline">${esc(item.badge)}</span>` : '';
   const desc = item.desc ? `<p class="card-desc">${esc(item.desc[lang])}</p>` : '';
   const priced = item.price > 0;
-  const price = priced
-    ? `<span class="card-price">${money(item.price)}</span>`
-    : `<span class="card-price ask">${tr('ask', lang)}</span>`;
-  const ctrl = !priced ? ''
-    : qty === 0
-      ? `<button class="add-btn" type="button" data-action="add" data-id="${id}" aria-label="${tr('add', lang)}: ${name}">+</button>`
-      : `<div class="stepper"><button class="step-btn" type="button" data-action="dec" data-id="${id}" aria-label="${tr('less', lang)}: ${name}">−</button>`
-        + `<span class="step-qty">${qty}</span>`
-        + `<button class="step-btn step-add" type="button" data-action="inc" data-id="${id}" aria-label="${tr('more', lang)}: ${name}">+</button></div>`;
+  const footer = item.sizes
+    ? `<div class="card-footer card-sizes">${variants(item).map(v => {
+      const size = esc(SIZES[v.size][lang]);
+      return `<div class="size"><span class="size-name">${size}</span><span class="card-price">${money(v.price)}</span>`
+        + `${control(esc(v.id), `${name} (${size})`, qtyOf(v.id), lang)}</div>`;
+    }).join('')}</div>`
+    : `<div class="card-footer">${priced
+      ? `<span class="card-price">${money(item.price)}</span>${control(id, name, qtyOf(item.id), lang)}`
+      : `<span class="card-price ask">${tr('ask', lang)}</span>`}</div>`;
   return `<article class="menu-card${item.img ? '' : ' no-img'}" data-id="${id}">${photo}<div class="card-body">`
-    + `<div>${tag}<h3 class="card-name">${name}</h3>${desc}</div><div class="card-footer">${price}${ctrl}</div></div></article>`;
+    + `<div>${tag}<h3 class="card-name">${name}</h3>${desc}</div>${footer}</div></article>`;
 }
 
 /** Las secciones de la carta, en el orden de CATEGORIES. qtyOf(id) dice cuántos hay de ese plato en el pedido. */
@@ -113,7 +127,7 @@ export function renderSections(categories, menu, parts, lang, qtyOf = () => 0) {
         + `${c.cover.focus ? ` style="object-position:${esc(c.cover.focus)}"` : ''}></figure>`
       : '';
     const note = c.note ? `<p class="sec-note">${esc(c.note[lang])}</p>` : '';
-    const cards = (menu[c.id] || []).map(i => renderCard(i, lang, qtyOf(i.id))).join('');
+    const cards = (menu[c.id] || []).map(i => renderCard(i, lang, qtyOf)).join('');
     return `<section class="menu-section" id="sec-${id}" data-section="${id}" aria-labelledby="h-${id}">`
       + `<div class="sec-head"><div class="sec-icon" aria-hidden="true">${emoji(c.id)}</div>`
       + `<div><p class="sec-label">${esc(part[c.part] || '')}</p><h2 class="sec-name" id="h-${id}">${esc(c.label[lang])}</h2></div></div>`
@@ -121,11 +135,16 @@ export function renderSections(categories, menu, parts, lang, qtyOf = () => 0) {
   }).join('');
 }
 
-/** El plato y su categoría, por id; null si ya no está en la carta. */
+/** El plato y su categoría, por id; null si ya no está en la carta. Un tamaño («cf-cappuccino:lg») trae su
+ *  plato del pedido (variants) y la bebida en parent. */
 export function findInMenu(categories, menu, id) {
+  const [base, size] = String(id).split(':');
   for (const c of categories) {
-    const item = (menu[c.id] || []).find(i => i.id === id);
-    if (item) return { item, cat: c.id };
+    const item = (menu[c.id] || []).find(i => i.id === base);
+    if (!item) continue;
+    if (size === undefined) return { item, cat: c.id };
+    const v = variants(item).find(x => x.size === size);
+    return v ? { item: v, cat: c.id, parent: item } : null;
   }
   return null;
 }

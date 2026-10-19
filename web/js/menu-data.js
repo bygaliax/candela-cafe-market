@@ -1,13 +1,24 @@
-// Fuente de verdad: FourFold Menu-01/02.jpg (menú impreso). NO editar precios sin cotejar.
+// Fuente de verdad: FourFold Menu-01/02.jpg (menú impreso) y, para Coffee Bar, Matcha y Hot Lattes, el PDF
+// «Candela Coffee Bar» del cliente (2 págs., 19-oct-2026). NO editar precios sin cotejar.
 //
-// Nota sobre precios: en el four-fold impreso, las secciones BAKERY & MORE y COFFEE BAR
-// NO muestran precio por ítem. Para no inventar precios, esos ítems llevan price: 0
-// (interpretar como "precio en tienda / preguntar"). Las secciones JUICES, SMOOTHIES y
-// PROTEIN SHAKES traen precio a nivel de categoría (LR / MD) y se aplican a todos sus ítems.
+// Nota sobre precios: en el four-fold impreso, la sección BAKERY & MORE NO muestra precio por ítem. Para no
+// inventar precios, esos ítems llevan price: 0 (interpretar como "precio en tienda / preguntar"). Las secciones
+// JUICES, SMOOTHIES y PROTEIN SHAKES traen precio a nivel de categoría (LR / MD) y se aplican a todos sus ítems.
+// Las bebidas del PDF con dos tamaños llevan sizes: { md, lg } (MEDIUM / LARGE) y price = el del mediano.
 export const PHONE = '17862547577';
 export const DAILY_SPECIAL = {
   en: 'Ask about our daily food specials!',
   es: '¡Pregunta por nuestros especiales del día!',
+};
+// Los tamaños del Coffee Bar; en el pedido van en inglés, como en la carta impresa: «Cappuccino (Large)».
+export const SIZES = {
+  md: { en: 'Medium', es: 'Mediano' },
+  lg: { en: 'Large', es: 'Grande' },
+};
+// Pie de las dos páginas del PDF (leches y sabores) y su aviso de que las fotos son ilustrativas.
+export const COFFEE_NOTE = {
+  en: 'Milk: regular, almond or oat · Flavors: caramel, vanilla, pumpkin spice or brown sugar · Photos are illustrative.',
+  es: 'Leche: normal, de almendra o de avena · Sabores: caramelo, vainilla, pumpkin spice o azúcar morena · Fotos ilustrativas.',
 };
 
 // Momentos del día de la carta (spec del menú, §4.2). CATEGORIES va en este orden.
@@ -24,7 +35,9 @@ export const CATEGORIES = [
   { id: 'bakery',         part: 'morning', label: { en: 'Bakery & More',           es: 'Panadería' },
     cover: { img: 'manana-pastelitos', w: [480, 960] } },
   { id: 'coffee',         part: 'coffee',  label: { en: 'Coffee Bar',              es: 'Barra de Café' },
-    cover: { img: 'noche-neon', w: [480, 960], focus: '50% 88%' } },
+    cover: { img: 'noche-neon', w: [480, 960], focus: '50% 88%' }, note: COFFEE_NOTE },
+  { id: 'matcha',         part: 'coffee',  label: { en: 'Matcha',                  es: 'Matcha' }, note: COFFEE_NOTE },
+  { id: 'lattes',         part: 'coffee',  label: { en: 'Hot Lattes',              es: 'Lattes calientes' }, note: COFFEE_NOTE },
   { id: 'juices',         part: 'coffee',  label: { en: 'Juices',                  es: 'Jugos' } },
   { id: 'smoothies',      part: 'coffee',  label: { en: 'Smoothies',               es: 'Batidos' } },
   { id: 'shakes',         part: 'coffee',  label: { en: 'Protein Shakes',          es: 'Batidos de Proteína' } },
@@ -40,7 +53,7 @@ export const CATEGORIES = [
   { id: 'appetizers',     part: 'midday',  label: { en: 'Appetizers & Sides',      es: 'Aperitivos' } },
 ];
 
-// item: { id, name, desc:{en,es}|null, price:Number, badge:String|null, img:slug|null, focus?:'X% Y%' }
+// item: { id, name, desc:{en,es}|null, price:Number, sizes?:{md,lg}, badge:String|null, img:slug|null, focus?:'X% Y%' }
 export const MENU = {
   breakfast: [
     {
@@ -639,17 +652,33 @@ export const MENU = {
     },
   ],
 
+  // PDF «Candela Coffee Bar», pág. 1 (Classic coffees & tea), en su orden. Fotos ilustrativas del propio PDF.
   coffee: [
-    { id: 'cf-espresso-double-espresso', name: 'Espresso Coffee / Double Espresso', desc: null, price: 0, badge: null, img: null },
-    { id: 'cf-cortadito',                name: 'Cortadito',                         desc: null, price: 0, badge: null, img: null },
-    { id: 'cf-macchiato',                name: 'Macchiato',                         desc: null, price: 0, badge: null, img: null },
-    { id: 'cf-cappuccino',               name: 'Cappuccino',                        desc: null, price: 0, badge: null, img: null },
-    { id: 'cf-coffee-latte-flavored',    name: 'Coffee Latte / Flavored',           desc: null, price: 0, badge: null, img: null },
-    { id: 'cf-iced-coffee',              name: 'Iced Coffee',                       desc: null, price: 0, badge: null, img: null },
-    { id: 'cf-flavored-coffee-latte',    name: 'Flavored Coffee / Latte',           desc: null, price: 0, badge: null, img: null },
-    { id: 'cf-bagged-tea-flavored',      name: 'Bagged Tea / Flavored',             desc: null, price: 0, badge: null, img: null },
-    { id: 'cf-drip-coffee',              name: 'Drip-Coffee',                       desc: null, price: 0, badge: null, img: null },
-    { id: 'cf-americano',                name: 'Americano',                         desc: null, price: 0, badge: null, img: null },
+    { id: 'cf-espresso',        name: 'Espresso',        desc: null, price: 3.25, badge: null, img: 'cafe-espresso' },
+    { id: 'cf-cortadito',       name: 'Cortadito',       desc: null, price: 3.51, badge: null, img: 'cafe-cortadito' },
+    { id: 'cf-cappuccino',      name: 'Cappuccino',      desc: null, price: 3.99, sizes: { md: 3.99, lg: 4.99 }, badge: null, img: 'cafe-cappuccino' },
+    { id: 'cf-americano',       name: 'Americano',       desc: null, price: 3.69, sizes: { md: 3.69, lg: 4.69 }, badge: null, img: 'cafe-americano' },
+    { id: 'cf-coffee-latte',    name: 'Coffee Latte',    desc: null, price: 3.99, sizes: { md: 3.99, lg: 4.99 }, badge: null, img: 'cafe-coffee-latte' },
+    { id: 'cf-colada',          name: 'Colada',          desc: null, price: 2.49, badge: null, img: 'cafe-colada' },
+    { id: 'cf-double-espresso', name: 'Double Espresso', desc: null, price: 3.99, badge: null, img: 'cafe-double-espresso' },
+    { id: 'cf-hot-chocolate',   name: 'Hot Chocolate',   desc: null, price: 3.99, sizes: { md: 3.99, lg: 4.99 }, badge: null, img: 'cafe-hot-chocolate' },
+    { id: 'cf-iced-latte',      name: 'Iced Latte',      desc: null, price: 3.99, sizes: { md: 3.99, lg: 4.99 }, badge: null, img: 'cafe-iced-latte' },
+    { id: 'cf-macchiato',       name: 'Macchiato',       desc: null, price: 3.49, badge: null, img: 'cafe-macchiato' },
+    { id: 'cf-regular-tea',     name: 'Regular Tea',     desc: null, price: 2.49, sizes: { md: 2.49, lg: 3.25 }, badge: null, img: 'cafe-regular-tea' },
+  ],
+
+  // PDF «Candela Coffee Bar», pág. 2 (Matcha & specialty lattes).
+  matcha: [
+    { id: 'mt-matcha-latte',      name: 'Matcha Latte',      desc: null, price: 6.99, sizes: { md: 6.99, lg: 7.99 }, badge: null, img: 'cafe-matcha-latte' },
+    { id: 'mt-strawberry-matcha', name: 'Strawberry Matcha', desc: null, price: 7.99, sizes: { md: 7.99, lg: 8.99 }, badge: null, img: 'cafe-strawberry-matcha' },
+    { id: 'mt-dirty-matcha',      name: 'Dirty Matcha',      desc: null, price: 7.99, sizes: { md: 7.99, lg: 8.99 }, badge: null, img: 'cafe-dirty-matcha' },
+    { id: 'mt-passion-matcha',    name: 'Passion Matcha',    desc: null, price: 7.99, sizes: { md: 7.99, lg: 8.99 }, badge: null, img: 'cafe-passion-matcha' },
+  ],
+
+  lattes: [
+    { id: 'lt-pumpkin-spice-latte',  name: 'Pumpkin Spice Latte',  desc: null, price: 5.99, sizes: { md: 5.99, lg: 6.99 }, badge: null, img: 'cafe-pumpkin-spice-latte' },
+    { id: 'lt-pistachio-latte',      name: 'Pistachio Latte',      desc: null, price: 5.99, sizes: { md: 5.99, lg: 6.99 }, badge: null, img: 'cafe-pistachio-latte' },
+    { id: 'lt-dulce-de-leche-latte', name: 'Dulce de Leche Latte', desc: null, price: 5.99, sizes: { md: 5.99, lg: 6.99 }, badge: null, img: 'cafe-dulce-de-leche-latte' },
   ],
 
   juices: [
