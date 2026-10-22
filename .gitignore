@@ -30,3 +30,7 @@ tools/prod/
 tools/bottles/
 dist-menu-qr/
 __pycache__/
+
+# Variables de entorno: nunca versionar secretos (auditoría 2026-10-22)
+.env*
+!.env.example
