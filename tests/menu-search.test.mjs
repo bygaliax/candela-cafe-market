@@ -12,11 +12,11 @@ test('normalize: minúsculas, sin tildes y sin espacios sobrantes', () => {
 });
 
 test('matches: por nombre, por descripción en los dos idiomas y por categoría', () => {
-  assert.ok(matches(ruben, ny, 'ruben'));
+  assert.ok(matches(ruben, ny, 'reuben'));
   assert.ok(matches(ruben, ny, 'pastrami'));        // descripción EN y ES
   assert.ok(matches(ruben, ny, 'queso suizo'));     // descripción ES
   assert.ok(matches(ruben, ny, 'sandwiches ny'));   // categoría ES, sin tilde
-  assert.ok(matches(ruben, ny, 'PASTRAMI ruben'));  // varias palabras, en cualquier orden
+  assert.ok(matches(ruben, ny, 'PASTRAMI reuben')); // varias palabras, en cualquier orden
   assert.ok(!matches(ruben, ny, 'pizza'));
 });
 
@@ -27,8 +27,8 @@ test('matches: con menos de 2 letras no filtra', () => {
 
 test('filterMenu: sin búsqueda está todo y las anchas son las de la carta', () => {
   const f = filterMenu(CATEGORIES, MENU, '');
-  assert.equal(f.count, 87);
-  assert.equal(f.cats.size, 17);
+  assert.equal(f.count, 97);
+  assert.equal(f.cats.size, 18);
   assert.equal(f.parts.size, 3);
   assert.deepEqual([...f.wide].sort(), ['bg-candela-burger', 'bk-pancakes-french-toast-wafles', 'cf-espresso', 'lt-pumpkin-spice-latte', 'ny-the-ruben-sandwich', 'pn-grilled-chicken-panini', 'sw-chicken-steak-quesadilla']);
 });

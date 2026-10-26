@@ -20,13 +20,13 @@ const LINES = [
   { id: 'ny-the-ruben-sandwich', name: 'The Ruben Sandwich', price: 15.49, qty: 1 },
 ];
 
-test('La carta del QR pinta los platos de la web: 18 categorías y 87 platos, en su orden', () => {
-  assert.equal(CATEGORIES.length, 18);
-  assert.equal(ALL.length, 87);
+test('La carta del QR pinta los platos de la web: 19 categorías y 97 platos, en su orden', () => {
+  assert.equal(CATEGORIES.length, 19);
+  assert.equal(ALL.length, 97);
   for (const lang of ['es', 'en']) {
     const html = renderSections(CATEGORIES, MENU, PARTS, lang);
-    assert.equal(count(html, 'class="menu-section"'), 18);
-    assert.equal(count(html, '<article class="menu-card'), 87);   // una tarjeta por bebida, no por tamaño
+    assert.equal(count(html, 'class="menu-section"'), 19);
+    assert.equal(count(html, '<article class="menu-card'), 97);   // una tarjeta por bebida, no por tamaño
     assert.deepEqual([...html.matchAll(/id="sec-([^"]+)"/g)].map(m => m[1]), CATEGORIES.map(c => c.id));
     assert.deepEqual([...html.matchAll(/<article class="menu-card[^"]*" data-id="([^"]+)"/g)].map(m => m[1]),
       ALL.map(a => a.item.id));
@@ -67,7 +67,7 @@ test('Sin emojis en la carta: pestañas, secciones, franja, pedido, texto de Wha
   assert.doesNotMatch(renderSections(CATEGORIES, MENU, PARTS, 'es'), /sec-icon/);
 });
 
-test('Foto solo si el plato la tiene (31: 13 platos y las 18 bebidas del Coffee Bar), con su etiqueta escapada', () => {
+test('Foto solo si el plato la tiene (31: 13 platos y 18 de las 19 bebidas del Coffee Bar), con su etiqueta escapada', () => {
   const withImg = ALL.filter(a => a.item.img);
   assert.equal(withImg.length, 31);
   for (const { item: i } of ALL) {
@@ -82,7 +82,8 @@ test('Foto solo si el plato la tiene (31: 13 platos y las 18 bebidas del Coffee 
 
 test('Sin precio: «Pregunta en tienda» y sin botón; con precio, con céntimos', () => {
   const free = ALL.filter(a => !(a.item.price > 0));
-  assert.deepEqual(free.map(a => a.cat), ['bakery', 'bakery', 'bakery']);   // el café ya tiene precio (PDF, 19-oct)
+  // Make Your Own Breakfast y la panadería no tienen precio en el impreso; el café sí (PDF, 19-oct)
+  assert.deepEqual(free.map(a => a.cat), ['breakfast', 'bakery', 'bakery', 'bakery']);
   for (const { item: i } of free) {
     const es = renderCard(i, 'es'), en = renderCard(i, 'en');
     assert.ok(es.includes('Pregunta en tienda') && en.includes('Ask in store'), i.id);
@@ -91,7 +92,7 @@ test('Sin precio: «Pregunta en tienda» y sin botón; con precio, con céntimos
   assert.equal(money(11.49), '$11.49');
   assert.equal(money(13), '$13.00');
   assert.equal(money(11.49 * 2), '$22.98');
-  assert.ok(renderCard(item('bk-downtown-platter'), 'es').includes('<span class="card-price">$11.49</span>'));
+  assert.ok(renderCard(item('bk-downtown-platter'), 'es').includes('<span class="card-price">$12.49</span>'));
 });
 
 test('Con el plato en el pedido, el «+» pasa a contador', () => {
@@ -155,17 +156,17 @@ test('Franja: los 5 avisos reales, una tanda para leer y otra oculta para el buc
 test('Buscador: sin búsqueda se ven todas las secciones, también el Daily Buffet, que no tiene platos', () => {
   for (const q of ['', ' ', 'a']) {
     const all = searchHits(CATEGORIES, MENU, q);
-    assert.equal(all.items.size, 87, JSON.stringify(q));
+    assert.equal(all.items.size, 97, JSON.stringify(q));
     assert.deepEqual([...all.cats], CATEGORIES.map(c => c.id), JSON.stringify(q));
   }
   // con búsqueda, la sección sin platos sale si coinciden su nombre o su nota
   assert.deepEqual([...searchHits(CATEGORIES, MENU, 'buffet').cats], ['daily-buffet']);
   assert.ok(searchHits(CATEGORIES, MENU, 'comida fresca').cats.has('daily-buffet'));
-  assert.ok(!searchHits(CATEGORIES, MENU, 'ruben').cats.has('daily-buffet'));
+  assert.ok(!searchHits(CATEGORIES, MENU, 'reuben').cats.has('daily-buffet'));
 });
 
 test('Buscador: sin tildes, en las dos lenguas y con todas las palabras', () => {
-  assert.equal(searchHits(CATEGORIES, MENU, '').items.size, 87);
+  assert.equal(searchHits(CATEGORIES, MENU, '').items.size, 97);
   assert.ok(searchHits(CATEGORIES, MENU, 'aguacate').cats.has('avocado-toast'));
   assert.ok(searchHits(CATEGORIES, MENU, 'CAFE').cats.has('coffee'));
   assert.deepEqual([...searchHits(CATEGORIES, MENU, 'matcha').cats], ['matcha']);
@@ -250,10 +251,10 @@ test('Tamaños: cada uno es un plato del pedido, con id «:md» / «:lg» y el n
   assert.equal(findInMenu(CATEGORIES, MENU, 'cf-cappuccino:xl'), null);   // tamaño que no existe
   assert.equal(findInMenu(CATEGORIES, MENU, 'cf-espresso:md'), null);     // el espresso no tiene tamaños
   assert.equal(findInMenu(CATEGORIES, MENU, 'cf-cappuccino').item.id, 'cf-cappuccino');
-  // 18 bebidas: 13 con dos tamaños y 5 de un solo precio
+  // 19 bebidas: 14 con dos tamaños y 5 de un solo precio
   const drinks = ALL.filter(a => ['coffee', 'matcha', 'lattes'].includes(a.cat));
-  assert.equal(drinks.length, 18);
-  assert.equal(drinks.filter(a => a.item.sizes).length, 13);
+  assert.equal(drinks.length, 19);
+  assert.equal(drinks.filter(a => a.item.sizes).length, 14);
 });
 
 test('Tamaños en el pedido: el carrito los guarda aparte, revalida nombre y precio, y van así por WhatsApp', () => {

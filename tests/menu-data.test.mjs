@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync } from 'node:fs';
-import { CATEGORIES, MENU, PARTS, DAILY_BUFFET, SIZES, COFFEE_NOTE } from '../web/js/menu-data.js';
+import { CATEGORIES, MENU, PARTS, DAILY_BUFFET, SIZES, COFFEE_NOTE, PANINI_NOTE, JUICES_NOTE } from '../web/js/menu-data.js';
 
 const file = (slug, w) => new URL(`../web/assets/img/${slug}-${w}.webp`, import.meta.url);
 const allItems = () => CATEGORIES.flatMap(c => MENU[c.id]);
@@ -15,16 +15,16 @@ test('Momentos: mañana, café y jugos, mediodía; cada categoría en uno y sin 
   assert.deepEqual(CATEGORIES.map(c => c.id), [
     'breakfast', 'avocado-toast', 'bakery',
     'coffee', 'matcha', 'lattes', 'juices', 'smoothies', 'shakes',
-    'daily-buffet', 'ny-signature', 'signature', 'panini', 'burgers', 'dominican-spot', 'salads-wraps', 'soups', 'appetizers',
+    'daily-buffet', 'ny-signature', 'signature', 'panini', 'burgers', 'dominican-spot', 'salads-wraps', 'soups', 'appetizers', 'desserts',
   ]);
 });
 
-test('87 platos y precios (los 79 del four-fold, con el café del PDF del 19-oct); ningún id se repite ni choca con una categoría', () => {
+test('97 platos y precios (los del menú impreso de Praxis del 26-oct; el café, del PDF del 19-oct); ningún id se repite ni choca con una categoría', () => {
   const items = allItems();
-  assert.equal(items.length, 87);
-  assert.equal(items.reduce((s, i) => s + i.price, 0).toFixed(2), '977.64');
+  assert.equal(items.length, 97);
+  assert.equal(items.reduce((s, i) => s + i.price, 0).toFixed(2), '1133.55');
   const ids = items.map(i => i.id);
-  assert.equal(new Set(ids).size, 87);
+  assert.equal(new Set(ids).size, 97);
   assert.ok(ids.every(id => !id.includes(':')), 'los «:» son de los tamaños del pedido (cf-cappuccino:lg)');
   const catIds = new Set(CATEGORIES.map(c => c.id));
   assert.deepEqual(ids.filter(id => catIds.has(id)), []);
@@ -90,7 +90,26 @@ test('Cabeceras: Panadería, Barra de Café, Daily Buffet (la mesa caliente), Ri
   assert.equal(cat('dominican-spot').note, undefined);
 });
 
-test('Coffee Bar, Matcha y Hot Lattes: los del PDF del cliente (19-oct), en su orden y con sus dos tamaños', () => {
+test('Menú impreso de Praxis (26-oct): sus platos nuevos con sus precios, sus avisos y sin sus erratas', () => {
+  const price = id => allItems().find(i => i.id === id).price;
+  assert.deepEqual(MENU.desserts.map(i => [i.name, i.price]), [
+    ['Caramel Flan', 6.99], ['Chocolate Mousse', 6.99], ['Guava Cheesecake', 6.99], ['Passion Fruit Cheesecake', 6.99], ['Tres Leches Cake', 6.99],
+  ]);
+  assert.equal(price('bk-make-your-own-breakfast'), 0);   // el impreso no le pone precio: se pregunta en tienda
+  assert.equal(price('dm-sancocho-dominicano'), 17.99);
+  assert.equal(price('sp-half-sandwich-chicken-soup'), 14.99);
+  assert.equal(price('pn-flat-panini-ready-to-go'), 14.99);
+  assert.equal(price('ny-phili-cheese-steak'), 15.99);    // el único que sube $2
+  const cat = id => CATEGORIES.find(c => c.id === id);
+  assert.equal(cat('panini').note, PANINI_NOTE);
+  assert.equal(cat('juices').note, JUICES_NOTE);
+  // las erratas que traían el four-fold y el impreso (los ids viejos se quedan: son anclas)
+  const text = allItems().flatMap(i => [i.name, i.desc ? i.desc.en : '']).join('\n');
+  for (const typo of [/Wafles/, /Mozarella/, /Mix Cheese/, /Croton\b/, /Peta /, /Warp/, /Roaste[dr] Beef/, /Salsarito/,
+    /Ruben/, /Phili /, /Baguete/, /Chedar/, /Tomates/, /\(LR\)/, /\( /]) assert.doesNotMatch(text, typo);
+});
+
+test('Coffee Bar, Matcha y Hot Lattes: los del PDF del cliente (19-oct) y el Mango Matcha del impreso, en su orden y con sus dos tamaños', () => {
   const row = i => [i.name, i.sizes ? [i.sizes.md, i.sizes.lg] : i.price];
   assert.deepEqual(MENU.coffee.map(row), [
     ['Espresso', 3.25], ['Cortadito', 3.51], ['Cappuccino', [3.99, 4.99]], ['Americano', [3.69, 4.69]],
@@ -99,6 +118,7 @@ test('Coffee Bar, Matcha y Hot Lattes: los del PDF del cliente (19-oct), en su o
   ]);
   assert.deepEqual(MENU.matcha.map(row), [
     ['Matcha Latte', [6.99, 7.99]], ['Strawberry Matcha', [7.99, 8.99]], ['Dirty Matcha', [7.99, 8.99]], ['Passion Matcha', [7.99, 8.99]],
+    ['Mango Matcha', [7.99, 8.99]],
   ]);
   assert.deepEqual(MENU.lattes.map(row), [['Pumpkin Spice Latte', [5.99, 6.99]], ['Pistachio Latte', [5.99, 6.99]], ['Dulce de Leche Latte', [5.99, 6.99]]]);
   // con tamaños, price es el del mediano y solo hay mediano y grande

@@ -22,12 +22,12 @@ test('wideId: la primera si son impares, ninguna si son pares', () => {
 
 test('renderMenu: cada plato sale una sola vez, con su ancla', () => {
   for (const it of Object.values(MENU).flat()) assert.equal(count(ES, ` id="${it.id}"`), 1, it.id); // con espacio: data-id="…" también contiene id="…"
-  assert.equal(count(ES, 'data-id="'), 87);
+  assert.equal(count(ES, 'data-id="'), 97);
 });
 
 test('renderMenu: h2 por momento y h3 por categoría, en el orden de la carta', () => {
   assert.equal(count(ES, '<h2 class="part-label"'), 3);
-  assert.equal(count(ES, '<h3 class="cat-sign"'), 18);
+  assert.equal(count(ES, '<h3 class="cat-sign"'), 19);
   assert.ok(ES.indexOf('>Mañana<') < ES.indexOf('>Café y jugos<'));
   assert.ok(ES.indexOf('>Café y jugos<') < ES.indexOf('>Mediodía<'));
   assert.ok(ES.indexOf('id="breakfast"') < ES.indexOf('id="coffee"'));
